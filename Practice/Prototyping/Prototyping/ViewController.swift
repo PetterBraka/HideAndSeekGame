@@ -8,6 +8,9 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let animalArray = ["Dogs", "Cats", "Rabits"]
+    let categoriNames = ["collie", "labrador" ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
