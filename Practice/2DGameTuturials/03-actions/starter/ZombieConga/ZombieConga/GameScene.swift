@@ -283,7 +283,14 @@ class GameScene: SKScene {
     }
     
     func zombieHit(cat: SKSpriteNode) {
-        cat.removeFromParent()
+        cat.name = "train"
+        cat.removeAllActions()
+        cat.setScale(1.0)
+        cat.zRotation = 0
+        
+        let turnGreen = SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.2)
+        cat.run(turnGreen)
+        
         run(catCollisionSound)
     }
     
