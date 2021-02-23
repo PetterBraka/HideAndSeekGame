@@ -31,6 +31,10 @@ class MainMenu: SKScene {
             switch name {
             case playButton?.name:
                 print("Play button pressed")
+                let setUpScene = SetUp(size: size)
+                setUpScene.scaleMode = scaleMode
+                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                view?.presentScene(setUpScene, transition: reveal)
             case helpButton?.name:
                 print("Help button pressed")
             default:
