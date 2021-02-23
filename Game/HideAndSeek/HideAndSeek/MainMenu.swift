@@ -8,14 +8,34 @@
 import SpriteKit
 
 class MainMenu: SKScene {
+    var playButton: SKSpriteNode?
+    var helpButton: SKSpriteNode?
+    
+    override func sceneDidLoad() {
+        getButtons()
+    }
+    
+    func getButtons() {
+        if let sign = self.childNode(withName: "sign") {
+            print("found sign")
+            playButton = sign.childNode(withName: "playButton") as? SKSpriteNode
+            helpButton = sign.childNode(withName: "helpButton") as? SKSpriteNode
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-         for touch in touches {
-              let location = touch.location(in: self)
-              let touchedNode = atPoint(location)
-              if touchedNode.name == "HelloButton" {
-                   // Call the function here.
-              }
-         }
+        let touch:UITouch = touches.first!
+        let positionInScene = touch.location(in: self)
+        let touchedNode = self.atPoint(positionInScene)
+        if let name = touchedNode.name {
+            switch name {
+            case playButton?.name:
+                print("Play button pressed")
+            case helpButton?.name:
+                print("Help button pressed")
+            default:
+                print("No button pressed")
+            }
+        }
     }
 }
