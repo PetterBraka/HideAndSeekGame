@@ -31,12 +31,18 @@ class MainMenu: SKScene {
             switch name {
             case playButton?.name:
                 print("Play button pressed")
-                let setUpScene = SetUp(size: size)
-                setUpScene.scaleMode = scaleMode
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                view?.presentScene(setUpScene, transition: reveal)
+                if let setUpScene = SetUp(fileNamed: "SetUpScene") {
+                    setUpScene.scaleMode = scaleMode
+                    let transition = SKTransition.crossFade(withDuration: 0.5)
+                    view?.presentScene(setUpScene, transition: transition)
+                }
             case helpButton?.name:
                 print("Help button pressed")
+                if let helpScene = Help(fileNamed: "HelpScene") {
+                    helpScene.scaleMode = scaleMode
+                    let transition = SKTransition.crossFade(withDuration: 0.5)
+                    view?.presentScene(helpScene, transition: transition)
+                }
             default:
                 print("No button pressed")
             }
