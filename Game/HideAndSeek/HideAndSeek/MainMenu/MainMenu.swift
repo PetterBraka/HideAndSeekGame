@@ -34,7 +34,7 @@ class MainMenu: SKScene {
                 let setUpStoryborad = UIStoryboard(name: "SetUp", bundle: nil)
                 let SetUpVC = setUpStoryborad.instantiateViewController(withIdentifier :"SetUPVC")
                 let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
-                currentViewController.present(SetUpVC, animated: false, completion: nil)
+                currentViewController.present(SetUpVC, animated: true, completion: nil)
             case helpButton?.name:
                 print("Help button pressed")
                 if let helpScene = Help(fileNamed: "HelpScene") {

@@ -62,15 +62,10 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adU-Vd-dJ8">
+                            <navigationBar contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="adU-Vd-dJ8">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                                 <items>
-                                    <navigationItem title="Game setup" id="RjU-G8-dBd">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="0Ws-53-HnS">
-                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="jNL-uN-CsH"/>
-                                    </navigationItem>
+                                    <navigationItem title="Game setup" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="RjU-G8-dBd"/>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -81,7 +76,7 @@
                             <constraint firstItem="4wL-GQ-Zkl" firstAttribute="top" secondItem="adU-Vd-dJ8" secondAttribute="bottom" constant="10" id="Zhu-cA-b25"/>
                             <constraint firstItem="dpB-Vf-SEB" firstAttribute="bottom" secondItem="4wL-GQ-Zkl" secondAttribute="bottom" constant="20" id="eI3-BC-eha"/>
                             <constraint firstItem="4wL-GQ-Zkl" firstAttribute="leading" secondItem="dpB-Vf-SEB" secondAttribute="leading" constant="20" id="gph-NI-EMj"/>
-                            <constraint firstItem="adU-Vd-dJ8" firstAttribute="top" secondItem="8bq-EG-Xv4" secondAttribute="top" id="no8-LY-j2T"/>
+                            <constraint firstItem="adU-Vd-dJ8" firstAttribute="top" secondItem="dpB-Vf-SEB" secondAttribute="top" id="no8-LY-j2T"/>
                             <constraint firstAttribute="trailing" secondItem="adU-Vd-dJ8" secondAttribute="trailing" id="oIl-nZ-Wn2"/>
                             <constraint firstItem="adU-Vd-dJ8" firstAttribute="leading" secondItem="8bq-EG-Xv4" secondAttribute="leading" id="x2M-8L-pUw"/>
                         </constraints>
@@ -90,6 +85,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="navBarItem" destination="RjU-G8-dBd" id="kkm-eJ-tot"/>
                         <outlet property="tableView" destination="4wL-GQ-Zkl" id="dey-NQ-wNc"/>
                     </connections>
                 </viewController>
@@ -104,9 +100,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
