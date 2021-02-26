@@ -12,7 +12,6 @@
         <!--Set UpVC-->
         <scene sceneID="tLK-VR-9H4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qRW-an-YnS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SetUPVC" id="VAO-9B-0eu" customClass="SetUpVC" customModule="HideAndSeek" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bq-EG-Xv4">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
@@ -94,6 +93,7 @@
                         <outlet property="tableView" destination="4wL-GQ-Zkl" id="dey-NQ-wNc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qRW-an-YnS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-291.304347826087" y="0.0"/>
         </scene>
