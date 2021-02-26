@@ -31,11 +31,10 @@ class MainMenu: SKScene {
             switch name {
             case playButton?.name:
                 print("Play button pressed")
-                if let setUpScene = SetUp(fileNamed: "SetUpScene") {
-                    setUpScene.scaleMode = scaleMode
-                    let transition = SKTransition.crossFade(withDuration: 0.5)
-                    view?.presentScene(setUpScene, transition: transition)
-                }
+                let setUpStoryborad = UIStoryboard(name: "SetUp", bundle: nil)
+                let SetUpVC = setUpStoryborad.instantiateViewController(withIdentifier :"SetUPVC")
+                let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
+                currentViewController.present(SetUpVC, animated: false, completion: nil)
             case helpButton?.name:
                 print("Help button pressed")
                 if let helpScene = Help(fileNamed: "HelpScene") {
