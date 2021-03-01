@@ -13,7 +13,7 @@
         <scene sceneID="tLK-VR-9H4">
             <objects>
                 <viewController storyboardIdentifier="SetUPVC" id="VAO-9B-0eu" customClass="SetUpVC" customModule="HideAndSeek" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bq-EG-Xv4">
+                    <view key="view" contentMode="scaleToFill" id="8bq-EG-Xv4" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -70,7 +70,6 @@
                             </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dpB-Vf-SEB"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="dpB-Vf-SEB" firstAttribute="trailing" secondItem="4wL-GQ-Zkl" secondAttribute="trailing" constant="20" id="OUc-Sy-uup"/>
                             <constraint firstItem="4wL-GQ-Zkl" firstAttribute="top" secondItem="adU-Vd-dJ8" secondAttribute="bottom" constant="10" id="Zhu-cA-b25"/>

@@ -5,6 +5,7 @@
 //  Created by Petter vang Brakalsvålet on 22/02/2021.
 //
 
+import UIKit
 import SpriteKit
 
 class MainMenu: SKScene {

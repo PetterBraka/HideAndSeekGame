@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 class SetUpVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -27,14 +28,36 @@ class SetUpVC: UIViewController {
         #endif
         switch sender {
         case navBarItem.leftBarButtonItem:
+            #if DEBUG
+            print("Cancel button pressed")
+            #endif
             self.dismiss(animated: true, completion: nil)
         case navBarItem.rightBarButtonItem:
-            break
+            #if DEBUG
+            print("Done button pressed")
+            #endif
+            startGame()
         default:
             print("unknown button pressed")
         }
     }
-
+    
+    func startGame(){
+        let transistion = SKTransition.fade(withDuration: 0.5)
+        guard let view = self.view as? SKView else {
+            print("Can't cast view to SKView")
+            return
+        }
+        let scene = GameScene(size: self.view.bounds.size, difficulty: .normal, player: .seeker, time: 10, amountOfPlayers: 2)
+        scene.scaleMode = .aspectFill
+        view.presentScene(scene, transition: transistion)
+        self.dismiss(animated: true, completion: nil)
+        
+        view.ignoresSiblingOrder = true
+        view.showsFPS = true
+        view.showsNodeCount = true
+    }
+    
 }
 
 extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
