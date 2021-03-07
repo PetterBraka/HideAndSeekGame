@@ -43,19 +43,10 @@ class SetUpVC: UIViewController {
     }
     
     func startGame(){
-        let transistion = SKTransition.fade(withDuration: 0.5)
-        guard let view = self.view as? SKView else {
-            print("Can't cast view to SKView")
-            return
-        }
-        let scene = GameScene(size: self.view.bounds.size, difficulty: .normal, player: .seeker, time: 10, amountOfPlayers: 2)
-        scene.scaleMode = .aspectFill
-        view.presentScene(scene, transition: transistion)
-        self.dismiss(animated: true, completion: nil)
-        
-        view.ignoresSiblingOrder = true
-        view.showsFPS = true
-        view.showsNodeCount = true
+        print("Game starting")
+        let storyborad = UIStoryboard(name: "Main", bundle: nil)
+        let gameScene = storyborad.instantiateViewController(withIdentifier :"GameSceneVC")
+        self.present(gameScene, animated: true, completion: nil)
     }
     
 }

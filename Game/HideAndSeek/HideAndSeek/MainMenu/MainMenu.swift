@@ -32,8 +32,8 @@ class MainMenu: SKScene {
             switch name {
             case playButton?.name:
                 print("Play button pressed")
-                let setUpStoryborad = UIStoryboard(name: "SetUp", bundle: nil)
-                let SetUpVC = setUpStoryborad.instantiateViewController(withIdentifier :"SetUPVC")
+                let storyborad = UIStoryboard(name: "Main", bundle: nil)
+                let SetUpVC = storyborad.instantiateViewController(withIdentifier :"SetUpVC")
                 let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
                 currentViewController.present(SetUpVC, animated: true, completion: nil)
             case helpButton?.name:

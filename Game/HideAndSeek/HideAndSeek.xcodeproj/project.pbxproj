@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
-		3365714425E63CC700308812 /* SetUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3365714325E63CC700308812 /* SetUp.storyboard */; };
 		3365714725E662A300308812 /* SetUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SetUpCell.swift */; };
 		3371F2E225E9125A008E983E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3371F2E125E9125A008E983E /* GameScene.sks */; };
 		3371F2E525E91266008E983E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E425E91266008E983E /* GameScene.swift */; };
@@ -24,8 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
-		3365714325E63CC700308812 /* SetUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetUp.storyboard; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SetUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpCell.swift; sourceTree = "<group>"; };
 		3371F2E125E9125A008E983E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -53,20 +53,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3371F2DF25E9121D008E983E /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				3371F2E025E91239008E983E /* GameScene */,
-				33E5BDEC25E5614100D337F9 /* SetUp */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
 		3371F2E025E91239008E983E /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
 				3371F2E125E9125A008E983E /* GameScene.sks */,
 				3371F2E425E91266008E983E /* GameScene.swift */,
+				330125D825EE8BD900C4F4CC /* GameSceneVC.swift */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -92,10 +84,11 @@
 			children = (
 				33E5BDC225E5369600D337F9 /* AppDelegate.swift */,
 				33E5BDCA25E5369600D337F9 /* GameViewController.swift */,
-				33E5BDEB25E5612400D337F9 /* MainMenu */,
-				3371F2DF25E9121D008E983E /* Game */,
-				33E5BDF425E5643300D337F9 /* Help */,
 				33E5BDCC25E5369600D337F9 /* Main.storyboard */,
+				33E5BDEB25E5612400D337F9 /* MainMenu */,
+				3371F2E025E91239008E983E /* GameScene */,
+				33E5BDEC25E5614100D337F9 /* SetUp */,
+				33E5BDF425E5643300D337F9 /* Help */,
 				33E5BDCF25E5369700D337F9 /* Assets.xcassets */,
 				33E5BDD125E5369700D337F9 /* Info.plist */,
 				3371F2E725E91822008E983E /* extensions.swift */,
@@ -116,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				3365714025E63CB600308812 /* SetUpVC.swift */,
-				3365714325E63CC700308812 /* SetUp.storyboard */,
 				3365714625E662A300308812 /* SetUpCell.swift */,
 			);
 			path = SetUp;
@@ -189,7 +181,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E5BDCE25E5369600D337F9 /* Main.storyboard in Resources */,
-				3365714425E63CC700308812 /* SetUp.storyboard in Resources */,
 				33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */,
 				33E5BDF625E5644D00D337F9 /* HelpScene.sks in Resources */,
 				3371F2E225E9125A008E983E /* GameScene.sks in Resources */,
@@ -211,6 +202,7 @@
 				33E5BDCB25E5369600D337F9 /* GameViewController.swift in Sources */,
 				33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */,
 				3371F2E525E91266008E983E /* GameScene.swift in Sources */,
+				330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */,
 				33E5BDDE25E5375700D337F9 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
