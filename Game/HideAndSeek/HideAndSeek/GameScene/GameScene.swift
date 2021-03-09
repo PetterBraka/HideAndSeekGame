@@ -42,24 +42,37 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        addBackground()
-        addPlayer()
+        createBackground()
+        createPlayer()
+        createJoystick()
     }
     
-    fileprivate func addBackground() {
+    fileprivate func createBackground() {
         let background = SKSpriteNode(imageNamed: "GameBackground")
-        
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = -1
         background.aspectFillToSize(size: size)
         self.addChild(background)
     }
     
-    fileprivate func addPlayer() {
+    fileprivate func createPlayer() {
         let player = SKSpriteNode(imageNamed: "player")
         player.position = CGPoint(x: size.width / 2, y: size.height / 2)
         player.zPosition = 1
         player.aspectFillToSize(size: CGSize(width: 50, height: 75))
         self.addChild(player)
+    }
+    
+    fileprivate func createJoystick() {
+        let background = SKSpriteNode(imageNamed: "joystick_background")
+        background.size = CGSize(width: 80, height: 80)
+        background.position = CGPoint(x: background.size.width + 20, y: background.size.height + 20)
+        background.zPosition = 0
+        self.addChild(background)
+        let joystick = SKSpriteNode(imageNamed: "joystick")
+        joystick.size = CGSize(width: 40, height: 40)
+        joystick.position = background.position
+        joystick.zPosition = 1
+        self.addChild(joystick)
     }
 }
