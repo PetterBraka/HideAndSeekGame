@@ -42,11 +42,24 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        if let background = SKSpriteNode(fileNamed: "GameBackground") {
-            
-            background.position = CGPoint(x: size.width / 2, y: size.height / 2)
-            background.aspectFillToSize(size: view.frame.size)
-            addChild(background)
-        }
+        addBackground()
+        addPlayer()
+    }
+    
+    fileprivate func addBackground() {
+        let background = SKSpriteNode(imageNamed: "GameBackground")
+        
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.zPosition = -1
+        background.aspectFillToSize(size: size)
+        self.addChild(background)
+    }
+    
+    fileprivate func addPlayer() {
+        let player = SKSpriteNode(imageNamed: "player")
+        player.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        player.zPosition = 1
+        player.aspectFillToSize(size: CGSize(width: 50, height: 75))
+        self.addChild(player)
     }
 }
