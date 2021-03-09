@@ -5,6 +5,7 @@
 //  Created by Petter vang Brakalsvålet on 22/02/2021.
 //
 
+import UIKit
 import SpriteKit
 
 class MainMenu: SKScene {
@@ -31,11 +32,10 @@ class MainMenu: SKScene {
             switch name {
             case playButton?.name:
                 print("Play button pressed")
-                if let setUpScene = SetUp(fileNamed: "SetUpScene") {
-                    setUpScene.scaleMode = scaleMode
-                    let transition = SKTransition.crossFade(withDuration: 0.5)
-                    view?.presentScene(setUpScene, transition: transition)
-                }
+                let storyborad = UIStoryboard(name: "Main", bundle: nil)
+                let SetUpVC = storyborad.instantiateViewController(withIdentifier :"SetUpVC")
+                let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
+                currentViewController.present(SetUpVC, animated: true, completion: nil)
             case helpButton?.name:
                 print("Help button pressed")
                 if let helpScene = Help(fileNamed: "HelpScene") {
