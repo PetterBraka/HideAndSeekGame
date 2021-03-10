@@ -30,6 +30,11 @@ class GameScene: SKScene {
     let player = SKSpriteNode(imageNamed: "player")
     var stickActive = false
     
+    let playerMovePointsPerSec: CGFloat = 200
+    var lastUpdateTime: TimeInterval = 0
+    var dt: TimeInterval = 0
+    var velocity = CGPoint.zero
+    
     init(size: CGSize,
          difficulty: ChallangeRating,
          player: Role,
@@ -96,21 +101,17 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             
             if stickActive {
-            
                 let v = CGVector(dx: location.x - joystickBackground.position.x, dy: location.y - joystickBackground.position.y)
-                let angle = atan2(v.dy, v.dx)
-                
-                let degrees = angle * CGFloat( 180 / Double.pi)
+                let angle: CGFloat = atan2(v.dy, v.dx)
                 let length: CGFloat = joystickBackground.frame.size.height / 2
-                
-                let xDistance: CGFloat = sin(angle - 1.57079633) * length
-                let yDistance: CGFloat = cos(angle - 1.57079633) * length
-                
+                let distance = CGPoint(x: sin(angle - 1.57079633) * length, y: cos(angle - 1.57079633) * length)
                 if joystickBackground.frame.contains(location) {
                     joystick.position = location
                 } else {
-                    joystick.position = CGPoint(x: joystickBackground.position.x - xDistance, y: joystickBackground.position.y + yDistance)
+                    joystick.position = CGPoint(x: joystickBackground.position.x - distance.x, y: joystickBackground.position.y + distance.y)
                 }
+                moveTo(location)
+                
                 player.zRotation = angle - 1.57079633
             }
         }
@@ -121,9 +122,27 @@ class GameScene: SKScene {
             let move = SKAction.move(to: joystickBackground.position, duration: 0.2)
             joystick.run(move)
         }
+        velocity = CGPoint.zero
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
+        if lastUpdateTime > 0 {
+            dt = currentTime - lastUpdateTime
+        } else {
+            dt = 0
+        }
+        lastUpdateTime = currentTime
+        move(player, velocity)
+    }
+    
+    func moveTo(_ location: CGPoint){
+        let offset = location - joystickBackground.position
+        let direction = offset.normalized()
+        velocity = direction * playerMovePointsPerSec
+    }
+    
+    func move(_ sprite: SKSpriteNode, _ location: CGPoint){
+        let amountToMove = velocity * CGFloat(dt)
+        sprite.position += amountToMove
     }
 }
