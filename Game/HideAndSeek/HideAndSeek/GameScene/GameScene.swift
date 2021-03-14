@@ -53,8 +53,9 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         createBackground()
-        createPlayer()
+        spawnPlayer()
         createJoystick()
+        spawnTent(newTent: true, CGPoint(x: size.width / 5, y: (size.height / 3) * 2))
     }
     
     fileprivate func createBackground() {
@@ -65,7 +66,7 @@ class GameScene: SKScene {
         self.addChild(background)
     }
     
-    fileprivate func createPlayer() {
+    fileprivate func spawnPlayer() {
         player.position = CGPoint(x: size.width / 2, y: size.height / 2)
         player.zPosition = 1
         player.aspectFillToSize(size: CGSize(width: 50, height: 75))
@@ -77,12 +78,26 @@ class GameScene: SKScene {
         joystickBackground.size = CGSize(width: 120, height: 120)
         joystickBackground.position = CGPoint(x: joystickBackground.size.width + 20, y: joystickBackground.size.height + 20)
         joystickBackground.alpha = 0.7
-        joystickBackground.zPosition = 0
+        joystickBackground.zPosition = 9
         self.addChild(joystickBackground)
         joystick.size = CGSize(width: 60, height: 60)
         joystick.position = joystickBackground.position
-        joystick.zPosition = 1
+        joystick.zPosition = 10
         self.addChild(joystick)
+    }
+    
+    fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
+        var tent: SKSpriteNode
+        if newTent {
+            tent = SKSpriteNode(imageNamed: "tentNew")
+        } else {
+            tent = SKSpriteNode(imageNamed: "tentOld")
+        }
+        tent.aspectFillToSize(size: player.size)
+        tent.name = "tent"
+        tent.position = position
+        tent.zPosition = 2
+        self.addChild(tent)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
