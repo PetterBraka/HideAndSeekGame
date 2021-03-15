@@ -69,18 +69,18 @@ class GameScene: SKScene {
     fileprivate func spawnPlayer() {
         player.position = CGPoint(x: size.width / 2, y: size.height / 2)
         player.zPosition = 1
-        player.aspectFillToSize(size: CGSize(width: 50, height: 75))
+        player.aspectFillToSize(size: CGSize(width: 25, height: 50))
         player.name = "player"
         self.addChild(player)
     }
     
     fileprivate func createJoystick() {
-        joystickBackground.size = CGSize(width: 120, height: 120)
+        joystickBackground.size = CGSize(width: 110, height: 110)
         joystickBackground.position = CGPoint(x: joystickBackground.size.width + 20, y: joystickBackground.size.height + 20)
         joystickBackground.alpha = 0.7
         joystickBackground.zPosition = 9
         self.addChild(joystickBackground)
-        joystick.size = CGSize(width: 60, height: 60)
+        joystick.size = CGSize(width: joystickBackground.size.width / 2, height: joystickBackground.size.height / 2)
         joystick.position = joystickBackground.position
         joystick.zPosition = 10
         self.addChild(joystick)
