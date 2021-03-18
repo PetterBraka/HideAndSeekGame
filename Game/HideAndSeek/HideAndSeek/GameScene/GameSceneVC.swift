@@ -9,7 +9,10 @@ import UIKit
 import SpriteKit
 
 class GameSceneVC: UIViewController {
-
+    @IBAction func exitButton(_ sender: UIButton) {
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = self.view as! SKView? {
