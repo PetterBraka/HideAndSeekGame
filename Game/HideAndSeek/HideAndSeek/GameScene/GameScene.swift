@@ -24,13 +24,12 @@ class GameScene: SKScene {
     let playerRole: Role
     let playTime: Int
     let numberOfPlayers: Int
-    
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let player = SKSpriteNode(imageNamed: "player")
-    var stickActive = false
-    
     let playerMovePointsPerSec: CGFloat = 200
+    
+    var stickActive = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var velocity = CGPoint.zero
