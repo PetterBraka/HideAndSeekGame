@@ -40,6 +40,8 @@ class GameScene: SKScene {
     let catMovePointsPerSec:CGFloat = 480.0
     let cameraNode = SKCameraNode()
     let cameraMovePointsPerSec: CGFloat = 200.0
+    let livesLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let catLabel = SKLabelNode(fontNamed: "Chalkduster")
 
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
@@ -117,13 +119,36 @@ class GameScene: SKScene {
                 },
                 SKAction.wait(forDuration: 1.0)])))
         
-        // debugDrawPlayableArea()
+//        debugDrawPlayableArea()
         
         playBackgroundMusic(filename: "backgroundMusic.mp3")
         
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        
+        livesLabel.text = "Lives: x"
+        livesLabel.fontColor = .black
+        livesLabel.fontSize = 100
+        livesLabel.zPosition = 150
+        livesLabel.horizontalAlignmentMode = .left
+        livesLabel.verticalAlignmentMode = .bottom
+        livesLabel.position = CGPoint(
+            x: -playableRect.width / 2 + CGFloat(20),
+            y: -playableRect.height / 3)
+        cameraNode.addChild(livesLabel)
+        
+        catLabel.text = "Cats: x"
+        catLabel.fontColor = .black
+        catLabel.fontSize = 100
+        catLabel.zPosition = 150
+        catLabel.horizontalAlignmentMode = .right
+        catLabel.verticalAlignmentMode = .bottom
+        catLabel.position = CGPoint(
+            x: playableRect.width / 2 - CGFloat(20),
+            y: -playableRect.height / 3)
+        cameraNode.addChild(catLabel)
+        
     }
 
     func backgroundNode() -> SKSpriteNode {
@@ -192,6 +217,7 @@ class GameScene: SKScene {
         // checkCollisions()
         moveTrain()
         moveCamera()
+        livesLabel.text = "Lives: \(lives)"
         
         if lives <= 0 && !gameOver {
             gameOver = true
@@ -416,6 +442,8 @@ class GameScene: SKScene {
             }
             targetPosition = node.position
         }
+        
+        catLabel.text = "Cats: \(trainCount)"
         
         if trainCount >= 15 && !gameOver {
             gameOver = true
