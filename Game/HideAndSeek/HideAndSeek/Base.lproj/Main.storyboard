@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <viewController storyboardIdentifier="MainMenuVC" title="MainMenu" id="BV1-FR-VrT" customClass="GameViewController" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -29,22 +29,22 @@
             <objects>
                 <viewController storyboardIdentifier="SetUpVC" id="cF7-T8-eFD" userLabel="SetUpVC" customClass="SetUpVC" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G7Q-FQ-IoN" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OPc-rB-6Zk">
-                                <rect key="frame" x="20" y="98" width="374" height="744"/>
+                                <rect key="frame" x="64" y="54" width="768" height="319"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SetUpCell" id="7cz-fy-NTc" customClass="SetUpCell" customModule="HideAndSeek" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="768" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7cz-fy-NTc" id="e3f-hp-jhi">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YNa-WO-ULk">
-                                                    <rect key="frame" x="10" y="6.5" width="354" height="31"/>
+                                                    <rect key="frame" x="10" y="6.5" width="748" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chose a character" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WuB-Wg-HKw">
                                                             <rect key="frame" x="0.0" y="0.0" width="139.5" height="31"/>
@@ -53,7 +53,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gBP-bx-vPv">
-                                                            <rect key="frame" x="240" y="0.0" width="114" height="32"/>
+                                                            <rect key="frame" x="634" y="0.0" width="114" height="32"/>
                                                             <segments>
                                                                 <segment title="Hider"/>
                                                                 <segment title="Seeker"/>
@@ -78,7 +78,7 @@
                                 <sections/>
                             </tableView>
                             <navigationBar contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="iJU-Vp-nXy">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                                 <items>
                                     <navigationItem title="Game setup" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="iSP-zk-Mmy"/>
                                 </items>
@@ -113,11 +113,11 @@
             <objects>
                 <viewController storyboardIdentifier="GameSceneVC" title="GameScene" id="IuL-ps-qpD" userLabel="GameSceneVC" customClass="GameSceneVC" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CbS-nF-Azh" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uE-7I-VPl">
-                                <rect key="frame" x="10" y="64.5" width="50" height="49"/>
+                                <rect key="frame" x="20" y="20.5" width="50" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="rHO-Dn-E6f"/>
                                     <constraint firstAttribute="width" constant="50" id="x3O-L8-odH"/>
@@ -134,7 +134,7 @@
                         <viewLayoutGuide key="safeArea" id="afl-Wf-aTh"/>
                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                         <constraints>
-                            <constraint firstItem="4uE-7I-VPl" firstAttribute="leading" secondItem="afl-Wf-aTh" secondAttribute="leading" constant="10" id="yIq-ZV-Ift"/>
+                            <constraint firstItem="4uE-7I-VPl" firstAttribute="leading" secondItem="CbS-nF-Azh" secondAttribute="leading" constant="20" id="yIq-ZV-Ift"/>
                             <constraint firstItem="4uE-7I-VPl" firstAttribute="top" secondItem="afl-Wf-aTh" secondAttribute="top" constant="20" id="zRy-yL-7XU"/>
                         </constraints>
                     </view>
@@ -148,7 +148,7 @@
             <objects>
                 <viewController storyboardIdentifier="HelpVC" title="Help" id="Qog-eQ-J0u" userLabel="HelpSceneVC" customClass="HelpVC" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fXT-kq-Bi7" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Hn2-Aw-Mde"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>

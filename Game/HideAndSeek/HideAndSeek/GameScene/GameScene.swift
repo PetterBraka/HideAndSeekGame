@@ -28,6 +28,8 @@ class GameScene: SKScene {
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let player = SKSpriteNode(imageNamed: "player")
     let playerMovePointsPerSec: CGFloat = 200
+    let actionButton = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+    let playerRange = 100
     
     var stickActive = false
     var lastUpdateTime: TimeInterval = 0
@@ -54,7 +56,11 @@ class GameScene: SKScene {
         createBackground()
         spawnPlayer()
         createJoystick()
-        spawnTent(newTent: true, CGPoint(x: size.width / 5, y: (size.height / 3) * 2))
+        createButton()
+        spawnTent(newTent: true,
+                  CGPoint(
+                    x: size.width / 5,
+                    y: (size.height / 3) * 2))
     }
     
     fileprivate func createBackground() {
@@ -74,15 +80,29 @@ class GameScene: SKScene {
     }
     
     fileprivate func createJoystick() {
+        joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
-        joystickBackground.position = CGPoint(x: joystickBackground.size.width + 20, y: joystickBackground.size.height + 20)
+        joystickBackground.position = CGPoint(
+            x: joystickBackground.size.width / 2 + 20,
+            y: joystickBackground.size.height / 2 + 20)
         joystickBackground.alpha = 0.7
         joystickBackground.zPosition = 9
         self.addChild(joystickBackground)
-        joystick.size = CGSize(width: joystickBackground.size.width / 2, height: joystickBackground.size.height / 2)
+        joystick.name = "joystick"
+        joystick.size = CGSize(
+            width: joystickBackground.size.width / 2,
+            height: joystickBackground.size.height / 2)
         joystick.position = joystickBackground.position
         joystick.zPosition = 10
         self.addChild(joystick)
+    }
+    
+    fileprivate func createButton() {
+        actionButton.name = "button"
+        actionButton.position = CGPoint(
+            x: size.width - 20 - (joystickBackground.size.width / 2),
+            y: (joystickBackground.size.width / 2) + 20)
+        self.addChild(actionButton)
     }
     
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
@@ -102,9 +122,18 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if joystickBackground.contains(location) {
+//            if joystickBackground.contains(location) {
+//                stickActive = true
+//            } else {
+//                stickActive = false
+//            }
+//
+            switch self.atPoint(location).name {
+            case joystickBackground.name:
                 stickActive = true
-            } else {
+            case actionButton.name:
+                print("button taped")
+            default:
                 stickActive = false
             }
         }
