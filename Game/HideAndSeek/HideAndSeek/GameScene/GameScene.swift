@@ -33,12 +33,13 @@ class GameScene: SKScene {
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let player = SKSpriteNode(imageNamed: "player")
+    let house = SKSpriteNode(imageNamed: "house")
     let playerMovePointsPerSec: CGFloat = 200
     let playerRange = Reach.medium
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
-    var tents: [SKSpriteNode] = []
+    var hidingSpots: [SKSpriteNode] = []
     var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
@@ -63,9 +64,10 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         createBackground()
-        spawnPlayer()
         createJoystick()
         createButton()
+        spawnPlayer()
+        spawnHouse()
         spawnTent(newTent: true, CGPoint(x: 240, y: 320))
         spawnTent(newTent: false, CGPoint(x: 180, y: 250))
         spawnTent(newTent: true, CGPoint(x: 320, y: 270))
@@ -78,14 +80,6 @@ class GameScene: SKScene {
         background.zPosition = -1
         background.aspectFillToSize(size: size)
         self.addChild(background)
-    }
-    
-    fileprivate func spawnPlayer() {
-        player.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        player.zPosition = 1
-        player.aspectFillToSize(size: CGSize(width: 20, height: 25))
-        player.name = "player"
-        self.addChild(player)
     }
     
     fileprivate func createJoystick() {
@@ -134,6 +128,23 @@ class GameScene: SKScene {
         self.addChild(buttonLabel)
     }
     
+    fileprivate func spawnPlayer() {
+        player.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        player.zPosition = 1
+        player.aspectFillToSize(size: CGSize(width: 20, height: 25))
+        player.name = "player"
+        self.addChild(player)
+        hidingSpots.append(house)
+    }
+    
+    fileprivate func spawnHouse() {
+        house.position = CGPoint(x: 450, y: 300)
+        house.zPosition = 2
+        house.aspectFillToSize(size: CGSize(width: 150, height: 150))
+        house.name = "house"
+        self.addChild(house)
+    }
+    
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
         var tent: SKSpriteNode
         if newTent {
@@ -145,7 +156,7 @@ class GameScene: SKScene {
         tent.name = "tent"
         tent.position = position
         tent.zPosition = 2
-        tents.append(tent)
+        hidingSpots.append(tent)
         self.addChild(tent)
     }
     
@@ -157,8 +168,8 @@ class GameScene: SKScene {
                 stickActive = true
             case actionButton.name:
                 print("button taped")
-                tents.forEach { (tent) in
-                    if checkReachOf(player, to: tent) {
+                hidingSpots.forEach { (hidingSpot) in
+                    if checkReachOf(player, to: hidingSpot) {
                         if !freezeJoystick{
                             let hidePlayer = SKAction.hide()
                             player.run(hidePlayer)
@@ -238,8 +249,8 @@ class GameScene: SKScene {
     }
     
     fileprivate func updateButtonLabel(){
-            tents.forEach { (tent) in
-                if checkReachOf(player, to: tent) {
+            hidingSpots.forEach { (hidingSpot) in
+                if checkReachOf(player, to: hidingSpot) {
                     if !freezeJoystick{
                         buttonLabel.text = "Hide"
                     } else {
