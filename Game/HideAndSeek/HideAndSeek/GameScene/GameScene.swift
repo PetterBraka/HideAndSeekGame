@@ -66,10 +66,10 @@ class GameScene: SKScene {
         spawnPlayer()
         createJoystick()
         createButton()
-        spawnTent(newTent: true,
-                  CGPoint(
-                    x: size.width / 5,
-                    y: (size.height / 3) * 2))
+        spawnTent(newTent: true, CGPoint(x: 240, y: 320))
+        spawnTent(newTent: false, CGPoint(x: 180, y: 250))
+        spawnTent(newTent: true, CGPoint(x: 320, y: 270))
+        spawnTent(newTent: false, CGPoint(x: 220, y: 180))
     }
     
     fileprivate func createBackground() {
@@ -83,7 +83,7 @@ class GameScene: SKScene {
     fileprivate func spawnPlayer() {
         player.position = CGPoint(x: size.width / 2, y: size.height / 2)
         player.zPosition = 1
-        player.aspectFillToSize(size: CGSize(width: 25, height: 50))
+        player.aspectFillToSize(size: CGSize(width: 20, height: 25))
         player.name = "player"
         self.addChild(player)
     }
@@ -141,7 +141,7 @@ class GameScene: SKScene {
         } else {
             tent = SKSpriteNode(imageNamed: "tentOld")
         }
-        tent.aspectFillToSize(size: player.size)
+        tent.aspectFillToSize(size: CGSize(width: player.size.width + 10, height: player.size.height + 10))
         tent.name = "tent"
         tent.position = position
         tent.zPosition = 2
