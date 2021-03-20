@@ -19,6 +19,12 @@ enum Role {
     case seeker
 }
 
+enum Reach: Float {
+    case short = 50
+    case medium = 75
+    case far = 100
+}
+
 class GameScene: SKScene {
     let gameDifficulty: ChallangeRating
     let playerRole: Role
@@ -29,12 +35,14 @@ class GameScene: SKScene {
     let player = SKSpriteNode(imageNamed: "player")
     let playerMovePointsPerSec: CGFloat = 200
     let actionButton = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
-    let playerRange = 100
+    let playerRange = Reach.medium
     
-    var stickActive = false
+    var tents: [SKSpriteNode] = []
+    var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
-    var velocity = CGPoint.zero
+    var velocity: CGPoint = .zero
+    var freezeJoystick: Bool = false
     
     init(size: CGSize,
          difficulty: ChallangeRating,
@@ -116,25 +124,60 @@ class GameScene: SKScene {
         tent.name = "tent"
         tent.position = position
         tent.zPosition = 2
+        tents.append(tent)
         self.addChild(tent)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-//            if joystickBackground.contains(location) {
-//                stickActive = true
-//            } else {
-//                stickActive = false
-//            }
-//
             switch self.atPoint(location).name {
             case joystickBackground.name:
                 stickActive = true
             case actionButton.name:
                 print("button taped")
+                tents.forEach { (tent) in
+                    checkButton(player, tent)
+                }
             default:
                 stickActive = false
+            }
+        }
+    }
+    
+    fileprivate func checkButton(_ player: SKSpriteNode, _ hidingSpot: SKSpriteNode ){
+        let distance = abs(hypotf(Float(player.position.x - hidingSpot.position.x),
+                                  Float(player.position.y - hidingSpot.position.y)))
+        if distance < Float(playerRange.rawValue) {
+            print("Hiding spot within reach")
+            if !player.isHidden{
+                player.isHidden = true
+                print("Player is hidden")
+                freezeJoystick = true
+            } else {
+                player.isHidden = false
+                freezeJoystick = false
+            }
+        }
+    }
+    
+    fileprivate func moveJoystick(_ location: CGPoint) {
+        if !freezeJoystick {
+            if stickActive {
+                let radius = CGVector(dx: location.x - joystickBackground.position.x,
+                                      dy: location.y - joystickBackground.position.y)
+                let angle: CGFloat = atan2(radius.dy, radius.dx)
+                let length: CGFloat = joystickBackground.frame.size.height / 2
+                let distance = CGPoint(
+                    x: sin(angle - 1.57079633) * length,
+                    y: cos(angle - 1.57079633) * length)
+                if joystickBackground.frame.contains(location) {
+                    joystick.position = location
+                } else {
+                    joystick.position = CGPoint(x: joystickBackground.position.x - distance.x, y: joystickBackground.position.y + distance.y)
+                }
+                moveTo(location)
+                player.zRotation = angle - 1.57079633
             }
         }
     }
@@ -142,21 +185,7 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            
-            if stickActive {
-                let v = CGVector(dx: location.x - joystickBackground.position.x, dy: location.y - joystickBackground.position.y)
-                let angle: CGFloat = atan2(v.dy, v.dx)
-                let length: CGFloat = joystickBackground.frame.size.height / 2
-                let distance = CGPoint(x: sin(angle - 1.57079633) * length, y: cos(angle - 1.57079633) * length)
-                if joystickBackground.frame.contains(location) {
-                    joystick.position = location
-                } else {
-                    joystick.position = CGPoint(x: joystickBackground.position.x - distance.x, y: joystickBackground.position.y + distance.y)
-                }
-                moveTo(location)
-                
-                player.zRotation = angle - 1.57079633
-            }
+            moveJoystick(location)
         }
     }
     
