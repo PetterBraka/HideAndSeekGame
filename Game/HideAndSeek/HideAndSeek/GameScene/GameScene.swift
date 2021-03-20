@@ -73,7 +73,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func createBackground() {
-        let background = SKSpriteNode(imageNamed: "GameBackground")
+        let background = SKSpriteNode(imageNamed: "gameBackground")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = -1
         background.aspectFillToSize(size: size)
@@ -107,7 +107,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func createButton() {
-        actionButton = SKSpriteNode(imageNamed: "Button")
+        actionButton = SKSpriteNode(imageNamed: "button")
         actionButton.aspectFillToSize(size: CGSize(width: 100, height: 75))
         actionButton.name = "actionButton"
         actionButton.zPosition = 10
