@@ -34,9 +34,10 @@ class GameScene: SKScene {
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let player = SKSpriteNode(imageNamed: "player")
     let playerMovePointsPerSec: CGFloat = 200
-    let actionButton = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
     let playerRange = Reach.medium
+    let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     
+    var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var tents: [SKSpriteNode] = []
     var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
@@ -47,11 +48,11 @@ class GameScene: SKScene {
     init(size: CGSize,
          difficulty: ChallangeRating,
          player: Role,
-         time: Int,
+         duration: Int,
          amountOfPlayers: Int) {
         gameDifficulty = difficulty
         playerRole = player
-        playTime = time
+        playTime = duration
         numberOfPlayers = amountOfPlayers
         super.init(size: size)
     }
@@ -106,11 +107,31 @@ class GameScene: SKScene {
     }
     
     fileprivate func createButton() {
-        actionButton.name = "button"
+        actionButton = SKSpriteNode(imageNamed: "Button")
+        actionButton.aspectFillToSize(size: CGSize(width: 100, height: 75))
+        actionButton.name = "actionButton"
+        actionButton.zPosition = 10
         actionButton.position = CGPoint(
-            x: size.width - 20 - (joystickBackground.size.width / 2),
-            y: (joystickBackground.size.width / 2) + 20)
+            x: size.width - 50 - (actionButton.size.width / 2),
+            y: 20 + actionButton.size.height / 2)
         self.addChild(actionButton)
+        createButtonLable()
+    }
+    
+    fileprivate func createButtonLable() {
+        buttonLabel.text = "Action button"
+        buttonLabel.name = "ButtonLabel"
+        buttonLabel.color = .black
+        buttonLabel.fontSize = 20
+        buttonLabel.numberOfLines = 2
+        buttonLabel.preferredMaxLayoutWidth = actionButton.size.width + 20
+        buttonLabel.horizontalAlignmentMode = .center
+        buttonLabel.verticalAlignmentMode = .top
+        buttonLabel.position = CGPoint(
+            x: actionButton.position.x,
+            y: actionButton.position.y - actionButton.size.height / 2)
+        buttonLabel.zPosition = 10
+        self.addChild(buttonLabel)
     }
     
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
@@ -138,13 +159,15 @@ class GameScene: SKScene {
                 print("button taped")
                 tents.forEach { (tent) in
                     if checkReachOf(player, to: tent) {
-                        if !player.isHidden{
-                            player.isHidden = true
+                        if !freezeJoystick{
+                            let hidePlayer = SKAction.hide()
+                            player.run(hidePlayer)
                             freezeJoystick = true
                             print("Player is hidden")
                             print("Freezing controlls")
                         } else {
-                            player.isHidden = false
+                            let showPlayer = SKAction.unhide()
+                            player.run(showPlayer)
                             freezeJoystick = false
                             print("Player isn't hidden")
                             print("Unfreezing controlls")
@@ -161,7 +184,6 @@ class GameScene: SKScene {
         let distance = abs(hypotf(Float(player.position.x - to.position.x),
                                   Float(player.position.y - to.position.y)))
         if distance <= Float(playerRange.rawValue) {
-            print("Hiding spot within reach")
             return true
         } else {
             return false
@@ -212,6 +234,27 @@ class GameScene: SKScene {
         }
         lastUpdateTime = currentTime
         move(player, velocity)
+        updateButtonLabel()
+    }
+    
+    fileprivate func updateButtonLabel(){
+            tents.forEach { (tent) in
+                if checkReachOf(player, to: tent) {
+                    if !freezeJoystick{
+                        buttonLabel.text = "Hide"
+                    } else {
+                        buttonLabel.text = "Leave"
+                    }
+                } else {
+                    buttonLabel.text = "Button"
+                }
+                actionButton.position = CGPoint(
+                    x: size.width - 50 - (actionButton.size.width / 2),
+                    y: 20 + actionButton.size.height / 2 + buttonLabel.frame.height)
+                buttonLabel.position = CGPoint(
+                    x: actionButton.position.x,
+                    y: actionButton.position.y - actionButton.size.height / 2)
+            }
     }
     
     func moveTo(_ location: CGPoint){
