@@ -137,7 +137,19 @@ class GameScene: SKScene {
             case actionButton.name:
                 print("button taped")
                 tents.forEach { (tent) in
-                    checkButton(player, tent)
+                    if checkReachOf(player, to: tent) {
+                        if !player.isHidden{
+                            player.isHidden = true
+                            freezeJoystick = true
+                            print("Player is hidden")
+                            print("Freezing controlls")
+                        } else {
+                            player.isHidden = false
+                            freezeJoystick = false
+                            print("Player isn't hidden")
+                            print("Unfreezing controlls")
+                        }
+                    }
                 }
             default:
                 stickActive = false
@@ -145,19 +157,14 @@ class GameScene: SKScene {
         }
     }
     
-    fileprivate func checkButton(_ player: SKSpriteNode, _ hidingSpot: SKSpriteNode ){
-        let distance = abs(hypotf(Float(player.position.x - hidingSpot.position.x),
-                                  Float(player.position.y - hidingSpot.position.y)))
-        if distance < Float(playerRange.rawValue) {
+    fileprivate func checkReachOf(_ player: SKSpriteNode, to: SKSpriteNode) -> Bool {
+        let distance = abs(hypotf(Float(player.position.x - to.position.x),
+                                  Float(player.position.y - to.position.y)))
+        if distance <= Float(playerRange.rawValue) {
             print("Hiding spot within reach")
-            if !player.isHidden{
-                player.isHidden = true
-                print("Player is hidden")
-                freezeJoystick = true
-            } else {
-                player.isHidden = false
-                freezeJoystick = false
-            }
+            return true
+        } else {
+            return false
         }
     }
     
