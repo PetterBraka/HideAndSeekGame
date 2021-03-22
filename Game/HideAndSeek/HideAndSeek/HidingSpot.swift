@@ -18,7 +18,7 @@ class HidingSpot: NSObject {
     }
     
     private let zPosition: CGFloat = 2
-    private var size: CGSize = CGSize(width: 20, height: 20)
+    private var size: CGSize?
     
     let type: Variant
     let location: CGPoint
@@ -59,7 +59,9 @@ class HidingSpot: NSObject {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
         place.name = type.rawValue
-        place.aspectFillToSize(size: size)
+        if let newSize = size {
+            place.aspectFillToSize(size: newSize)
+        }
         place.zPosition = zPosition
         return place
     }
