@@ -18,7 +18,7 @@ class HidingSpot: NSObject {
     }
     
     private let zPosition: CGFloat = 2
-    private var size: CGSize?
+    private var size: CGSize
     
     let type: Variant
     let location: CGPoint
@@ -26,14 +26,15 @@ class HidingSpot: NSObject {
     
     var spriteNode: SKSpriteNode = SKSpriteNode()
     var image: String
-    var avalible: Bool?
+    var reachable: Bool
     
-    init(_ variant: Variant, _ location: CGPoint, _ capacity: Int?, image: String, avalible: Bool?) {
+    init(_ variant: Variant, _ location: CGPoint, image: String, capacity: Int?) {
         self.type = variant
         self.location = location
         self.image = image
-        self.avalible = avalible
+        self.reachable = false
         self.capacity = capacity
+        self.size = CGSize(width: 20, height: 20)
         super.init()
 //        Warning - Check if this will work (Will it run the function getSize()?)
         self.size = getSize()
@@ -59,11 +60,20 @@ class HidingSpot: NSObject {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
         place.name = type.rawValue
-        if let newSize = size {
-            place.aspectFillToSize(size: newSize)
-        }
+        place.aspectFillToSize(size: size)
         place.zPosition = zPosition
         return place
     }
     
+    func checkReach(_ player: SKSpriteNode, _ playerRange: Float) {
+        let distance = abs(Float(hypot(player.position.x - location.x,
+                                  player.position.y - location.y)))
+        let nodeRadius = abs(Float(hypot(size.width / 2, size.height / 2)))
+        let range = playerRange + nodeRadius
+        if distance <= range {
+            reachable = true
+        } else {
+            reachable = false
+        }
+    }
 }
