@@ -65,11 +65,11 @@ class HidingSpot: NSObject {
         return place
     }
     
-    func checkReach(_ player: SKSpriteNode, _ playerRange: Float) {
-        let distance = abs(Float(hypot(player.position.x - location.x,
-                                  player.position.y - location.y)))
+    func checkReach(_ player: Player) {
+        let distance = abs(Float(hypot(player.spriteNode.position.x - location.x,
+                                       player.spriteNode.position.y - location.y)))
         let nodeRadius = abs(Float(hypot(size.width / 2, size.height / 2)))
-        let range = playerRange + nodeRadius
+        let range = player.reach.rawValue + nodeRadius
         if distance <= range {
             reachable = true
         } else {
