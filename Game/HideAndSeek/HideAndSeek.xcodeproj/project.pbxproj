@@ -10,6 +10,7 @@
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
 		3365714725E662A300308812 /* SetUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SetUpCell.swift */; };
+		336CBC00260773820090D223 /* HidingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CBBFF260773820090D223 /* HidingSpot.swift */; };
 		3371F2E225E9125A008E983E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3371F2E125E9125A008E983E /* GameScene.sks */; };
 		3371F2E525E91266008E983E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E425E91266008E983E /* GameScene.swift */; };
 		3371F2E825E91822008E983E /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E725E91822008E983E /* extensions.swift */; };
@@ -28,6 +29,7 @@
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SetUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpCell.swift; sourceTree = "<group>"; };
+		336CBBFF260773820090D223 /* HidingSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidingSpot.swift; sourceTree = "<group>"; };
 		3371F2E125E9125A008E983E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		3371F2E725E91822008E983E /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
@@ -85,8 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				33E5BDC225E5369600D337F9 /* AppDelegate.swift */,
-				33E5BDCA25E5369600D337F9 /* GameViewController.swift */,
 				33E5BDCC25E5369600D337F9 /* Main.storyboard */,
+				336CBBFF260773820090D223 /* HidingSpot.swift */,
 				33E5BDEB25E5612400D337F9 /* MainMenu */,
 				3371F2E025E91239008E983E /* GameScene */,
 				33E5BDEC25E5614100D337F9 /* SetUp */,
@@ -101,6 +103,7 @@
 		33E5BDEB25E5612400D337F9 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
+				33E5BDCA25E5369600D337F9 /* GameViewController.swift */,
 				33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */,
 				33E5BDDC25E5375700D337F9 /* MainMenu.swift */,
 			);
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3365714125E63CB600308812 /* SetUpVC.swift in Sources */,
+				336CBC00260773820090D223 /* HidingSpot.swift in Sources */,
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
 				3365714725E662A300308812 /* SetUpCell.swift in Sources */,
 				33E5BDF925E564D300D337F9 /* Help.swift in Sources */,
