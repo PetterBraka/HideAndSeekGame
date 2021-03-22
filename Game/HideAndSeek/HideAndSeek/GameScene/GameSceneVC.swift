@@ -9,12 +9,15 @@ import UIKit
 import SpriteKit
 
 class GameSceneVC: UIViewController {
-
+    @IBAction func exitButton(_ sender: UIButton) {
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            let scene = GameScene(size: self.view.bounds.size, difficulty: .normal, player: .seeker, time: 10, amountOfPlayers: 2)
+            let scene = GameScene(size: self.view.bounds.size, difficulty: .normal, player: .seeker, duration: 10, amountOfPlayers: 2)
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 

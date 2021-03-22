@@ -33,16 +33,15 @@ class MainMenu: SKScene {
             case playButton?.name:
                 print("Play button pressed")
                 let storyborad = UIStoryboard(name: "Main", bundle: nil)
-                let SetUpVC = storyborad.instantiateViewController(withIdentifier :"SetUpVC")
+                let setUpVC = storyborad.instantiateViewController(withIdentifier :"SetUpVC")
                 let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
-                currentViewController.present(SetUpVC, animated: true, completion: nil)
+                currentViewController.present(setUpVC, animated: true, completion: nil)
             case helpButton?.name:
                 print("Help button pressed")
-                if let helpScene = Help(fileNamed: "HelpScene") {
-                    helpScene.scaleMode = scaleMode
-                    let transition = SKTransition.crossFade(withDuration: 0.5)
-                    view?.presentScene(helpScene, transition: transition)
-                }
+                let storyborad = UIStoryboard(name: "Main", bundle: nil)
+                let helpVC = storyborad.instantiateViewController(withIdentifier :"HelpVC")
+                let currentViewController:UIViewController = (UIApplication.shared.windows.first?.rootViewController!)!
+                currentViewController.present(helpVC, animated: true, completion: nil)
             default:
                 print("No button pressed")
             }
