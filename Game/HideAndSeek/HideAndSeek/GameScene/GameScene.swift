@@ -33,13 +33,12 @@ class GameScene: SKScene {
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let player = SKSpriteNode(imageNamed: "player")
-    let house = SKSpriteNode(imageNamed: "house")
     let playerMovePointsPerSec: CGFloat = 200
     let playerRange = Reach.medium
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
-    var hidingSpots: [SKSpriteNode] = []
+    var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
@@ -134,30 +133,23 @@ class GameScene: SKScene {
         player.aspectFillToSize(size: CGSize(width: 20, height: 25))
         player.name = "player"
         self.addChild(player)
-        hidingSpots.append(house)
     }
     
     fileprivate func spawnHouse() {
-        house.position = CGPoint(x: 450, y: 300)
-        house.zPosition = 2
-        house.aspectFillToSize(size: CGSize(width: 150, height: 150))
-        house.name = "house"
-        self.addChild(house)
+        let house = HidingSpot(.house, CGPoint(x: 450, y: 300), 2, image: "house", avalible: true)
+        self.addChild(house.spriteNode)
+        hidingSpots.append(house)
     }
     
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
-        var tent: SKSpriteNode
+        var tent: HidingSpot
         if newTent {
-            tent = SKSpriteNode(imageNamed: "tentNew")
+            tent = HidingSpot(.tent, position, 1, image: "tentNew", avalible: true)
         } else {
-            tent = SKSpriteNode(imageNamed: "tentOld")
+            tent = HidingSpot(.tent, position, 1, image: "tentOld", avalible: true)
         }
-        tent.aspectFillToSize(size: CGSize(width: player.size.width + 10, height: player.size.height + 10))
-        tent.name = "tent"
-        tent.position = position
-        tent.zPosition = 2
         hidingSpots.append(tent)
-        self.addChild(tent)
+        self.addChild(tent.spriteNode)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -169,7 +161,7 @@ class GameScene: SKScene {
             case actionButton.name:
                 print("button taped")
                 hidingSpots.forEach { (hidingSpot) in
-                    if checkReachOf(player, to: hidingSpot) {
+                    if checkReachOf(player, to: hidingSpot.spriteNode) {
                         if !freezeJoystick{
                             let hidePlayer = SKAction.hide()
                             player.run(hidePlayer)
@@ -250,7 +242,7 @@ class GameScene: SKScene {
     
     fileprivate func updateButtonLabel(){
             hidingSpots.forEach { (hidingSpot) in
-                if checkReachOf(player, to: hidingSpot) {
+                if checkReachOf(player, to: hidingSpot.spriteNode) {
                     if !freezeJoystick{
                         buttonLabel.text = "Hide"
                     } else {
