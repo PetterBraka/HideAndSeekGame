@@ -15,6 +15,7 @@
 		3371F2E525E91266008E983E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E425E91266008E983E /* GameScene.swift */; };
 		3371F2E825E91822008E983E /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E725E91822008E983E /* extensions.swift */; };
 		339157982608B097008FFCA2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339157972608B097008FFCA2 /* Player.swift */; };
+		3391579D2608B8E8008FFCA2 /* Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3391579C2608B8E8008FFCA2 /* Bot.swift */; };
 		33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DAC07F25FF7B18007FA28F /* HelpVC.swift */; };
 		33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDC225E5369600D337F9 /* AppDelegate.swift */; };
 		33E5BDCB25E5369600D337F9 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDCA25E5369600D337F9 /* GameViewController.swift */; };
@@ -35,6 +36,7 @@
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		3371F2E725E91822008E983E /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		339157972608B097008FFCA2 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		3391579C2608B8E8008FFCA2 /* Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bot.swift; sourceTree = "<group>"; };
 		33DAC07F25FF7B18007FA28F /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
 		33E5BDBF25E5369600D337F9 /* HideAndSeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HideAndSeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E5BDC225E5369600D337F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				33E5BDCC25E5369600D337F9 /* Main.storyboard */,
 				336CBBFF260773820090D223 /* HidingSpot.swift */,
 				339157972608B097008FFCA2 /* Player.swift */,
+				3391579C2608B8E8008FFCA2 /* Bot.swift */,
 				33E5BDEB25E5612400D337F9 /* MainMenu */,
 				3371F2E025E91239008E983E /* GameScene */,
 				33E5BDEC25E5614100D337F9 /* SetUp */,
@@ -206,6 +209,7 @@
 			files = (
 				3365714125E63CB600308812 /* SetUpVC.swift in Sources */,
 				336CBC00260773820090D223 /* HidingSpot.swift in Sources */,
+				3391579D2608B8E8008FFCA2 /* Bot.swift in Sources */,
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
 				3365714725E662A300308812 /* SetUpCell.swift in Sources */,
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
