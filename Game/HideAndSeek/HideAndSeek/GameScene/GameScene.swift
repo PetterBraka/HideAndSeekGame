@@ -65,6 +65,7 @@ class GameScene: SKScene {
         spawnTent(newTent: false, CGPoint(x: 180, y: 250))
         spawnTent(newTent: true, CGPoint(x: 320, y: 270))
         spawnTent(newTent: false, CGPoint(x: 220, y: 180))
+        drawCampfire()
     }
     
     fileprivate func createMap() {
@@ -91,6 +92,14 @@ class GameScene: SKScene {
         shape.lineWidth = 5
         shape.zPosition = 20
         self.addChild(shape)
+    }
+    
+    fileprivate func drawCampfire(){
+        let campfire = SKSpriteNode(imageNamed: "campfire")
+        campfire.position = CGPoint(x: size.width / 16 * 7, y: size.height / 4 * 2)
+        campfire.zPosition = 0
+        campfire.aspectFillToSize(size: player.spriteNode.size)
+        self.addChild(campfire)
     }
     
     fileprivate func createJoystick() {
