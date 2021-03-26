@@ -96,6 +96,7 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: size.width / 8 * 4, y: size.height / 16 * 13), image: "house", capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
+        self.addChild(house.drawDebugArea())
     }
     
     fileprivate func drawTents(){
@@ -185,6 +186,7 @@ class GameScene: SKScene {
         }
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
+        self.addChild(tent.drawDebugArea())
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

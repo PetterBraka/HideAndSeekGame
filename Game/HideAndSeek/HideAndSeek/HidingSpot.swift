@@ -78,4 +78,15 @@ class HidingSpot: NSObject {
             reachable = false
         }
     }
+    
+    func drawDebugArea() -> SKShapeNode{
+        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        shape.position = CGPoint(
+            x: spriteNode.position.x - size.width / 2,
+            y: spriteNode.position.y - size.height / 2)
+        shape.lineWidth = 2
+        shape.strokeColor = .orange
+        shape.zPosition = 99
+        return shape
+    }
 }
