@@ -20,6 +20,7 @@ class GameScene: SKScene {
     let numberOfPlayers: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
+    let mountain = SKSpriteNode(imageNamed: "mountain")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     
     var player: Player
@@ -44,7 +45,7 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        createBackground()
+        createMap()
         createJoystick()
         createButton()
         spawnPlayer()
@@ -55,12 +56,19 @@ class GameScene: SKScene {
         spawnTent(newTent: false, CGPoint(x: 220, y: 180))
     }
     
-    fileprivate func createBackground() {
+    fileprivate func createMap() {
         let background = SKSpriteNode(imageNamed: "gameBackground")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = -1
         background.aspectFillToSize(size: size)
         self.addChild(background)
+        mountain.anchorPoint = CGPoint(x: 0, y: 1)
+        mountain.position = CGPoint(x: 0, y: background.size.height)
+        mountain.zPosition = 0
+        mountain.size = CGSize(
+            width: ((background.size.width / 8) * 2) + (background.size.width / 12),
+            height: background.size.height - (background.size.height / 10))
+        self.addChild(mountain)
     }
     
     fileprivate func createJoystick() {
