@@ -60,12 +60,10 @@ class GameScene: SKScene {
         createJoystick()
         createButton()
         spawnPlayer()
-        spawnHouse()
-        spawnTent(newTent: true, CGPoint(x: 240, y: 320))
-        spawnTent(newTent: false, CGPoint(x: 180, y: 250))
-        spawnTent(newTent: true, CGPoint(x: 320, y: 270))
-        spawnTent(newTent: false, CGPoint(x: 220, y: 180))
+        drawHouse()
+        drawTents()
         drawCampfire()
+        drawRiver()
     }
     
     fileprivate func createMap() {
@@ -94,12 +92,33 @@ class GameScene: SKScene {
         self.addChild(shape)
     }
     
+    fileprivate func drawHouse() {
+        let house = HidingSpot(.house, CGPoint(x: size.width / 8 * 4, y: size.height / 16 * 13), image: "house", capacity: 2)
+        self.addChild(house.spriteNode)
+        hidingSpots.append(house)
+    }
+    
+    fileprivate func drawTents(){
+        spawnTent(newTent: true, CGPoint(x: 240, y: 320))
+        spawnTent(newTent: false, CGPoint(x: 180, y: 250))
+        spawnTent(newTent: true, CGPoint(x: 320, y: 270))
+        spawnTent(newTent: false, CGPoint(x: 220, y: 180))
+    }
+    
     fileprivate func drawCampfire(){
         let campfire = SKSpriteNode(imageNamed: "campfire")
         campfire.position = CGPoint(x: size.width / 16 * 7, y: size.height / 4 * 2)
         campfire.zPosition = 0
         campfire.aspectFillToSize(size: player.spriteNode.size)
         self.addChild(campfire)
+    }
+    
+    fileprivate func drawRiver(){
+        let river = SKSpriteNode(imageNamed: "river")
+        river.position = CGPoint(x: size.width / 16 * 11, y: size.height / 2)
+        river.zPosition = 0
+        river.size = CGSize(width: size.width / 8, height: size.height)
+        self.addChild(river)
     }
     
     fileprivate func createJoystick() {
@@ -155,12 +174,6 @@ class GameScene: SKScene {
         if player.nodeReach != nil {
             self.addChild(player.nodeReach!)
         }
-    }
-    
-    fileprivate func spawnHouse() {
-        let house = HidingSpot(.house, CGPoint(x: 450, y: 300), image: "house", capacity: 2)
-        self.addChild(house.spriteNode)
-        hidingSpots.append(house)
     }
     
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
