@@ -24,7 +24,6 @@ class Player: NSObject {
     var role: Role
     var movmentSpeed: CGFloat = 200
     var spriteNode: SKSpriteNode
-    var nodeReach: SKShapeNode?
     
     internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: CGFloat, image: String) {
         self.reach = reach
@@ -40,14 +39,5 @@ class Player: NSObject {
         player.aspectFillToSize(size: size)
         player.name = "player"
         spriteNode = player
-    }
-    
-    func drawReach(){
-        let shape = SKShapeNode(circleOfRadius: CGFloat(reach.rawValue))
-        shape.position = spriteNode.position
-        shape.lineWidth = 2
-        shape.strokeColor = .orange
-        shape.zPosition = 99
-        nodeReach = shape
     }
 }
