@@ -14,46 +14,28 @@ enum ChallangeRating {
     case hard
 }
 
-enum Role {
-    case hider
-    case seeker
-}
-
-enum Reach: Float {
-    case short = 50
-    case medium = 75
-    case far = 100
-}
-
 class GameScene: SKScene {
     let gameDifficulty: ChallangeRating
-    let playerRole: Role
-    let playTime: Int
+    let duration: Int
     let numberOfPlayers: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
-    let player = SKSpriteNode(imageNamed: "player")
-    let playerMovePointsPerSec: CGFloat = 200
-    let playerRange = Reach.medium
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     
+    var player: Player
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
-    var tents: [SKSpriteNode] = []
+    var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var velocity: CGPoint = .zero
     var freezeJoystick: Bool = false
     
-    init(size: CGSize,
-         difficulty: ChallangeRating,
-         player: Role,
-         duration: Int,
-         amountOfPlayers: Int) {
-        gameDifficulty = difficulty
-        playerRole = player
-        playTime = duration
-        numberOfPlayers = amountOfPlayers
+    init(size: CGSize, difficulty: ChallangeRating, duration: Int, amountOfPlayers: Int) {
+        self.gameDifficulty = difficulty
+        self.duration = duration
+        self.numberOfPlayers = amountOfPlayers
+        self.player = Player(reach: .short, role: .seeker, movmentSpeed: 200, image: "player")
         super.init(size: size)
     }
     
@@ -63,9 +45,10 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         createBackground()
-        spawnPlayer()
         createJoystick()
         createButton()
+        spawnPlayer()
+        spawnHouse()
         spawnTent(newTent: true, CGPoint(x: 240, y: 320))
         spawnTent(newTent: false, CGPoint(x: 180, y: 250))
         spawnTent(newTent: true, CGPoint(x: 320, y: 270))
@@ -73,19 +56,11 @@ class GameScene: SKScene {
     }
     
     fileprivate func createBackground() {
-        let background = SKSpriteNode(imageNamed: "GameBackground")
+        let background = SKSpriteNode(imageNamed: "gameBackground")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = -1
         background.aspectFillToSize(size: size)
         self.addChild(background)
-    }
-    
-    fileprivate func spawnPlayer() {
-        player.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        player.zPosition = 1
-        player.aspectFillToSize(size: CGSize(width: 20, height: 25))
-        player.name = "player"
-        self.addChild(player)
     }
     
     fileprivate func createJoystick() {
@@ -107,7 +82,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func createButton() {
-        actionButton = SKSpriteNode(imageNamed: "Button")
+        actionButton = SKSpriteNode(imageNamed: "button")
         actionButton.aspectFillToSize(size: CGSize(width: 100, height: 75))
         actionButton.name = "actionButton"
         actionButton.zPosition = 10
@@ -134,19 +109,26 @@ class GameScene: SKScene {
         self.addChild(buttonLabel)
     }
     
+    fileprivate func spawnPlayer() {
+        player.createSprite(size: CGSize(width: 20, height: 20), location: CGPoint(x: size.width / 2, y: size.height / 2))
+        self.addChild(player.spriteNode)
+    }
+    
+    fileprivate func spawnHouse() {
+        let house = HidingSpot(.house, CGPoint(x: 450, y: 300), image: "house", capacity: 2)
+        self.addChild(house.spriteNode)
+        hidingSpots.append(house)
+    }
+    
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
-        var tent: SKSpriteNode
+        var tent: HidingSpot
         if newTent {
-            tent = SKSpriteNode(imageNamed: "tentNew")
+            tent = HidingSpot(.tent, position, image: "tentNew", capacity: 1)
         } else {
-            tent = SKSpriteNode(imageNamed: "tentOld")
+            tent = HidingSpot(.tent, position, image: "tentOld", capacity: 1)
         }
-        tent.aspectFillToSize(size: CGSize(width: player.size.width + 10, height: player.size.height + 10))
-        tent.name = "tent"
-        tent.position = position
-        tent.zPosition = 2
-        tents.append(tent)
-        self.addChild(tent)
+        hidingSpots.append(tent)
+        self.addChild(tent.spriteNode)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -156,37 +138,34 @@ class GameScene: SKScene {
             case joystickBackground.name:
                 stickActive = true
             case actionButton.name:
+                #if DEBUG
                 print("button taped")
-                tents.forEach { (tent) in
-                    if checkReachOf(player, to: tent) {
+                #endif
+                hidingSpots.forEach { (hidingSpot) in
+                    hidingSpot.checkReach(player)
+                    if hidingSpot.reachable {
                         if !freezeJoystick{
                             let hidePlayer = SKAction.hide()
-                            player.run(hidePlayer)
+                            player.spriteNode.run(hidePlayer)
                             freezeJoystick = true
+                            #if DEBUG
                             print("Player is hidden")
                             print("Freezing controlls")
+                            #endif
                         } else {
                             let showPlayer = SKAction.unhide()
-                            player.run(showPlayer)
+                            player.spriteNode.run(showPlayer)
                             freezeJoystick = false
+                            #if DEBUG
                             print("Player isn't hidden")
                             print("Unfreezing controlls")
+                            #endif
                         }
                     }
                 }
             default:
                 stickActive = false
             }
-        }
-    }
-    
-    fileprivate func checkReachOf(_ player: SKSpriteNode, to: SKSpriteNode) -> Bool {
-        let distance = abs(hypotf(Float(player.position.x - to.position.x),
-                                  Float(player.position.y - to.position.y)))
-        if distance <= Float(playerRange.rawValue) {
-            return true
-        } else {
-            return false
         }
     }
     
@@ -206,7 +185,7 @@ class GameScene: SKScene {
                     joystick.position = CGPoint(x: joystickBackground.position.x - distance.x, y: joystickBackground.position.y + distance.y)
                 }
                 moveTo(location)
-                player.zRotation = angle - 1.57079633
+                player.spriteNode.zRotation = angle - 1.57079633
             }
         }
     }
@@ -233,34 +212,39 @@ class GameScene: SKScene {
             dt = 0
         }
         lastUpdateTime = currentTime
-        move(player, velocity)
+        move(player.spriteNode, velocity)
         updateButtonLabel()
     }
     
+    fileprivate func updateButtonPosition() {
+        actionButton.position = CGPoint(
+            x: size.width - 50 - (actionButton.size.width / 2),
+            y: 20 + actionButton.size.height / 2 + buttonLabel.frame.height)
+        buttonLabel.position = CGPoint(
+            x: actionButton.position.x,
+            y: actionButton.position.y - actionButton.size.height / 2)
+    }
+    
     fileprivate func updateButtonLabel(){
-            tents.forEach { (tent) in
-                if checkReachOf(player, to: tent) {
-                    if !freezeJoystick{
-                        buttonLabel.text = "Hide"
-                    } else {
-                        buttonLabel.text = "Leave"
-                    }
-                } else {
-                    buttonLabel.text = "Button"
-                }
-                actionButton.position = CGPoint(
-                    x: size.width - 50 - (actionButton.size.width / 2),
-                    y: 20 + actionButton.size.height / 2 + buttonLabel.frame.height)
-                buttonLabel.position = CGPoint(
-                    x: actionButton.position.x,
-                    y: actionButton.position.y - actionButton.size.height / 2)
+        hidingSpots.forEach { (hidingSpot) in
+            hidingSpot.checkReach(player)
+        }
+        if hidingSpots.contains(where: {$0.reachable == true}) {
+            if !freezeJoystick{
+                buttonLabel.text = "Hide"
+            } else {
+                buttonLabel.text = "Leave"
             }
+            updateButtonPosition()
+        } else {
+            buttonLabel.text = ""
+        }
     }
     
     func moveTo(_ location: CGPoint){
         let offset = location - joystickBackground.position
         let direction = offset.normalized()
-        velocity = direction * playerMovePointsPerSec
+        velocity = direction * player.movmentSpeed
     }
     
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
