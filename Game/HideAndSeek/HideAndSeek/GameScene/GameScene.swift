@@ -303,11 +303,13 @@ class GameScene: SKScene {
             print("inside game area")
             cameraNode.position = player.spriteNode.position
         } else {
-            if (positionX <= bottomLeft.x || positionX >= topRight.x) {
+            if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
+            (positionY >= bottomLeft.y && positionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
                 print("outside horizontal game area")
             }
-            if (positionY <= bottomLeft.y || positionY >= topRight.y) {
+            if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
+                (positionY <= bottomLeft.y || positionY >= topRight.y) {
                 cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
                 print("outside vertical game area")
             }
