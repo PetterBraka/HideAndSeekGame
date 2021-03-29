@@ -44,15 +44,15 @@ class HidingSpot: NSObject {
     private func getSize() -> CGSize {
         switch type {
         case .mountan:
-            return CGSize(width: 100, height: 400)
+            return CGSize(width: 200, height: 800)
         case .house:
-            return CGSize(width: 125, height: 125)
+            return CGSize(width: 250, height: 250)
         case .tent:
-            return CGSize(width: 40, height: 40)
+            return CGSize(width: 80, height: 80)
         case .tree:
-            return CGSize(width: 30, height: 60)
+            return CGSize(width: 60, height: 120)
         case .lake:
-            return CGSize(width: 200, height: 75)
+            return CGSize(width: 4000, height: 150)
         }
     }
     
