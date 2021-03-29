@@ -294,8 +294,8 @@ class GameScene: SKScene {
     
     fileprivate func updateButtonPosition() {
         actionButton.position = CGPoint(
-            x: size.width - 50 - (actionButton.size.width / 2),
-            y: 20 + actionButton.size.height / 2 + buttonLabel.frame.height)
+            x: (size.width - 50 - (actionButton.size.width / 2) - playableArea.width / 2),
+            y: (20 + actionButton.size.height / 2 + buttonLabel.frame.height) - playableArea.height / 2)
         buttonLabel.position = CGPoint(
             x: actionButton.position.x,
             y: actionButton.position.y - actionButton.size.height / 2)
@@ -314,6 +314,9 @@ class GameScene: SKScene {
             updateButtonPosition()
         } else {
             buttonLabel.text = ""
+            actionButton.position = CGPoint(
+                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
+                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         }
     }
     
