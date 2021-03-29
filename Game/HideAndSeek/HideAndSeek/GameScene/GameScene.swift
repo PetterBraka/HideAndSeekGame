@@ -22,7 +22,8 @@ class GameScene: SKScene {
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let mountain = SKSpriteNode(imageNamed: "mountain")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
-//    let gameArea = CGRect(x: 0.5, y: 0.5, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+    let gameArea = CGSize(width: 1600, height: 800)
+    let cameraNode = SKCameraNode()
     
     var playableArea: CGRect
     var player: Player
@@ -56,7 +57,6 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        debugDrawPlayableArea()
         createMap()
         createJoystick()
         createButton()
@@ -65,14 +65,21 @@ class GameScene: SKScene {
         drawTents()
         drawCampfire()
         drawRiver()
-        print(size)
+        addCamera()
+        debugDrawPlayableArea()
+    }
+    
+    fileprivate func addCamera(){
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = player.spriteNode.position
     }
     
     fileprivate func createMap() {
         let background = SKSpriteNode(imageNamed: "gameBackground")
-        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
         background.zPosition = -1
-        background.aspectFillToSize(size: size)
+        background.aspectFillToSize(size: gameArea)
         self.addChild(background)
         mountain.anchorPoint = CGPoint(x: 0, y: 1)
         mountain.position = CGPoint(x: 0, y: background.size.height)
@@ -91,26 +98,31 @@ class GameScene: SKScene {
         shape.strokeColor = .systemRed
         shape.lineWidth = 5
         shape.zPosition = 20
-        self.addChild(shape)
+        shape.position = CGPoint(x: -playableArea.width / 2, y: playableMargin - playableArea.height / 2)
+        cameraNode.addChild(shape)
     }
     
     fileprivate func drawHouse() {
-        let house = HidingSpot(.house, CGPoint(x: size.width / 8 * 4, y: size.height / 16 * 13), image: "house", capacity: 2)
+        let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), image: "house", capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
         self.addChild(house.drawDebugArea())
     }
     
     fileprivate func drawTents(){
-        spawnTent(newTent: true, CGPoint(x: 240, y: 320))
-        spawnTent(newTent: false, CGPoint(x: 180, y: 250))
-        spawnTent(newTent: true, CGPoint(x: 320, y: 270))
-        spawnTent(newTent: false, CGPoint(x: 220, y: 180))
+        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 8),
+                                         y: (gameArea.height / 4 * 3)))
+        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 3),
+                                         y: (gameArea.height / 8 * 5) + 50))
+        spawnTent(newTent: false, CGPoint(x: (gameArea.width / 16 * 5),
+                                          y: (gameArea.height / 8 * 5)))
+        spawnTent(newTent: false, CGPoint(x: (gameArea.width / 8 * 2),
+                                          y: (gameArea.height / 4 * 2)))
     }
     
     fileprivate func drawCampfire(){
         let campfire = SKSpriteNode(imageNamed: "campfire")
-        campfire.position = CGPoint(x: size.width / 16 * 7, y: size.height / 4 * 2)
+        campfire.position = CGPoint(x: gameArea.width / 16 * 7, y: gameArea.height / 4 * 2)
         campfire.zPosition = 0
         campfire.aspectFillToSize(size: player.spriteNode.size)
         self.addChild(campfire)
@@ -118,9 +130,9 @@ class GameScene: SKScene {
     
     fileprivate func drawRiver(){
         let river = SKSpriteNode(imageNamed: "river")
-        river.position = CGPoint(x: size.width / 16 * 11, y: size.height / 2)
+        river.position = CGPoint(x: gameArea.width / 16 * 11, y: gameArea.height / 2)
         river.zPosition = 0
-        river.size = CGSize(width: size.width / 8, height: size.height)
+        river.size = CGSize(width: gameArea.width / 8, height: gameArea.height)
         self.addChild(river)
     }
     
@@ -128,18 +140,18 @@ class GameScene: SKScene {
         joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
         joystickBackground.position = CGPoint(
-            x: joystickBackground.size.width / 2 + 20,
-            y: joystickBackground.size.height / 2 + 20)
+            x: (joystickBackground.size.width / 2 + 20) - playableArea.width / 2,
+            y: (joystickBackground.size.height / 2 + 20) - playableArea.height / 2)
         joystickBackground.alpha = 0.7
         joystickBackground.zPosition = 9
-        self.addChild(joystickBackground)
+        cameraNode.addChild(joystickBackground)
         joystick.name = "joystick"
         joystick.size = CGSize(
             width: joystickBackground.size.width / 2,
             height: joystickBackground.size.height / 2)
         joystick.position = joystickBackground.position
         joystick.zPosition = 10
-        self.addChild(joystick)
+        cameraNode.addChild(joystick)
     }
     
     fileprivate func createButton() {
@@ -148,9 +160,9 @@ class GameScene: SKScene {
         actionButton.name = "actionButton"
         actionButton.zPosition = 10
         actionButton.position = CGPoint(
-            x: size.width - 50 - (actionButton.size.width / 2),
-            y: 20 + actionButton.size.height / 2)
-        self.addChild(actionButton)
+            x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
+            y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
+        cameraNode.addChild(actionButton)
         createButtonLable()
     }
     
@@ -167,11 +179,11 @@ class GameScene: SKScene {
             x: actionButton.position.x,
             y: actionButton.position.y - actionButton.size.height / 2)
         buttonLabel.zPosition = 10
-        self.addChild(buttonLabel)
+        cameraNode.addChild(buttonLabel)
     }
     
     fileprivate func spawnPlayer() {
-        player.createSprite(size: CGSize(width: 20, height: 20), location: CGPoint(x: size.width / 2, y: size.height / 2))
+        player.createSprite(size: CGSize(width: 50, height: 50), location: CGPoint(x: gameArea.width / 2, y: gameArea.height / 2))
         self.addChild(player.spriteNode)
         player.drawReach()
         if player.nodeReach != nil {
@@ -193,7 +205,7 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let location = touch.location(in: self)
+            let location = touch.location(in: cameraNode)
             if joystickBackground.contains(location) {
                 stickActive = true
             } else {
@@ -242,7 +254,9 @@ class GameScene: SKScene {
                 if joystickBackground.frame.contains(location) {
                     joystick.position = location
                 } else {
-                    joystick.position = CGPoint(x: joystickBackground.position.x - distance.x, y: joystickBackground.position.y + distance.y)
+                    joystick.position = CGPoint(
+                        x: joystickBackground.position.x - distance.x,
+                        y: joystickBackground.position.y + distance.y)
                 }
                 moveTo(location)
                 player.spriteNode.zRotation = angle - 1.57079633
@@ -252,7 +266,7 @@ class GameScene: SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let location = touch.location(in: self)
+            let location = touch.location(in: cameraNode)
             moveJoystick(location)
         }
     }
@@ -275,6 +289,7 @@ class GameScene: SKScene {
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
         updateButtonLabel()
+        cameraNode.position = player.spriteNode.position
     }
     
     fileprivate func updateButtonPosition() {
@@ -311,5 +326,11 @@ class GameScene: SKScene {
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
         let amountToMove = velocity * CGFloat(dt)
         sprite.position += amountToMove
+    }
+    
+    var cameraRect : CGRect {
+        let x = cameraNode.position.x - size.width / 2 + (size.width - playableArea.width) / 2
+        let y = cameraNode.position.y - size.height / 2 + (size.height - playableArea.height) / 2
+        return CGRect(x: x, y: y, width: playableArea.width, height: playableArea.height)
     }
 }
