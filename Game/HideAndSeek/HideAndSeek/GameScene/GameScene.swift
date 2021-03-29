@@ -75,6 +75,18 @@ class GameScene: SKScene {
         cameraNode.position = player.spriteNode.position
     }
     
+    func debugDrawPlayableArea() {
+        let aspectRatio = frame.width / frame.height
+        let playableHeight = playableArea.width / aspectRatio
+        let playableMargin = (playableArea.height - playableHeight) / 2.0
+        let shape = SKShapeNode(rect: CGRect(x: 0, y: playableMargin, width: size.width, height: playableArea.height))
+        shape.strokeColor = .systemRed
+        shape.lineWidth = 5
+        shape.zPosition = 20
+        shape.position = CGPoint(x: -playableArea.width / 2, y: playableMargin - playableArea.height / 2)
+        cameraNode.addChild(shape)
+    }
+    
     fileprivate func createMap() {
         let background = SKSpriteNode(imageNamed: "gameBackground")
         background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
@@ -90,18 +102,6 @@ class GameScene: SKScene {
         self.addChild(mountain)
     }
     
-    func debugDrawPlayableArea() {
-        let aspectRatio = frame.width / frame.height
-        let playableHeight = playableArea.width / aspectRatio
-        let playableMargin = (playableArea.height - playableHeight) / 2.0
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: playableMargin, width: size.width, height: playableArea.height))
-        shape.strokeColor = .systemRed
-        shape.lineWidth = 5
-        shape.zPosition = 20
-        shape.position = CGPoint(x: -playableArea.width / 2, y: playableMargin - playableArea.height / 2)
-        cameraNode.addChild(shape)
-    }
-    
     fileprivate func drawHouse() {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), image: "house", capacity: 2)
         self.addChild(house.spriteNode)
@@ -110,14 +110,14 @@ class GameScene: SKScene {
     }
     
     fileprivate func drawTents(){
-        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 8),
+        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 5),
                                          y: (gameArea.height / 4 * 3)))
-        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 3),
+        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 3) + 50,
                                          y: (gameArea.height / 8 * 5) + 50))
         spawnTent(newTent: false, CGPoint(x: (gameArea.width / 16 * 5),
-                                          y: (gameArea.height / 8 * 5)))
+                                          y: (gameArea.height / 8 * 4)))
         spawnTent(newTent: false, CGPoint(x: (gameArea.width / 8 * 2),
-                                          y: (gameArea.height / 4 * 2)))
+                                          y: (gameArea.height / 8 * 3.5)))
     }
     
     fileprivate func drawCampfire(){
