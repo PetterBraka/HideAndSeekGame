@@ -22,6 +22,7 @@ class GameScene: SKScene {
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let mountain = SKSpriteNode(imageNamed: "mountain")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
+//    let gameArea = CGRect(x: 0.5, y: 0.5, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
     
     var playableArea: CGRect
     var player: Player
@@ -64,6 +65,7 @@ class GameScene: SKScene {
         drawTents()
         drawCampfire()
         drawRiver()
+        print(size)
     }
     
     fileprivate func createMap() {
