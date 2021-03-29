@@ -22,7 +22,7 @@ class GameScene: SKScene {
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let mountain = SKSpriteNode(imageNamed: "mountain")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
-    let gameArea = CGSize(width: 1600, height: 800)
+    let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
     
     var playableArea: CGRect
@@ -79,7 +79,7 @@ class GameScene: SKScene {
         let background = SKSpriteNode(imageNamed: "gameBackground")
         background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
         background.zPosition = -1
-        background.aspectFillToSize(size: gameArea)
+        background.aspectFillToSize(size: gameArea.size)
         self.addChild(background)
         mountain.anchorPoint = CGPoint(x: 0, y: 1)
         mountain.position = CGPoint(x: 0, y: background.size.height)
@@ -289,7 +289,31 @@ class GameScene: SKScene {
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
         updateButtonLabel()
-        cameraNode.position = player.spriteNode.position
+        updateCameraPosition()
+    }
+    
+    fileprivate func updateCameraPosition(){
+        let bottomLeft = CGPoint(x: playableArea.minX, y: playableArea.minY)
+        let topRight = CGPoint(x: playableArea.maxX, y: playableArea.maxY)
+        let positionX = player.spriteNode.position.x - playableArea.width / 2
+        let positionY = player.spriteNode.position.y - playableArea.height / 2
+        
+        if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
+            (positionY >= bottomLeft.y && positionY <= topRight.y){
+            print("inside game area")
+            cameraNode.position = player.spriteNode.position
+        } else {
+            if (positionX <= bottomLeft.x || positionX >= topRight.x) {
+                cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
+                print("outside horizontal game area")
+            }
+            if (positionY <= bottomLeft.y || positionY >= topRight.y) {
+                cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
+                print("outside vertical game area")
+            }
+            print("outside game area")
+        }
+        
     }
     
     fileprivate func updateButtonPosition() {
@@ -329,11 +353,5 @@ class GameScene: SKScene {
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
         let amountToMove = velocity * CGFloat(dt)
         sprite.position += amountToMove
-    }
-    
-    var cameraRect : CGRect {
-        let x = cameraNode.position.x - size.width / 2 + (size.width - playableArea.width) / 2
-        let y = cameraNode.position.y - size.height / 2 + (size.height - playableArea.height) / 2
-        return CGRect(x: x, y: y, width: playableArea.width, height: playableArea.height)
     }
 }
