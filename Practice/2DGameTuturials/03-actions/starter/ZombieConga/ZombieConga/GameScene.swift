@@ -197,9 +197,21 @@ class GameScene: SKScene {
             dt = 0
         }
         lastUpdateTime = currentTime
+        
+        /*
+        if let lastTouchLocation = lastTouchLocation {
+          let diff = lastTouchLocation - zombie.position
+          if diff.length() <= zombieMovePointsPerSec * CGFloat(dt) {
+            zombie.position = lastTouchLocation
+            velocity = CGPoint.zero
+            stopZombieAnimation()
+          } else {
+          */
             move(sprite: zombie, velocity: velocity)
             rotate(sprite: zombie, direction: velocity,
               rotateRadiansPerSec: zombieRotateRadiansPerSec)
+          /*}
+        }*/
         
         boundsCheckZombie()
         // checkCollisions()
