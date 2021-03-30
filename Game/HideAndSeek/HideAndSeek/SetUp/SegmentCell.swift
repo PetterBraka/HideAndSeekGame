@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SetUpCell: UITableViewCell {
+class SegmentCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     

@@ -8,10 +8,12 @@
 import SpriteKit
 import GameplayKit
 
-enum ChallangeRating {
-    case easy
-    case normal
-    case hard
+enum ChallangeRating : String {
+    case easy = "Easy"
+    case normal = "Normal"
+    case hard = "Hard"
+    
+    static var count: Int {return ChallangeRating.hard.hashValue + 1}
 }
 
 class GameScene: SKScene {

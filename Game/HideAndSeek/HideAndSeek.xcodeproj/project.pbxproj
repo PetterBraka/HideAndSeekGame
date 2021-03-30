@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
+		33646E79261336F200B1A9D7 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33646E78261336F200B1A9D7 /* StepperCell.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
-		3365714725E662A300308812 /* SetUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SetUpCell.swift */; };
+		3365714725E662A300308812 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SegmentCell.swift */; };
 		336CBC00260773820090D223 /* HidingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CBBFF260773820090D223 /* HidingSpot.swift */; };
 		3371F2E225E9125A008E983E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3371F2E125E9125A008E983E /* GameScene.sks */; };
 		3371F2E525E91266008E983E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E425E91266008E983E /* GameScene.swift */; };
@@ -29,8 +30,9 @@
 
 /* Begin PBXFileReference section */
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
+		33646E78261336F200B1A9D7 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
-		3365714625E662A300308812 /* SetUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpCell.swift; sourceTree = "<group>"; };
+		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
 		336CBBFF260773820090D223 /* HidingSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidingSpot.swift; sourceTree = "<group>"; };
 		3371F2E125E9125A008E983E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -120,7 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				3365714025E63CB600308812 /* SetUpVC.swift */,
-				3365714625E662A300308812 /* SetUpCell.swift */,
+				3365714625E662A300308812 /* SegmentCell.swift */,
+				33646E78261336F200B1A9D7 /* StepperCell.swift */,
 			);
 			path = SetUp;
 			sourceTree = "<group>";
@@ -210,8 +213,9 @@
 				3365714125E63CB600308812 /* SetUpVC.swift in Sources */,
 				336CBC00260773820090D223 /* HidingSpot.swift in Sources */,
 				3391579D2608B8E8008FFCA2 /* Bot.swift in Sources */,
+				33646E79261336F200B1A9D7 /* StepperCell.swift in Sources */,
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
-				3365714725E662A300308812 /* SetUpCell.swift in Sources */,
+				3365714725E662A300308812 /* SegmentCell.swift in Sources */,
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
 				33E5BDF925E564D300D337F9 /* Help.swift in Sources */,
 				3371F2E825E91822008E983E /* extensions.swift in Sources */,

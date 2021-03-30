@@ -9,13 +9,27 @@ import UIKit
 import SpriteKit
 
 class SetUpVC: UIViewController {
+    struct GameOptions {
+        var title: String
+        var segments: Bool
+        var options: [String]?
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBarItem: UINavigationItem!
+    var gameOptions = [
+        GameOptions(title: "Role", segments: true, options: ["Hider", "Seeker"]),
+        GameOptions(title: "Difficulty", segments: true, options: [ChallangeRating.easy.rawValue,
+                                                                   ChallangeRating.normal.rawValue,
+                                                                   ChallangeRating.hard.rawValue]),
+        GameOptions(title: "Duration", segments: false),
+        GameOptions(title: "Number of players", segments: false)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
         navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
         navBarItem.leftBarButtonItem?.tintColor = .systemRed
         navBarItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(navBarTapped(sender:)))
@@ -53,15 +67,21 @@ class SetUpVC: UIViewController {
 
 extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        gameOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SetUpCell") as! SetUpCell
-        cell.title.text = "Test data"
-        cell.updateSegmentControler(["option 1", "option 2"])
+        if gameOptions[indexPath.row].segments{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SegmentCell", for: indexPath) as! SegmentCell
+            cell.title.text = gameOptions[indexPath.row].title
+            cell.updateSegmentControler(gameOptions[indexPath.row].options!)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StepperCell", for: indexPath) as! StepperCell
+            cell.title.text = gameOptions[indexPath.row].title
+            return cell
+        }
         
-        return cell
     }
     
     
