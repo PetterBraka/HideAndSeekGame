@@ -9,9 +9,9 @@ import UIKit
 import SpriteKit
 
 class Player: NSObject {
-    enum Role {
-        case hider
-        case seeker
+    enum Role: String {
+        case hider = "Hider"
+        case seeker = "Seeker"
     }
 
     enum Reach: Float {
@@ -49,5 +49,14 @@ class Player: NSObject {
         shape.strokeColor = .orange
         shape.zPosition = 99
         nodeReach = shape
+    }
+    
+    func toString(){
+        print("-------------------------------")
+        print("Role: \(role)")
+        print("Reach: \(reach)")
+        print("Speed: \(movmentSpeed)")
+        print("Image: \(String(describing: spriteNode.texture))")
+        print("-------------------------------")
     }
 }

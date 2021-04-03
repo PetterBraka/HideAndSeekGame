@@ -31,5 +31,13 @@ class SegmentCell: UITableViewCell {
         }
         segmentControl.selectedSegmentIndex = 0
     }
+    
+    func getData() -> String {
+        let index = segmentControl.selectedSegmentIndex
+        guard let segmentTitle = segmentControl.titleForSegment(at: index) else {
+            return ""
+        }
+        return segmentTitle
+    }
 
 }

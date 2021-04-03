@@ -9,37 +9,49 @@ import UIKit
 import SpriteKit
 
 class GameSceneVC: UIViewController {
+    var gameDifficulty: ChallangeRating?
+    var numberOfPlayers: Int?
+    var player: Player?
+    var duration: Int?
+    
     @IBAction func exitButton(_ sender: UIButton) {
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let view = self.view as! SKView? {
+        if let view = self.view as? SKView? {
             // Load the SKScene from 'GameScene.sks'
-            let scene = GameScene(size: self.view.bounds.size, difficulty: .normal, duration: 10, amountOfPlayers: 2)
-                // Set the scale mode to scale to fit the window
+            if gameDifficulty != nil && numberOfPlayers != nil && duration != nil {
+                let scene = GameScene(size: self.view.bounds.size,
+                                      difficulty: gameDifficulty!,
+                                      player: player!,
+                                      duration: duration!,
+                                      amountOfPlayers: numberOfPlayers!)
+                print("creating scene with user set values")
                 scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
+                view?.presentScene(scene)
+            } else {
+                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: 200, image: "player"), duration: 1, amountOfPlayers: 1)
+                print("creating scene with preset values")
+                scene.scaleMode = .aspectFill
+                view?.presentScene(scene)
+            }
+            view?.ignoresSiblingOrder = true
+            view?.showsFPS = true
+            view?.showsNodeCount = true
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

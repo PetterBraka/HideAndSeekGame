@@ -37,11 +37,11 @@ class GameScene: SKScene {
     var velocity: CGPoint = .zero
     var freezeJoystick: Bool = false
     
-    init(size: CGSize, difficulty: ChallangeRating, duration: Int, amountOfPlayers: Int) {
+    init(size: CGSize, difficulty: ChallangeRating, player: Player, duration: Int, amountOfPlayers: Int) {
         self.gameDifficulty = difficulty
         self.duration = duration
         self.numberOfPlayers = amountOfPlayers
-        self.player = Player(reach: .medium, role: .seeker, movmentSpeed: 200, image: "player")
+        self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
         super.init(size: size)
         self.playableArea = getPlayableArea()
@@ -59,6 +59,12 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        print("============================")
+        print("Duration: \(duration)")
+        print("Difficulty: \(gameDifficulty)")
+        print("Amount of player: \(numberOfPlayers)")
+        player.toString()
+        print("============================")
         createMap()
         createJoystick()
         createButton()
@@ -302,20 +308,22 @@ class GameScene: SKScene {
         
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y){
-            print("inside game area")
             cameraNode.position = player.spriteNode.position
         } else {
             if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
-                print("outside horizontal game area")
+                #if DEBUG
+                print("Outside horizontal game area")
+                #endif
             }
             if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
                 (positionY <= bottomLeft.y || positionY >= topRight.y) {
                 cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
-                print("outside vertical game area")
+                #if DEBUG
+                print("Outside vertical game area")
+                #endif
             }
-            print("outside game area")
         }
         
     }
