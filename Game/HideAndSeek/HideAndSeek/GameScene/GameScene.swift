@@ -17,9 +17,9 @@ enum ChallangeRating : String {
 }
 
 class GameScene: SKScene {
+    let numberOfPlayers: Int
     let gameDifficulty: ChallangeRating
     let duration: Int
-    let numberOfPlayers: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let mountain = SKSpriteNode(imageNamed: "mountain")
@@ -27,8 +27,8 @@ class GameScene: SKScene {
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
     
-    var playableArea: CGRect
     var player: Player
+    var playableArea: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -38,9 +38,9 @@ class GameScene: SKScene {
     var freezeJoystick: Bool = false
     
     init(size: CGSize, difficulty: ChallangeRating, player: Player, duration: Int, amountOfPlayers: Int) {
+        self.numberOfPlayers = amountOfPlayers
         self.gameDifficulty = difficulty
         self.duration = duration
-        self.numberOfPlayers = amountOfPlayers
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
         super.init(size: size)
@@ -59,12 +59,14 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        #if DEBUG
         print("============================")
         print("Duration: \(duration)")
         print("Difficulty: \(gameDifficulty)")
         print("Amount of player: \(numberOfPlayers)")
         player.toString()
         print("============================")
+        #endif
         createMap()
         createJoystick()
         createButton()
@@ -359,7 +361,7 @@ class GameScene: SKScene {
     func moveTo(_ location: CGPoint){
         let offset = location - joystickBackground.position
         let direction = offset.normalized()
-        velocity = direction * player.movmentSpeed
+        velocity = direction * player.movmentSpeed.rawValue
     }
     
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){

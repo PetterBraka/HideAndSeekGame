@@ -20,13 +20,19 @@ class Player: NSObject {
         case far = 30
     }
     
+    enum Speed: CGFloat {
+        case slow = 100
+        case normal = 200
+        case fast = 300
+    }
+    
     var reach: Reach
     var role: Role
-    var movmentSpeed: CGFloat = 200
+    var movmentSpeed: Speed
     var spriteNode: SKSpriteNode
     var nodeReach: SKShapeNode?
     
-    internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: CGFloat, image: String) {
+    internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed, image: String) {
         self.reach = reach
         self.role = role
         self.movmentSpeed = movmentSpeed

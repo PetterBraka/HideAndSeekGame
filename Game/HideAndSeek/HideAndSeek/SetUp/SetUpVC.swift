@@ -22,6 +22,7 @@ class SetUpVC: UIViewController {
         GameOptions(title: "Difficulty", hasSegments: true, options: [ChallangeRating.easy.rawValue,
                                                                       ChallangeRating.normal.rawValue,
                                                                       ChallangeRating.hard.rawValue]),
+        GameOptions(title: "Speed", hasSegments: true, options: ["Slow", "Normal", "Fast"]),
         GameOptions(title: "Reach", hasSegments: true, options: ["Short", "Medium", "Far"]),
         GameOptions(title: "Duration", hasSegments: false),
         GameOptions(title: "Bots", hasSegments: false)]
@@ -30,6 +31,7 @@ class SetUpVC: UIViewController {
     var playerReach = Player.Reach.medium
     var numberOfPlayer = 2
     var duration = 2
+    var movementSpeed = Player.Speed.normal
     
     
     override func viewDidLoad() {
@@ -76,20 +78,37 @@ class SetUpVC: UIViewController {
                         playersRole = Player.Role.seeker
                     }
                 case "Difficulty": //Difficulty
-                    if ChallangeRating.easy.rawValue == segmentTitle {
+                    switch segmentTitle {
+                    case ChallangeRating.easy.rawValue:
                         difficulty = .easy
-                    } else if ChallangeRating.normal.rawValue == segmentTitle {
+                    case ChallangeRating.normal.rawValue:
                         difficulty = .normal
-                    } else {
+                    case ChallangeRating.hard.rawValue:
                         difficulty = .hard
+                    default:
+                        difficulty = .normal
                     }
                 case "Reach": // Reach
-                    if "Short" == segmentTitle {
+                    switch segmentTitle {
+                    case "Short":
                         playerReach = .short
-                    } else if "Medium" == segmentTitle {
+                    case "Medium":
                         playerReach = .medium
-                    } else {
+                    case "Far":
                         playerReach = .far
+                    default:
+                        playerReach = .medium
+                    }
+                case "Speed": // Speed
+                    switch segmentTitle {
+                    case "Slow":
+                        movementSpeed = Player.Speed.slow
+                    case "Normal":
+                        movementSpeed = Player.Speed.normal
+                    case "Fast":
+                        movementSpeed = Player.Speed.fast
+                    default:
+                        movementSpeed = Player.Speed.normal
                     }
                 default:
                     print("can't find option")
@@ -112,7 +131,7 @@ class SetUpVC: UIViewController {
         print("Game starting")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
-        gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: 200, image: "player")
+        gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed, image: "player")
         gameScene.numberOfPlayers = numberOfPlayer
         gameScene.gameDifficulty = difficulty
         gameScene.duration = duration

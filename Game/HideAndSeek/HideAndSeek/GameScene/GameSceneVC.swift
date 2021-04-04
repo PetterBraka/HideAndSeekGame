@@ -15,7 +15,7 @@ class GameSceneVC: UIViewController {
     var duration: Int?
     
     @IBAction func exitButton(_ sender: UIButton) {
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class GameSceneVC: UIViewController {
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)
             } else {
-                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: 200, image: "player"), duration: 1, amountOfPlayers: 1)
+                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: .normal, image: "player"), duration: 1, amountOfPlayers: 1)
                 print("creating scene with preset values")
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)
