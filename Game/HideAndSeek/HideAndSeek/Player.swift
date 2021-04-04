@@ -58,11 +58,13 @@ class Player: NSObject {
     }
     
     func toString(){
+        #if DEBUG
         print("-------------------------------")
         print("Role: \(role)")
         print("Reach: \(reach)")
         print("Speed: \(movmentSpeed)")
         print("Image: \(String(describing: spriteNode.texture))")
         print("-------------------------------")
+        #endif
     }
 }

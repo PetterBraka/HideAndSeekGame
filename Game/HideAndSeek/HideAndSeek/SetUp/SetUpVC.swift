@@ -42,7 +42,6 @@ class SetUpVC: UIViewController {
         navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
         navBarItem.leftBarButtonItem?.tintColor = .systemRed
         navBarItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(navBarTapped(sender:)))
-        // Do any additional setup after loading the view.
     }
     
     @objc func navBarTapped(sender: UIBarButtonItem){
@@ -111,7 +110,9 @@ class SetUpVC: UIViewController {
                         movementSpeed = Player.Speed.normal
                     }
                 default:
+                    #if DEBUG
                     print("can't find option")
+                    #endif
                 }
             } else {
                 let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! StepperCell
@@ -121,14 +122,15 @@ class SetUpVC: UIViewController {
                 case "Bots": // Bots
                     numberOfPlayer = Int(cell.stepper.value)
                 default:
+                    #if DEBUG
                     print("can't find option")
+                    #endif
                 }
             }
         }
     }
     
     func startGame(){
-        print("Game starting")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
         gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed, image: "player")
