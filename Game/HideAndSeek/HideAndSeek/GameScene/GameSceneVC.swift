@@ -32,7 +32,7 @@ class GameSceneVC: UIViewController {
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)
             } else {
-                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: .normal, image: "player"), duration: 1, amountOfPlayers: 1)
+                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: .normal), duration: 1, amountOfPlayers: 1)
                 print("creating scene with preset values")
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)

@@ -32,15 +32,25 @@ class Player: NSObject {
     var spriteNode: SKSpriteNode
     var nodeReach: SKShapeNode?
     
-    internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed, image: String) {
+    internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed) {
         self.reach = reach
         self.role = role
         self.movmentSpeed = movmentSpeed
-        self.spriteNode = SKSpriteNode(imageNamed: image)
+        if role == Role.hider {
+            self.spriteNode = SKSpriteNode(imageNamed: "Hider")
+        } else {
+            self.spriteNode = SKSpriteNode(imageNamed: "Seeker")
+        }
     }
     
     func createSprite(size: CGSize, location: CGPoint) {
-        let player = SKSpriteNode(imageNamed: "player")
+        var image = ""
+        if role == Role.hider {
+            image = "Hider"
+        } else {
+            image = "Seeker"
+        }
+        let player = SKSpriteNode(imageNamed: image)
         player.position = location
         player.zPosition = 1
         player.aspectFillToSize(size: size)

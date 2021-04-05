@@ -133,7 +133,7 @@ class SetUpVC: UIViewController {
     func startGame(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
-        gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed, image: "player")
+        gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed)
         gameScene.numberOfPlayers = numberOfPlayer
         gameScene.gameDifficulty = difficulty
         gameScene.duration = duration
