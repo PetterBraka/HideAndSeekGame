@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SetUpCell: UITableViewCell {
+class SegmentCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
@@ -30,6 +30,14 @@ class SetUpCell: UITableViewCell {
                                          animated: true)
         }
         segmentControl.selectedSegmentIndex = 0
+    }
+    
+    func getData() -> String {
+        let index = segmentControl.selectedSegmentIndex
+        guard let segmentTitle = segmentControl.titleForSegment(at: index) else {
+            return ""
+        }
+        return segmentTitle
     }
 
 }

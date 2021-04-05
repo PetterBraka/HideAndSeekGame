@@ -32,12 +32,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OPc-rB-6Zk">
-                                <rect key="frame" x="64" y="54" width="768" height="319"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="OPc-rB-6Zk">
+                                <rect key="frame" x="0.0" y="44" width="896" height="370"/>
+                                <color key="sectionIndexBackgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SetUpCell" id="7cz-fy-NTc" customClass="SetUpCell" customModule="HideAndSeek" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="768" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SegmentCell" id="7cz-fy-NTc" userLabel="SegmentCell" customClass="SegmentCell" customModule="HideAndSeek" customModuleProvider="target">
+                                        <rect key="frame" x="64" y="55.5" width="768" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7cz-fy-NTc" id="e3f-hp-jhi">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
@@ -74,6 +74,51 @@
                                             <outlet property="title" destination="WuB-Wg-HKw" id="tJy-z8-AUB"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StepperCell" id="dc8-XY-doO" userLabel="StepperCell" customClass="StepperCell" customModule="HideAndSeek" customModuleProvider="target">
+                                        <rect key="frame" x="64" y="99" width="768" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dc8-XY-doO" id="SqH-Rl-aAU">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of players" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TN-b5-9cC" userLabel="Title">
+                                                    <rect key="frame" x="10" y="11.5" width="140" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Na2-tP-J8i">
+                                                    <rect key="frame" x="646.5" y="6" width="111.5" height="32"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwU-bL-wbR" userLabel="StepNumber">
+                                                            <rect key="frame" x="0.0" y="0.0" width="7.5" height="32"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="YHf-8Q-WdX">
+                                                            <rect key="frame" x="17.5" y="0.0" width="94" height="32"/>
+                                                            <connections>
+                                                                <action selector="stepperAction:" destination="dc8-XY-doO" eventType="valueChanged" id="R6S-RS-P4Q"/>
+                                                            </connections>
+                                                        </stepper>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7TN-b5-9cC" firstAttribute="centerY" secondItem="SqH-Rl-aAU" secondAttribute="centerY" id="AfB-fZ-oTF"/>
+                                                <constraint firstItem="Na2-tP-J8i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7TN-b5-9cC" secondAttribute="trailing" constant="10" id="PLS-sE-wRy"/>
+                                                <constraint firstItem="Na2-tP-J8i" firstAttribute="centerY" secondItem="SqH-Rl-aAU" secondAttribute="centerY" id="Rir-fw-lZd"/>
+                                                <constraint firstItem="7TN-b5-9cC" firstAttribute="leading" secondItem="SqH-Rl-aAU" secondAttribute="leading" constant="10" id="Wua-IU-1dD"/>
+                                                <constraint firstAttribute="trailing" secondItem="Na2-tP-J8i" secondAttribute="trailing" constant="10" id="cxu-3g-pPt"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="steppNumber" destination="lwU-bL-wbR" id="Rdi-Lv-tnE"/>
+                                            <outlet property="stepper" destination="YHf-8Q-WdX" id="KOH-zf-7rE"/>
+                                            <outlet property="title" destination="7TN-b5-9cC" id="d1b-8U-AgL"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                             </tableView>
@@ -87,13 +132,13 @@
                         <viewLayoutGuide key="safeArea" id="Y1B-LH-0o1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="OPc-rB-6Zk" firstAttribute="top" secondItem="iJU-Vp-nXy" secondAttribute="bottom" constant="10" id="1Rd-mF-zQC"/>
+                            <constraint firstItem="OPc-rB-6Zk" firstAttribute="top" secondItem="iJU-Vp-nXy" secondAttribute="bottom" id="1Rd-mF-zQC"/>
                             <constraint firstItem="iJU-Vp-nXy" firstAttribute="top" secondItem="Y1B-LH-0o1" secondAttribute="top" id="OKM-7b-0P1"/>
-                            <constraint firstItem="OPc-rB-6Zk" firstAttribute="leading" secondItem="Y1B-LH-0o1" secondAttribute="leading" constant="20" id="dIp-0A-kcQ"/>
-                            <constraint firstItem="Y1B-LH-0o1" firstAttribute="bottom" secondItem="OPc-rB-6Zk" secondAttribute="bottom" constant="20" id="dr4-YF-XWM"/>
+                            <constraint firstItem="OPc-rB-6Zk" firstAttribute="leading" secondItem="G7Q-FQ-IoN" secondAttribute="leading" id="dIp-0A-kcQ"/>
+                            <constraint firstAttribute="bottom" secondItem="OPc-rB-6Zk" secondAttribute="bottom" id="dr4-YF-XWM"/>
                             <constraint firstItem="iJU-Vp-nXy" firstAttribute="leading" secondItem="G7Q-FQ-IoN" secondAttribute="leading" id="ehc-cZ-y0m"/>
                             <constraint firstAttribute="trailing" secondItem="iJU-Vp-nXy" secondAttribute="trailing" id="tqr-3O-gMB"/>
-                            <constraint firstItem="Y1B-LH-0o1" firstAttribute="trailing" secondItem="OPc-rB-6Zk" secondAttribute="trailing" constant="20" id="wyU-b6-5cM"/>
+                            <constraint firstAttribute="trailing" secondItem="OPc-rB-6Zk" secondAttribute="trailing" id="wyU-b6-5cM"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -106,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mpG-fb-UyM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1161" y="64"/>
+            <point key="canvasLocation" x="1160.4910714285713" y="63.768115942028992"/>
         </scene>
         <!--GameSceneVC-->
         <scene sceneID="T1e-zr-6g2">

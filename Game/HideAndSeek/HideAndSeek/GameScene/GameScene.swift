@@ -8,16 +8,18 @@
 import SpriteKit
 import GameplayKit
 
-enum ChallangeRating {
-    case easy
-    case normal
-    case hard
+enum ChallangeRating : String {
+    case easy = "Easy"
+    case normal = "Normal"
+    case hard = "Hard"
+    
+    static var count: Int {return ChallangeRating.hard.hashValue + 1}
 }
 
 class GameScene: SKScene {
+    let numberOfPlayers: Int
     let gameDifficulty: ChallangeRating
     let duration: Int
-    let numberOfPlayers: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let mountain = SKSpriteNode(imageNamed: "mountain")
@@ -25,8 +27,8 @@ class GameScene: SKScene {
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
     
-    var playableArea: CGRect
     var player: Player
+    var playableArea: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -35,11 +37,11 @@ class GameScene: SKScene {
     var velocity: CGPoint = .zero
     var freezeJoystick: Bool = false
     
-    init(size: CGSize, difficulty: ChallangeRating, duration: Int, amountOfPlayers: Int) {
+    init(size: CGSize, difficulty: ChallangeRating, player: Player, duration: Int, amountOfPlayers: Int) {
+        self.numberOfPlayers = amountOfPlayers
         self.gameDifficulty = difficulty
         self.duration = duration
-        self.numberOfPlayers = amountOfPlayers
-        self.player = Player(reach: .medium, role: .seeker, movmentSpeed: 200, image: "player")
+        self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
         super.init(size: size)
         self.playableArea = getPlayableArea()
@@ -57,6 +59,14 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        #if DEBUG
+        print("============================")
+        print("Duration: \(duration)")
+        print("Difficulty: \(gameDifficulty)")
+        print("Amount of player: \(numberOfPlayers)")
+        player.toString()
+        print("============================")
+        #endif
         createMap()
         createJoystick()
         createButton()
@@ -300,20 +310,22 @@ class GameScene: SKScene {
         
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y){
-            print("inside game area")
             cameraNode.position = player.spriteNode.position
         } else {
             if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
-                print("outside horizontal game area")
+                #if DEBUG
+                print("Outside horizontal game area")
+                #endif
             }
             if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
                 (positionY <= bottomLeft.y || positionY >= topRight.y) {
                 cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
-                print("outside vertical game area")
+                #if DEBUG
+                print("Outside vertical game area")
+                #endif
             }
-            print("outside game area")
         }
         
     }
@@ -349,7 +361,7 @@ class GameScene: SKScene {
     func moveTo(_ location: CGPoint){
         let offset = location - joystickBackground.position
         let direction = offset.normalized()
-        velocity = direction * player.movmentSpeed
+        velocity = direction * player.movmentSpeed.rawValue
     }
     
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
