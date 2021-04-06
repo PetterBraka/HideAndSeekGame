@@ -65,7 +65,7 @@ class GameScene: SKScene {
     }
     
     private func getCameraBounds() -> CGRect {
-        let rect = CGRect(x: 0 , y: 0,
+        let rect = CGRect(x: frame.width / 2 , y: frame.height / 2,
                           width: playableArea.width - frame.width / 4,
                           height: playableArea.height)
         return rect
@@ -342,8 +342,8 @@ class GameScene: SKScene {
     fileprivate func updateCameraPosition(){
         let bottomLeft = CGPoint(x: cameraBounds.minX, y: cameraBounds.minY)
         let topRight = CGPoint(x: cameraBounds.maxX, y: cameraBounds.maxY)
-        let positionX = player.spriteNode.position.x - playableArea.width / 2
-        let positionY = player.spriteNode.position.y - playableArea.height / 2
+        let positionX = player.spriteNode.position.x //- playableArea.width / 2
+        let positionY = player.spriteNode.position.y //- playableArea.height / 2
         
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y){
