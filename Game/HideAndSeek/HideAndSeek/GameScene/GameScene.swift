@@ -206,28 +206,22 @@ class GameScene: SKScene {
     }
     
     fileprivate func spawnBots() {
+        let botSize = CGSize(width: 50, height: 50)
         let roleIndex = player.role.hashValue
         var role: Player.Role
-        if roleIndex != Player.Role.hider.hashValue {
-            role = .hider
-        } else {
+        if roleIndex != Player.Role.seeker.hashValue {
             role = .seeker
-        }
-        let size = CGSize(width: 50, height: 50)
-        let mainBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
-        mainBot.createSprite(size: size,
-                             location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
-        self.addChild(mainBot.spriteNode)
-        if mainBot.role == .seeker {
+            let mainBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
+            mainBot.createSprite(size: botSize,
+                                 location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
+            self.addChild(mainBot.spriteNode)
             seeker = mainBot
-        } else {
-            bots.append(mainBot)
         }
         var i = bots.count
         while i < numberOfPlayers {
             let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
-            bot.createSprite(size: size,
-                             location: CGPoint(x: self.gameArea.width / 32 * 13 + size.width * CGFloat(i) + 20,
+            bot.createSprite(size: botSize,
+                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(i) + 20,
                                                y:  self.gameArea.height / 2 - 60))
             self.addChild(bot.spriteNode)
             i = i + 1
