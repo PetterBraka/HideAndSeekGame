@@ -27,6 +27,8 @@ class GameScene: SKScene {
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
     
+    var seeker: Player?
+    var bots: [Player]
     var player: Player
     var playableArea: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
@@ -43,6 +45,7 @@ class GameScene: SKScene {
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
+        self.bots = []
         super.init(size: size)
         self.playableArea = getPlayableArea()
     }
@@ -71,10 +74,9 @@ class GameScene: SKScene {
         createJoystick()
         createButton()
         spawnPlayer()
+        spawnBots()
         drawHouse()
         drawTents()
-        drawCampfire()
-        drawRiver()
         addCamera()
         debugDrawPlayableArea()
     }
@@ -110,6 +112,24 @@ class GameScene: SKScene {
             width: ((background.size.width / 8) * 2) + (background.size.width / 12),
             height: background.size.height - (background.size.height / 10))
         self.addChild(mountain)
+        drawCampfire()
+        drawRiver()
+    }
+    
+    fileprivate func drawCampfire(){
+        let campfire = SKSpriteNode(imageNamed: "campfire")
+        campfire.position = CGPoint(x: gameArea.width / 16 * 7, y: gameArea.height / 2)
+        campfire.zPosition = 0
+        campfire.aspectFillToSize(size: CGSize(width: 50, height: 50))
+        self.addChild(campfire)
+    }
+    
+    fileprivate func drawRiver(){
+        let river = SKSpriteNode(imageNamed: "river")
+        river.position = CGPoint(x: gameArea.width / 16 * 11, y: gameArea.height / 2)
+        river.zPosition = 0
+        river.size = CGSize(width: gameArea.width / 8, height: gameArea.height)
+        self.addChild(river)
     }
     
     fileprivate func drawHouse() {
@@ -128,22 +148,6 @@ class GameScene: SKScene {
                                           y: (gameArea.height / 8 * 4)))
         spawnTent(newTent: false, CGPoint(x: (gameArea.width / 8 * 2),
                                           y: (gameArea.height / 8 * 3.5)))
-    }
-    
-    fileprivate func drawCampfire(){
-        let campfire = SKSpriteNode(imageNamed: "campfire")
-        campfire.position = CGPoint(x: gameArea.width / 16 * 7, y: gameArea.height / 4 * 2)
-        campfire.zPosition = 0
-        campfire.aspectFillToSize(size: player.spriteNode.size)
-        self.addChild(campfire)
-    }
-    
-    fileprivate func drawRiver(){
-        let river = SKSpriteNode(imageNamed: "river")
-        river.position = CGPoint(x: gameArea.width / 16 * 11, y: gameArea.height / 2)
-        river.zPosition = 0
-        river.size = CGSize(width: gameArea.width / 8, height: gameArea.height)
-        self.addChild(river)
     }
     
     fileprivate func createJoystick() {
@@ -198,6 +202,35 @@ class GameScene: SKScene {
         player.drawReach()
         if player.nodeReach != nil {
             self.addChild(player.nodeReach!)
+        }
+    }
+    
+    fileprivate func spawnBots() {
+        let roleIndex = player.role.hashValue
+        var role: Player.Role
+        if roleIndex != Player.Role.hider.hashValue {
+            role = .hider
+        } else {
+            role = .seeker
+        }
+        let size = CGSize(width: 50, height: 50)
+        let mainBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
+        mainBot.createSprite(size: size,
+                             location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
+        self.addChild(mainBot.spriteNode)
+        if mainBot.role == .seeker {
+            seeker = mainBot
+        } else {
+            bots.append(mainBot)
+        }
+        var i = bots.count
+        while i < numberOfPlayers {
+            let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
+            bot.createSprite(size: size,
+                             location: CGPoint(x: self.gameArea.width / 32 * 13 + size.width * CGFloat(i) + 20,
+                                               y:  self.gameArea.height / 2 - 60))
+            self.addChild(bot.spriteNode)
+            i = i + 1
         }
     }
     

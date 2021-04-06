@@ -36,18 +36,20 @@ class Player: NSObject {
         self.reach = reach
         self.role = role
         self.movmentSpeed = movmentSpeed
-        if role == Role.hider {
+        switch role {
+        case .hider:
             self.spriteNode = SKSpriteNode(imageNamed: "Hider")
-        } else {
+        default:
             self.spriteNode = SKSpriteNode(imageNamed: "Seeker")
         }
     }
     
     func createSprite(size: CGSize, location: CGPoint) {
         var image = ""
-        if role == Role.hider {
+        switch role {
+        case .hider:
             image = "Hider"
-        } else {
+        default:
             image = "Seeker"
         }
         let player = SKSpriteNode(imageNamed: image)
