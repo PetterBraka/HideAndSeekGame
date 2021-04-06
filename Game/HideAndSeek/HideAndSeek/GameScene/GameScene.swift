@@ -31,6 +31,7 @@ class GameScene: SKScene {
     var bots: [Player]
     var player: Player
     var playableArea: CGRect
+    var cameraBounds: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -45,9 +46,11 @@ class GameScene: SKScene {
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
+        self.cameraBounds = playableArea
         self.bots = []
         super.init(size: size)
         self.playableArea = getPlayableArea()
+        self.cameraBounds = getCameraBounds()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +61,14 @@ class GameScene: SKScene {
         let aspectRatio = frame.width / frame.height
         let playableHeight = size.width / aspectRatio
         let playableMargin = (size.height - playableHeight) / 2.0
-        return CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
+        return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
+    }
+    
+    private func getCameraBounds() -> CGRect {
+        let rect = CGRect(x: 0 , y: 0,
+                          width: playableArea.width - frame.width / 4,
+                          height: playableArea.height)
+        return rect
     }
     
     override func didMove(to view: SKView) {
@@ -330,8 +340,8 @@ class GameScene: SKScene {
     }
     
     fileprivate func updateCameraPosition(){
-        let bottomLeft = CGPoint(x: playableArea.minX, y: playableArea.minY)
-        let topRight = CGPoint(x: playableArea.maxX, y: playableArea.maxY)
+        let bottomLeft = CGPoint(x: cameraBounds.minX, y: cameraBounds.minY)
+        let topRight = CGPoint(x: cameraBounds.maxX, y: cameraBounds.maxY)
         let positionX = player.spriteNode.position.x - playableArea.width / 2
         let positionY = player.spriteNode.position.y - playableArea.height / 2
         
