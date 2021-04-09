@@ -17,7 +17,7 @@ enum ChallangeRating : String {
 }
 
 class GameScene: SKScene {
-    let numberOfPlayers: Int
+    var numberOfPlayers: Int
     let gameDifficulty: ChallangeRating
     let duration: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
@@ -226,15 +226,15 @@ class GameScene: SKScene {
                                  location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(mainBot.spriteNode)
             seeker = mainBot
+            numberOfPlayers = numberOfPlayers - 1
         }
-        var i = bots.count
-        while i < numberOfPlayers {
+        while bots.count < numberOfPlayers {
             let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
             bot.createSprite(size: botSize,
-                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(i) + 20,
+                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(bots.count) + 20,
                                                y:  self.gameArea.height / 2 - 60))
+            bots.append(bot)
             self.addChild(bot.spriteNode)
-            i = i + 1
         }
     }
     
