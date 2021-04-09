@@ -17,7 +17,7 @@ enum ChallangeRating : String {
 }
 
 class GameScene: SKScene {
-    let numberOfPlayers: Int
+    var numberOfPlayers: Int
     let gameDifficulty: ChallangeRating
     let duration: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
@@ -31,6 +31,7 @@ class GameScene: SKScene {
     var bots: [Player]
     var player: Player
     var playableArea: CGRect
+    var cameraBounds: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -45,9 +46,11 @@ class GameScene: SKScene {
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
+        self.cameraBounds = playableArea
         self.bots = []
         super.init(size: size)
         self.playableArea = getPlayableArea()
+        self.cameraBounds = getCameraBounds()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +61,14 @@ class GameScene: SKScene {
         let aspectRatio = frame.width / frame.height
         let playableHeight = size.width / aspectRatio
         let playableMargin = (size.height - playableHeight) / 2.0
-        return CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
+        return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
+    }
+    
+    private func getCameraBounds() -> CGRect {
+        let rect = CGRect(x: frame.width / 2 , y: frame.height / 2,
+                          width: playableArea.width - frame.width / 4,
+                          height: playableArea.height)
+        return rect
     }
     
     override func didMove(to view: SKView) {
@@ -216,15 +226,15 @@ class GameScene: SKScene {
                                  location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(mainBot.spriteNode)
             seeker = mainBot
+            numberOfPlayers = numberOfPlayers - 1
         }
-        var i = bots.count
-        while i < numberOfPlayers {
+        while bots.count < numberOfPlayers {
             let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
             bot.createSprite(size: botSize,
-                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(i) + 20,
+                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(bots.count) + 20,
                                                y:  self.gameArea.height / 2 - 60))
+            bots.append(bot)
             self.addChild(bot.spriteNode)
-            i = i + 1
         }
     }
     
@@ -330,10 +340,10 @@ class GameScene: SKScene {
     }
     
     fileprivate func updateCameraPosition(){
-        let bottomLeft = CGPoint(x: playableArea.minX, y: playableArea.minY)
-        let topRight = CGPoint(x: playableArea.maxX, y: playableArea.maxY)
-        let positionX = player.spriteNode.position.x - playableArea.width / 2
-        let positionY = player.spriteNode.position.y - playableArea.height / 2
+        let bottomLeft = CGPoint(x: cameraBounds.minX, y: cameraBounds.minY)
+        let topRight = CGPoint(x: cameraBounds.maxX, y: cameraBounds.maxY)
+        let positionX = player.spriteNode.position.x //- playableArea.width / 2
+        let positionY = player.spriteNode.position.y //- playableArea.height / 2
         
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y){
