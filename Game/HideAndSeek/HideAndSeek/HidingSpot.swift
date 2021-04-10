@@ -17,7 +17,7 @@ class HidingSpot: NSObject {
         case lake = "lake"
     }
     
-    private let zPosition: CGFloat = 2
+    private let zPosition: CGFloat = 1
     private var size: CGSize
     
     let type: Variant
@@ -36,7 +36,6 @@ class HidingSpot: NSObject {
         self.capacity = capacity
         self.size = CGSize(width: 20, height: 20)
         super.init()
-//        Warning - Check if this will work (Will it run the function getSize()?)
         self.size = getSize()
         self.spriteNode = createSprite()
     }
@@ -80,10 +79,10 @@ class HidingSpot: NSObject {
     }
     
     func drawDebugArea(_ playerReach: Player.Reach) -> SKShapeNode{
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width + CGFloat(playerReach.rawValue), height: size.height + CGFloat(playerReach.rawValue)))
+        let shape = SKShapeNode(circleOfRadius: (size.width / 2) + CGFloat(playerReach.rawValue))
         shape.position = CGPoint(
-            x: spriteNode.position.x - (size.width + CGFloat(playerReach.rawValue)) / 2,
-            y: spriteNode.position.y - (size.height + CGFloat(playerReach.rawValue)) / 2)
+            x: spriteNode.position.x,
+            y: spriteNode.position.y)
         shape.lineWidth = 2
         shape.strokeColor = .orange
         shape.zPosition = 99

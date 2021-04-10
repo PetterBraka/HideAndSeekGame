@@ -16,6 +16,11 @@ enum ChallangeRating : String {
     static var count: Int {return ChallangeRating.hard.hashValue + 1}
 }
 
+struct ColliderType {
+    static let Player: UInt32 = 1
+    static let Bot: UInt32 = 2
+}
+
 class GameScene: SKScene {
     var numberOfPlayers: Int
     let gameDifficulty: ChallangeRating
@@ -80,6 +85,7 @@ class GameScene: SKScene {
         player.toString()
         print("============================")
         #endif
+        self.physicsWorld.contactDelegate = self
         createMap()
         createJoystick()
         createButton()
@@ -160,6 +166,18 @@ class GameScene: SKScene {
                                           y: (gameArea.height / 8 * 3.5)))
     }
     
+    fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
+        var tent: HidingSpot
+        if newTent {
+            tent = HidingSpot(.tent, position, image: "tentNew", capacity: 1)
+        } else {
+            tent = HidingSpot(.tent, position, image: "tentOld", capacity: 1)
+        }
+        hidingSpots.append(tent)
+        self.addChild(tent.spriteNode)
+        self.addChild(tent.drawDebugArea(player.reach))
+    }
+    
     fileprivate func createJoystick() {
         joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
@@ -236,18 +254,6 @@ class GameScene: SKScene {
             bots.append(bot)
             self.addChild(bot.spriteNode)
         }
-    }
-    
-    fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
-        var tent: HidingSpot
-        if newTent {
-            tent = HidingSpot(.tent, position, image: "tentNew", capacity: 1)
-        } else {
-            tent = HidingSpot(.tent, position, image: "tentOld", capacity: 1)
-        }
-        hidingSpots.append(tent)
-        self.addChild(tent.spriteNode)
-        self.addChild(tent.drawDebugArea(player.reach))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -408,5 +414,11 @@ class GameScene: SKScene {
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
         let amountToMove = velocity * CGFloat(dt)
         sprite.position += amountToMove
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+         
     }
 }
