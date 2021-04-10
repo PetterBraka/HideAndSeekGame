@@ -146,7 +146,7 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), image: "house", capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        self.addChild(house.drawDebugArea())
+        self.addChild(house.drawDebugArea(player.reach))
     }
     
     fileprivate func drawTents(){
@@ -247,7 +247,7 @@ class GameScene: SKScene {
         }
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        self.addChild(tent.drawDebugArea())
+        self.addChild(tent.drawDebugArea(player.reach))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -393,6 +393,10 @@ class GameScene: SKScene {
                 x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
                 y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         }
+    }
+    
+    func playerCollision() {
+        
     }
     
     func moveTo(_ location: CGPoint){
