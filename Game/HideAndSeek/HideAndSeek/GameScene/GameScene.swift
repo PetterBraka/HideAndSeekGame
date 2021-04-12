@@ -253,7 +253,7 @@ class GameScene: SKScene {
                                  location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(mainBot.spriteNode)
             seeker = mainBot
-            numberOfPlayers = numberOfPlayers - 1
+            bots.append(mainBot)
         }
         while bots.count < numberOfPlayers {
             let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
@@ -277,27 +277,33 @@ class GameScene: SKScene {
                 #if DEBUG
                 print("button taped")
                 #endif
-                hidingSpots.forEach { (hidingSpot) in
-                    hidingSpot.checkReach(player)
-                    if hidingSpot.reachable {
-                        if !freezeJoystick{
-                            let hidePlayer = SKAction.hide()
-                            player.spriteNode.run(hidePlayer)
-                            freezeJoystick = true
-                            #if DEBUG
-                            print("Player is hidden")
-                            print("Freezing controlls")
-                            #endif
-                        } else {
-                            let showPlayer = SKAction.unhide()
-                            player.spriteNode.run(showPlayer)
-                            freezeJoystick = false
-                            #if DEBUG
-                            print("Player isn't hidden")
-                            print("Unfreezing controlls")
-                            #endif
-                        }
+                switch buttonLabel.text {
+                case "Hide":
+                    let hidePlayer = SKAction.hide()
+                    player.spriteNode.run(hidePlayer)
+                    freezeJoystick = true
+                    #if DEBUG
+                    print("Player is hidden")
+                    print("Freezing controlls")
+                    #endif
+                case "Leave":
+                    let showPlayer = SKAction.unhide()
+                    player.spriteNode.run(showPlayer)
+                    freezeJoystick = false
+                    #if DEBUG
+                    print("Player isn't hidden")
+                    print("Unfreezing controlls")
+                    #endif
+                case "Catch":
+                    if let bot = bots.first(where: {$0.reachable == true}){
+                        bot.chought()
                     }
+                case "Free":
+                    if let bot = bots.first(where: {$0.reachable == true}){
+                        bot.freed()
+                    }
+                default:
+                    print("can't do anything")
                 }
             }
         }
@@ -327,7 +333,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
-        updateButtonLabel()
+        catchPlayer()
         updateCameraPosition()
     }
     
@@ -368,7 +374,7 @@ class GameScene: SKScene {
             y: actionButton.position.y - actionButton.size.height / 2)
     }
     
-    fileprivate func updateButtonLabel(){
+    fileprivate func hidePlayer(){
         hidingSpots.forEach { (hidingSpot) in
             hidingSpot.checkReach(player)
         }
@@ -377,6 +383,26 @@ class GameScene: SKScene {
                 buttonLabel.text = "Hide"
             } else {
                 buttonLabel.text = "Leave"
+            }
+            updateButtonPosition()
+        } else {
+            buttonLabel.text = ""
+            actionButton.position = CGPoint(
+                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
+                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
+        }
+    }
+    
+    fileprivate func catchPlayer(){
+        bots.forEach { (bot) in
+            bot.checkReach(player)
+        }
+        if bots.contains(where: {$0.reachable == true}){
+        let bot = bots.first(where: {$0.reachable == true})
+            if bot?.movmentSpeed == .frozen {
+                buttonLabel.text = "Free"
+            } else {
+                buttonLabel.text = "Catch"
             }
             updateButtonPosition()
         } else {
@@ -457,34 +483,36 @@ class GameScene: SKScene {
                     y: cos(angle) * length)
                 if joystickBackground.frame.contains(location) {
                     if checkCollision(){
-                        switch movingDirection {
-                        case .Up:
-                            if joystickBackground.position.y < location.y {
-                                location.y = joystickBackground.position.y
-                                joystick.position.x = location.x
-                                print("can't move up")
-                            }
-                        case .Down:
-                            if joystickBackground.position.y > location.y {
-                                location.y = joystickBackground.position.y
-                                joystick.position.x = location.x
-                                print("can't move down")
-                            }
-                        case .Left:
-                            if joystickBackground.position.x > location.x {
-                                location.x = joystickBackground.position.x
-                                joystick.position.y = location.y
-                                print("can't move left")
-                            }
-                        case .Right:
-                            if joystickBackground.position.x < location.x {
-                                location.x = joystickBackground.position.x
-                                joystick.position.y = location.y
-                                print("can't move right")
-                            }
-                        default:
-                            print("can move")
-                        }
+//                        switch movingDirection {
+//                        case .Up:
+//                            if joystickBackground.position.y < location.y {
+//                                location.y = joystickBackground.position.y
+//                                joystick.position.x = location.x
+//                                print("can't move up")
+//                            }
+//                        case .Down:
+//                            if joystickBackground.position.y > location.y {
+//                                location.y = joystickBackground.position.y
+//                                joystick.position.x = location.x
+//                                print("can't move down")
+//                            }
+//                        case .Left:
+//                            if joystickBackground.position.x > location.x {
+//                                location.x = joystickBackground.position.x
+//                                joystick.position.y = location.y
+//                                print("can't move left")
+//                            }
+//                        case .Right:
+//                            if joystickBackground.position.x < location.x {
+//                                location.x = joystickBackground.position.x
+//                                joystick.position.y = location.y
+//                                print("can't move right")
+//                            }
+//                        default:
+//                            print("can move")
+//                        }
+                    } else {
+                        joystick.position = location
                     }
                 } else {
                     joystick.position = CGPoint(
