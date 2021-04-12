@@ -329,7 +329,6 @@ class GameScene: SKScene {
         player.nodeReach?.position = player.spriteNode.position
         updateButtonLabel()
         updateCameraPosition()
-        checkCollision()
     }
     
     fileprivate func updateCameraPosition(){
@@ -388,44 +387,44 @@ class GameScene: SKScene {
         }
     }
     
-    func checkCollision() -> SKSpriteNode {
-        var nodeCollided = SKSpriteNode()
+    func checkCollision() -> Bool {
+        var coliding: Bool = false
         enumerateChildNodes(withName: "bot") { (node, _) in
             let bot = node as! SKSpriteNode
             if bot.intersects(self.player.spriteNode) {
-                nodeCollided = bot
-                print("Collided with \(nodeCollided.name ?? "")")
+                coliding = true
+                print("Collided with \(bot.name ?? "")")
             }
         }
         enumerateChildNodes(withName: HidingSpot.Variant.house.rawValue) { (node, _) in
             let spot = node as! SKSpriteNode
             if spot.intersects(self.player.spriteNode) {
-                nodeCollided = spot
-                print("Collided with \(nodeCollided.name ?? "")")
+                coliding = true
+                print("Collided with \(spot.name ?? "")")
             }
         }
         enumerateChildNodes(withName: HidingSpot.Variant.tent.rawValue) { (node, _) in
             let spot = node as! SKSpriteNode
             if spot.intersects(self.player.spriteNode) {
-                nodeCollided = spot
-                print("Collided with \(nodeCollided.name ?? "")")
+                coliding = true
+                print("Collided with \(spot.name ?? "")")
             }
         }
         enumerateChildNodes(withName: HidingSpot.Variant.lake.rawValue) { (node, _) in
             let spot = node as! SKSpriteNode
             if spot.intersects(self.player.spriteNode) {
-                nodeCollided = spot
-                print("Collided with \(nodeCollided.name ?? "")")
+                coliding = true
+                print("Collided with \(spot.name ?? "")")
             }
         }
         enumerateChildNodes(withName: HidingSpot.Variant.mountan.rawValue) { (node, _) in
             let spot = node as! SKSpriteNode
             if spot.intersects(self.player.spriteNode) {
-                nodeCollided = spot
-                print("Collided with \(nodeCollided.name ?? "")")
+                coliding = true
+                print("Collided with \(spot.name ?? "")")
             }
         }
-        return nodeCollided
+        return coliding
     }
     
     func getDirection(for value: CGFloat) -> Direction{
@@ -446,7 +445,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func moveJoystick(_ location: CGPoint) {
-        _ = checkCollision()
+        var location = location
         if !freezeJoystick {
             if stickActive {
                 let radius = CGVector(dx: location.x - joystickBackground.position.x,
@@ -457,7 +456,36 @@ class GameScene: SKScene {
                     x: sin(angle) * length,
                     y: cos(angle) * length)
                 if joystickBackground.frame.contains(location) {
-                    joystick.position = location
+                    if checkCollision(){
+                        switch movingDirection {
+                        case .Up:
+                            if joystickBackground.position.y < location.y {
+                                location.y = joystickBackground.position.y
+                                joystick.position.x = location.x
+                                print("can't move up")
+                            }
+                        case .Down:
+                            if joystickBackground.position.y > location.y {
+                                location.y = joystickBackground.position.y
+                                joystick.position.x = location.x
+                                print("can't move down")
+                            }
+                        case .Left:
+                            if joystickBackground.position.x > location.x {
+                                location.x = joystickBackground.position.x
+                                joystick.position.y = location.y
+                                print("can't move left")
+                            }
+                        case .Right:
+                            if joystickBackground.position.x < location.x {
+                                location.x = joystickBackground.position.x
+                                joystick.position.y = location.y
+                                print("can't move right")
+                            }
+                        default:
+                            print("can move")
+                        }
+                    }
                 } else {
                     joystick.position = CGPoint(
                         x: joystickBackground.position.x - distance.x,
