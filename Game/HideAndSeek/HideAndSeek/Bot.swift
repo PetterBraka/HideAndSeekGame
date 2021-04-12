@@ -22,10 +22,6 @@ class Bot: Player {
         player.zPosition = 1
         player.aspectFillToSize(size: size)
         player.name = "bot"
-        player.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: image), size: size)
-        player.physicsBody?.affectedByGravity = false
-        player.physicsBody?.isDynamic = false
-        player.physicsBody?.categoryBitMask = ColliderType.Bot
         spriteNode = player
     }
 }
