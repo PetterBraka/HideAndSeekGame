@@ -75,7 +75,8 @@ class Player: NSObject {
     }
     
     func drawReach(){
-        let shape = SKShapeNode(circleOfRadius: CGFloat(reach.rawValue))
+        let raidus = CGFloat(reach.rawValue) + (spriteNode.size.width / 2)
+        let shape = SKShapeNode(circleOfRadius: raidus)
         shape.position = spriteNode.position
         shape.lineWidth = 2
         shape.strokeColor = .orange
@@ -86,8 +87,8 @@ class Player: NSObject {
     func checkReach(_ player: Player) {
         let distance = abs(Float(hypot(player.spriteNode.position.x - spriteNode.position.x,
                                        player.spriteNode.position.y - spriteNode.position.y)))
-        let nodeRadius = abs(Float(hypot(spriteNode.size.width / 2, spriteNode.size.height / 2)))
-        let range = player.reach.rawValue + nodeRadius
+        let nodeRadius = spriteNode.size.width / 2
+        let range = player.reach.rawValue + Float(nodeRadius)
         if distance <= range {
             reachable = true
         } else {
@@ -104,5 +105,37 @@ class Player: NSObject {
         print("Image: \(String(describing: spriteNode.texture))")
         print("-------------------------------")
         #endif
+    }
+    
+    func checkBotCollision(_ scene: SKScene, _ allBots: [Bot]) -> Bot? {
+        scene.enumerateChildNodes(withName: "bot") { (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let bot = allBots.first(where: {$0.spriteNode == sprite}){
+                if bot.nodeReach!.intersects(self.spriteNode) {
+                    print("Collided with \(sprite.name ?? "")")
+                    bot.reachable = true
+                }
+            }
+        }
+        if let bot = allBots.first(where: {$0.reachable == true}){
+            return bot
+        }
+        return nil
+    }
+    
+    func checkHidingSpotsCollision(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
+        scene.enumerateChildNodes(withName: "hidingSpot") { (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
+                if spot.nodeReach!.intersects(self.spriteNode) {
+                    print("Collided with \(sprite.name ?? "")")
+                    spot.reachable = true
+                }
+            }
+        }
+        if let spot = hidingSpots.first(where: {$0.reachable == true}){
+            return spot
+        }
+        return nil
     }
 }

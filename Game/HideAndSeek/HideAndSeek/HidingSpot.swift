@@ -27,6 +27,7 @@ class HidingSpot: NSObject {
     var spriteNode: SKSpriteNode = SKSpriteNode()
     var image: String
     var reachable: Bool
+    var nodeReach: SKShapeNode?
     
     init(_ variant: Variant, _ location: CGPoint, image: String, capacity: Int?) {
         self.type = variant
@@ -58,7 +59,7 @@ class HidingSpot: NSObject {
     private func createSprite() -> SKSpriteNode {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
-        place.name = type.rawValue
+        place.name = "hidingSpot"
         place.aspectFillToSize(size: size)
         place.zPosition = zPosition
         return place
@@ -69,8 +70,8 @@ class HidingSpot: NSObject {
     func checkReach(_ player: Player) {
         let distance = abs(Float(hypot(player.spriteNode.position.x - location.x,
                                        player.spriteNode.position.y - location.y)))
-        let nodeRadius = abs(Float(hypot(size.width / 2, size.height / 2)))
-        let range = player.reach.rawValue + nodeRadius
+        let nodeRadius = size.width / 2
+        let range = player.reach.rawValue + Float(nodeRadius)
         if distance <= range {
             reachable = true
         } else {
@@ -78,7 +79,7 @@ class HidingSpot: NSObject {
         }
     }
     
-    func drawDebugArea(_ playerReach: Player.Reach) -> SKShapeNode{
+    func drawDebugArea(_ playerReach: Player.Reach) {
         let shape = SKShapeNode(circleOfRadius: (size.width / 2) + CGFloat(playerReach.rawValue))
         shape.position = CGPoint(
             x: spriteNode.position.x,
@@ -86,6 +87,6 @@ class HidingSpot: NSObject {
         shape.lineWidth = 2
         shape.strokeColor = .orange
         shape.zPosition = 99
-        return shape
+        nodeReach = shape
     }
 }

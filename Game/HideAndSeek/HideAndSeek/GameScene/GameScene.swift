@@ -41,7 +41,7 @@ class GameScene: SKScene {
     let cameraNode = SKCameraNode()
     
     var seeker: Player?
-    var bots: [Player]
+    var bots: [Bot]
     var player: Player
     var movingDirection: Direction = .Still
     var nodesHit: [SKSpriteNode] = []
@@ -161,7 +161,8 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), image: "house", capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        self.addChild(house.drawDebugArea(player.reach))
+        house.drawDebugArea(player.reach)
+        self.addChild(house.nodeReach!)
     }
     
     fileprivate func drawTents(){
@@ -184,7 +185,8 @@ class GameScene: SKScene {
         }
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        self.addChild(tent.drawDebugArea(player.reach))
+        tent.drawDebugArea(player.reach)
+        self.addChild(tent.nodeReach!)
     }
     
     fileprivate func createJoystick() {
@@ -237,9 +239,7 @@ class GameScene: SKScene {
         player.createSprite(size: CGSize(width: 50, height: 50), location: CGPoint(x: gameArea.width / 2, y: gameArea.height / 2))
         self.addChild(player.spriteNode)
         player.drawReach()
-        if player.nodeReach != nil {
-            self.addChild(player.nodeReach!)
-        }
+        self.addChild(player.nodeReach!)
     }
     
     fileprivate func spawnBots() {
@@ -248,12 +248,14 @@ class GameScene: SKScene {
         var role: Player.Role
         if roleIndex != Player.Role.seeker.hashValue {
             role = .seeker
-            let mainBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
-            mainBot.createSprite(size: botSize,
+            let seekerBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
+            seekerBot.createSprite(size: botSize,
                                  location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
-            self.addChild(mainBot.spriteNode)
-            seeker = mainBot
-            bots.append(mainBot)
+            self.addChild(seekerBot.spriteNode)
+            seekerBot.drawReach()
+            self.addChild(seekerBot.nodeReach!)
+            seeker = seekerBot
+            bots.append(seekerBot)
         }
         while bots.count < numberOfPlayers {
             let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
@@ -262,6 +264,8 @@ class GameScene: SKScene {
                                                y:  self.gameArea.height / 2 - 60))
             bots.append(bot)
             self.addChild(bot.spriteNode)
+            bot.drawReach()
+            self.addChild(bot.nodeReach!)
         }
     }
     
@@ -333,6 +337,9 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
+        player.checkBotCollision(scene!, bots)
+        player.checkHidingSpotsCollision(scene!, hidingSpots)
+        hidePlayer()
         catchPlayer()
         updateCameraPosition()
     }
@@ -413,46 +420,6 @@ class GameScene: SKScene {
         }
     }
     
-    func checkCollision() -> Bool {
-        var coliding: Bool = false
-        enumerateChildNodes(withName: "bot") { (node, _) in
-            let bot = node as! SKSpriteNode
-            if bot.intersects(self.player.spriteNode) {
-                coliding = true
-                print("Collided with \(bot.name ?? "")")
-            }
-        }
-        enumerateChildNodes(withName: HidingSpot.Variant.house.rawValue) { (node, _) in
-            let spot = node as! SKSpriteNode
-            if spot.intersects(self.player.spriteNode) {
-                coliding = true
-                print("Collided with \(spot.name ?? "")")
-            }
-        }
-        enumerateChildNodes(withName: HidingSpot.Variant.tent.rawValue) { (node, _) in
-            let spot = node as! SKSpriteNode
-            if spot.intersects(self.player.spriteNode) {
-                coliding = true
-                print("Collided with \(spot.name ?? "")")
-            }
-        }
-        enumerateChildNodes(withName: HidingSpot.Variant.lake.rawValue) { (node, _) in
-            let spot = node as! SKSpriteNode
-            if spot.intersects(self.player.spriteNode) {
-                coliding = true
-                print("Collided with \(spot.name ?? "")")
-            }
-        }
-        enumerateChildNodes(withName: HidingSpot.Variant.mountan.rawValue) { (node, _) in
-            let spot = node as! SKSpriteNode
-            if spot.intersects(self.player.spriteNode) {
-                coliding = true
-                print("Collided with \(spot.name ?? "")")
-            }
-        }
-        return coliding
-    }
-    
     func getDirection(for value: CGFloat) -> Direction{
         if (value * 100) < 100 && (value * 100) > -100{
             print("Up")
@@ -471,7 +438,6 @@ class GameScene: SKScene {
     }
     
     fileprivate func moveJoystick(_ location: CGPoint) {
-        var location = location
         if !freezeJoystick {
             if stickActive {
                 let radius = CGVector(dx: location.x - joystickBackground.position.x,
@@ -482,38 +448,7 @@ class GameScene: SKScene {
                     x: sin(angle) * length,
                     y: cos(angle) * length)
                 if joystickBackground.frame.contains(location) {
-                    if checkCollision(){
-//                        switch movingDirection {
-//                        case .Up:
-//                            if joystickBackground.position.y < location.y {
-//                                location.y = joystickBackground.position.y
-//                                joystick.position.x = location.x
-//                                print("can't move up")
-//                            }
-//                        case .Down:
-//                            if joystickBackground.position.y > location.y {
-//                                location.y = joystickBackground.position.y
-//                                joystick.position.x = location.x
-//                                print("can't move down")
-//                            }
-//                        case .Left:
-//                            if joystickBackground.position.x > location.x {
-//                                location.x = joystickBackground.position.x
-//                                joystick.position.y = location.y
-//                                print("can't move left")
-//                            }
-//                        case .Right:
-//                            if joystickBackground.position.x < location.x {
-//                                location.x = joystickBackground.position.x
-//                                joystick.position.y = location.y
-//                                print("can't move right")
-//                            }
-//                        default:
-//                            print("can move")
-//                        }
-                    } else {
                         joystick.position = location
-                    }
                 } else {
                     joystick.position = CGPoint(
                         x: joystickBackground.position.x - distance.x,
