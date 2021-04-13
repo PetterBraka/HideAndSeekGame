@@ -26,7 +26,7 @@ enum Direction: String {
 
 struct ColliderType {
     static let Player: UInt32 = 1
-    static let Bot: UInt32 = 2
+    static let HidingPlace: UInt32 = 2
 }
 
 class GameScene: SKScene {
@@ -46,7 +46,7 @@ class GameScene: SKScene {
     var movingDirection: Direction = .Still
     var nodesHit: [SKSpriteNode] = []
     var playableArea: CGRect
-    var cameraBounds: CGRect
+    var gameBounds: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -61,11 +61,11 @@ class GameScene: SKScene {
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
-        self.cameraBounds = playableArea
+        self.gameBounds = playableArea
         self.bots = []
         super.init(size: size)
         self.playableArea = getPlayableArea()
-        self.cameraBounds = getCameraBounds()
+        self.gameBounds = getCameraBounds()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -343,21 +343,27 @@ class GameScene: SKScene {
         }
         hidePlayer()
         catchPlayer()
-        updateCameraPosition()
+        constainGameArea()
     }
     
-    fileprivate func updateCameraPosition(){
-        let bottomLeft = CGPoint(x: cameraBounds.minX, y: cameraBounds.minY)
-        let topRight = CGPoint(x: cameraBounds.maxX, y: cameraBounds.maxY)
-        let positionX = player.spriteNode.position.x //- playableArea.width / 2
-        let positionY = player.spriteNode.position.y //- playableArea.height / 2
+    fileprivate func constainGameArea(){
+        let bottomLeft = CGPoint(x: gameBounds.minX, y: gameBounds.minY)
+        let topRight = CGPoint(x: gameBounds.maxX, y: gameBounds.maxY)
         
+        constrainCamera(bottomLeft, topRight)
+//        constrainPlayer(bottomLeft, topRight)
+        
+    }
+    
+    fileprivate func constrainCamera(_ bottomLeft: CGPoint, _ topRight: CGPoint) {
+        let positionX = player.spriteNode.position.x
+        let positionY = player.spriteNode.position.y
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
             (positionY >= bottomLeft.y && positionY <= topRight.y){
             cameraNode.position = player.spriteNode.position
         } else {
             if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
-            (positionY >= bottomLeft.y && positionY <= topRight.y) {
+                (positionY >= bottomLeft.y && positionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
                 #if DEBUG
                 //print("Outside horizontal game area")
@@ -371,8 +377,29 @@ class GameScene: SKScene {
                 #endif
             }
         }
-        
     }
+    
+//    fileprivate func constrainPlayer(_ bottomLeft: CGPoint, _ topRight: CGPoint) {
+//        let bottomLeft = CGPoint(x: playableArea.minX, y: playableArea.minY)
+//        let topRight = CGPoint(x: playableArea.maxX, y: playableArea.maxY)
+//        let positionX = player.spriteNode.position.x
+//        let positionY = player.spriteNode.position.y
+//        if (positionX <= bottomLeft.x || positionX >= topRight.x) {
+//
+//        } else if (positionY >= bottomLeft.y && positionY <= topRight.y) {
+//            #if DEBUG
+//            print("Outside horizontal game area")
+//            #endif
+//        }
+//        if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
+//            (positionY <= bottomLeft.y || positionY >= topRight.y) {
+//            #if DEBUG
+//            print("Outside vertical game area")
+//            #endif
+//        }
+//    }
+    
+
     
     fileprivate func updateButtonPosition() {
         actionButton.position = CGPoint(

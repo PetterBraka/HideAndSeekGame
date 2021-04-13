@@ -61,6 +61,12 @@ class Player: NSObject {
         player.zPosition = 1
         player.aspectFillToSize(size: size)
         player.name = "player"
+        player.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: image), size: size)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.affectedByGravity = false
+        player.physicsBody?.categoryBitMask = ColliderType.Player
+        player.physicsBody?.collisionBitMask = ColliderType.HidingPlace
+        
         spriteNode = player
     }
     

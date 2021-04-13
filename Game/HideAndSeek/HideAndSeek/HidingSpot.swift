@@ -62,6 +62,10 @@ class HidingSpot: NSObject {
         place.name = "hidingSpot"
         place.aspectFillToSize(size: size)
         place.zPosition = zPosition
+        place.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: image), size: size)
+        place.physicsBody?.isDynamic = false
+        place.physicsBody?.affectedByGravity = false
+        place.physicsBody?.categoryBitMask = ColliderType.HidingPlace
         return place
     }
     
