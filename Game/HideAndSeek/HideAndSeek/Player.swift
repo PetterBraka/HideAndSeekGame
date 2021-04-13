@@ -96,18 +96,7 @@ class Player: NSObject {
         }
     }
     
-    func toString(){
-        #if DEBUG
-        print("-------------------------------")
-        print("Role: \(role)")
-        print("Reach: \(reach)")
-        print("Speed: \(movmentSpeed)")
-        print("Image: \(String(describing: spriteNode.texture))")
-        print("-------------------------------")
-        #endif
-    }
-    
-    func checkBotCollision(_ scene: SKScene, _ allBots: [Bot]) -> Bot? {
+    func checkIntersections(_ scene: SKScene, _ allBots: [Bot]) -> Bot? {
         scene.enumerateChildNodes(withName: "bot") { (node, _) in
             let sprite = node as! SKSpriteNode
             if let bot = allBots.first(where: {$0.spriteNode == sprite}){
@@ -123,7 +112,7 @@ class Player: NSObject {
         return nil
     }
     
-    func checkHidingSpotsCollision(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
+    func checkIntersections(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
         scene.enumerateChildNodes(withName: "hidingSpot") { (node, _) in
             let sprite = node as! SKSpriteNode
             if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
@@ -137,5 +126,16 @@ class Player: NSObject {
             return spot
         }
         return nil
+    }
+    
+    func toString(){
+        #if DEBUG
+        print("-------------------------------")
+        print("Role: \(role)")
+        print("Reach: \(reach)")
+        print("Speed: \(movmentSpeed)")
+        print("Image: \(String(describing: spriteNode.texture))")
+        print("-------------------------------")
+        #endif
     }
 }

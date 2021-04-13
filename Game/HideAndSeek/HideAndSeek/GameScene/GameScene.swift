@@ -337,8 +337,10 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
-        player.checkBotCollision(scene!, bots)
-        player.checkHidingSpotsCollision(scene!, hidingSpots)
+        if scene != nil {
+            player.checkIntersections(scene!, bots)?.toString()
+            player.checkIntersections(scene!, hidingSpots)?.toString()
+        }
         hidePlayer()
         catchPlayer()
         updateCameraPosition()

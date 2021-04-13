@@ -89,4 +89,14 @@ class HidingSpot: NSObject {
         shape.zPosition = 99
         nodeReach = shape
     }
+    
+    func toString(){
+        #if DEBUG
+        print("-------------------------------")
+        print("Type: \(type)")
+        print("Capacity: \(capacity ?? 0)")
+        print("Image: \(String(describing: spriteNode.texture))")
+        print("-------------------------------")
+        #endif
+    }
 }
