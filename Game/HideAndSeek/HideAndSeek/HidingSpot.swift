@@ -10,41 +10,55 @@ import SpriteKit
 
 class HidingSpot: NSObject {
     enum Variant: String {
-        case mountan = "mountan"
+        case mountain = "mountain"
         case house = "house"
         case tent = "tent"
         case tree = "tree"
         case lake = "lake"
     }
     
-    private let zPosition: CGFloat = 1
-    private var size: CGSize
-    
     let type: Variant
     let location: CGPoint
-    let capacity: Int?
+    let capacity: Int
     
     var spriteNode: SKSpriteNode = SKSpriteNode()
     var image: String
     var reachable: Bool
     var nodeReach: SKShapeNode?
     
-    init(_ variant: Variant, _ location: CGPoint, image: String, capacity: Int?) {
+    init(_ variant: Variant, _ location: CGPoint, capacity: Int) {
         self.type = variant
-        self.location = location
-        self.image = image
-        self.reachable = false
+        self.image = variant.rawValue
         self.capacity = capacity
-        self.size = CGSize(width: 20, height: 20)
+        self.location = location
+        self.reachable = false
         super.init()
-        self.size = getSize()
+        self.spriteNode = createSprite()
+    }
+    
+    init(_ variant: Variant, _ location: CGPoint, newTent: Bool, capacity: Int) {
+        self.type = variant
+        self.capacity = capacity
+        self.location = location
+        self.reachable = false
+        switch variant {
+        case .tent:
+            if newTent {
+                image = "tentNew"
+            } else {
+                image = "tentOld"
+            }
+        default:
+            self.image = variant.rawValue
+        }
+        super.init()
         self.spriteNode = createSprite()
     }
     
     private func getSize() -> CGSize {
         switch type {
-        case .mountan:
-            return CGSize(width: 200, height: 800)
+        case .mountain:
+            return CGSize(width: 500, height: 700)
         case .house:
             return CGSize(width: 250, height: 250)
         case .tent:
@@ -60,9 +74,10 @@ class HidingSpot: NSObject {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
         place.name = "hidingSpot"
-        place.aspectFillToSize(size: size)
-        place.zPosition = zPosition
-        place.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: image), size: size)
+        place.aspectFillToSize(size: getSize())
+        place.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        place.zPosition = 1
+        place.physicsBody = SKPhysicsBody(texture: place.texture!, size: place.size)
         place.physicsBody?.isDynamic = false
         place.physicsBody?.affectedByGravity = false
         place.physicsBody?.categoryBitMask = ColliderType.HidingPlace
@@ -74,7 +89,7 @@ class HidingSpot: NSObject {
     func checkReach(_ player: Player) {
         let distance = abs(Float(hypot(player.spriteNode.position.x - location.x,
                                        player.spriteNode.position.y - location.y)))
-        let nodeRadius = size.width / 2
+        let nodeRadius = getSize().width / 2
         let range = player.reach.rawValue + Float(nodeRadius)
         if distance <= range {
             reachable = true
@@ -84,7 +99,7 @@ class HidingSpot: NSObject {
     }
     
     func drawDebugArea(_ playerReach: Player.Reach) {
-        let shape = SKShapeNode(circleOfRadius: (size.width / 2) + CGFloat(playerReach.rawValue))
+        let shape = SKShapeNode(circleOfRadius: (getSize().width / 2) + CGFloat(playerReach.rawValue))
         shape.position = CGPoint(
             x: spriteNode.position.x,
             y: spriteNode.position.y)

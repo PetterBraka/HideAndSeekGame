@@ -35,7 +35,6 @@ class GameScene: SKScene {
     let duration: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
-    let mountain = SKSpriteNode(imageNamed: "mountain")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
@@ -130,13 +129,18 @@ class GameScene: SKScene {
         background.zPosition = -1
         background.aspectFillToSize(size: gameArea.size)
         self.addChild(background)
-        mountain.anchorPoint = CGPoint(x: 0, y: 1)
-        mountain.position = CGPoint(x: 0, y: background.size.height)
-        mountain.zPosition = 0
-        mountain.size = CGSize(
-            width: ((background.size.width / 8) * 2) + (background.size.width / 12),
-            height: background.size.height - (background.size.height / 10))
-        self.addChild(mountain)
+        let mountain = HidingSpot(.mountain, CGPoint(x: 250, y: gameArea.height - 350), capacity: 0)
+        self.addChild(mountain.spriteNode)
+        
+//        let mountain = SKSpriteNode(imageNamed: "mountain")
+//        mountain.zPosition = 1
+//        mountain.aspectFillToSize(size: CGSize(width: 500, height: 700))
+//        mountain.position = CGPoint(x: 250, y: gameArea.height - 350)
+//        mountain.physicsBody = SKPhysicsBody(texture: mountain.texture!, size: mountain.size)
+//        mountain.physicsBody?.isDynamic = false
+//        mountain.physicsBody?.affectedByGravity = false
+//        mountain.physicsBody?.categoryBitMask = ColliderType.HidingPlace
+//        self.addChild(mountain)
         drawCampfire()
         drawRiver()
     }
@@ -158,7 +162,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func drawHouse() {
-        let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), image: "house", capacity: 2)
+        let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
         house.drawDebugArea(player.reach)
@@ -177,12 +181,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
-        var tent: HidingSpot
-        if newTent {
-            tent = HidingSpot(.tent, position, image: "tentNew", capacity: 1)
-        } else {
-            tent = HidingSpot(.tent, position, image: "tentOld", capacity: 1)
-        }
+        let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
         tent.drawDebugArea(player.reach)
