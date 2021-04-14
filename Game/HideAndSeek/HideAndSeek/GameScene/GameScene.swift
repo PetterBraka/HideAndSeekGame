@@ -103,7 +103,7 @@ class GameScene: SKScene {
         drawTents()
         addCamera()
         debugDrawPlayableArea()
-        createBariars()
+        createBarriers()()
     }
     
     fileprivate func addCamera(){
@@ -138,25 +138,25 @@ class GameScene: SKScene {
         drawRiver()
     }
     
-    func createBariars()  {
-        drawBariar(size: CGSize(width: gameArea.width, height: 5),
+    func createBarriers()  {
+        drawBarrier(size: CGSize(width: gameArea.width, height: 5),
                    position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
-        drawBariar(size: CGSize(width: gameArea.width, height: 5),
+        drawBarrier(size: CGSize(width: gameArea.width, height: 5),
                    position: CGPoint(x: gameArea.width / 2, y: 0))
-        drawBariar(size: CGSize(width: 5 , height: gameArea.height),
+        drawBarrier(size: CGSize(width: 5 , height: gameArea.height),
                    position: CGPoint(x: 0, y: gameArea.height / 2))
-        drawBariar(size: CGSize(width: 5 , height: gameArea.height),
+        drawBarrier(size: CGSize(width: 5 , height: gameArea.height),
                    position: CGPoint(x: gameArea.width, y: gameArea.height / 2))
     }
     
-    func drawBariar(size: CGSize, position: CGPoint) {
-        let bariar = SKSpriteNode(color: .clear, size: size)
-        bariar.position = position
-        bariar.physicsBody = SKPhysicsBody(rectangleOf: bariar.frame.size)
-        bariar.physicsBody?.isDynamic = false
-        bariar.physicsBody?.affectedByGravity = false
-        bariar.physicsBody?.categoryBitMask = ColliderType.HidingPlace
-        self.addChild(bariar)
+    func drawBarrier(size: CGSize, position: CGPoint) {
+        let barrier = SKSpriteNode(color: .clear, size: size)
+        barrier.position = position
+        barrier.physicsBody = SKPhysicsBody(rectangleOf: barrier.frame.size)
+        barrier.physicsBody?.isDynamic = false
+        barrier.physicsBody?.affectedByGravity = false
+        barrier.physicsBody?.categoryBitMask = ColliderType.HidingPlace
+        self.addChild(barrier)
     }
     
     fileprivate func drawCampfire(){
