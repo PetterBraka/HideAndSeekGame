@@ -77,7 +77,14 @@ class HidingSpot: NSObject {
         place.aspectFillToSize(size: getSize())
         place.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         place.zPosition = 1
-        place.physicsBody = SKPhysicsBody(texture: place.texture!, size: place.size)
+        switch type {
+        case .house:
+            place.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: place.size.width - 30, height: place.size.height - 50))
+        case .tent:
+            place.physicsBody = SKPhysicsBody(circleOfRadius: place.size.width / 2)
+        default:
+            place.physicsBody = SKPhysicsBody(texture: place.texture!, size: place.size)
+        }
         place.physicsBody?.isDynamic = false
         place.physicsBody?.affectedByGravity = false
         place.physicsBody?.categoryBitMask = ColliderType.HidingPlace
@@ -85,7 +92,7 @@ class HidingSpot: NSObject {
     }
     
     func drawDebugArea() {
-        let shape = SKShapeNode(circleOfRadius: (getSize().width / 2))
+        let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
         shape.position = CGPoint(
             x: spriteNode.position.x,
             y: spriteNode.position.y)

@@ -365,7 +365,6 @@ class GameScene: SKScene {
             let sprite = node as! SKSpriteNode
             if let bot = bots.first(where: {$0.spriteNode == sprite}){
                 if bot.nodeReach!.intersects(player.nodeReach!) {
-                    print("Collided with \(sprite.name ?? "")")
                     bot.reachable = true
                 } else {
                     bot.reachable = false
@@ -383,7 +382,6 @@ class GameScene: SKScene {
             let sprite = node as! SKSpriteNode
             if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
                 if spot.nodeReach!.intersects(player.nodeReach!) {
-                    print("Collided with \(sprite.name ?? "")")
                     spot.reachable = true
                 } else {
                     spot.reachable = false
