@@ -84,22 +84,8 @@ class HidingSpot: NSObject {
         return place
     }
     
-    // Try replacing this with a node and check if the nodes are touching or not.
-    // That might be lighter on the machin.
-    func checkReach(_ player: Player) {
-        let distance = abs(Float(hypot(player.spriteNode.position.x - location.x,
-                                       player.spriteNode.position.y - location.y)))
-        let nodeRadius = getSize().width / 2
-        let range = player.reach.rawValue + Float(nodeRadius)
-        if distance <= range {
-            reachable = true
-        } else {
-            reachable = false
-        }
-    }
-    
-    func drawDebugArea(_ playerReach: Player.Reach) {
-        let shape = SKShapeNode(circleOfRadius: (getSize().width / 2) + CGFloat(playerReach.rawValue))
+    func drawDebugArea() {
+        let shape = SKShapeNode(circleOfRadius: (getSize().width / 2))
         shape.position = CGPoint(
             x: spriteNode.position.x,
             y: spriteNode.position.y)

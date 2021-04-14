@@ -179,7 +179,7 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        house.drawDebugArea(player.reach)
+        house.drawDebugArea()
         self.addChild(house.nodeReach!)
     }
     
@@ -198,7 +198,7 @@ class GameScene: SKScene {
         let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        tent.drawDebugArea(player.reach)
+        tent.drawDebugArea()
         self.addChild(tent.nodeReach!)
     }
     
