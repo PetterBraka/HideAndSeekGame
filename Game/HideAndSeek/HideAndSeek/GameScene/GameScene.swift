@@ -103,6 +103,7 @@ class GameScene: SKScene {
         drawTents()
         addCamera()
         debugDrawPlayableArea()
+        createBariars()
     }
     
     fileprivate func addCamera(){
@@ -130,19 +131,32 @@ class GameScene: SKScene {
         background.aspectFillToSize(size: gameArea.size)
         self.addChild(background)
         let mountain = HidingSpot(.mountain, CGPoint(x: 250, y: gameArea.height - 350), capacity: 0)
+        mountain.spriteNode.position = CGPoint(x: mountain.spriteNode.size.width / 2,
+                                               y: gameArea.height - mountain.spriteNode.size.height / 2)
         self.addChild(mountain.spriteNode)
-        
-//        let mountain = SKSpriteNode(imageNamed: "mountain")
-//        mountain.zPosition = 1
-//        mountain.aspectFillToSize(size: CGSize(width: 500, height: 700))
-//        mountain.position = CGPoint(x: 250, y: gameArea.height - 350)
-//        mountain.physicsBody = SKPhysicsBody(texture: mountain.texture!, size: mountain.size)
-//        mountain.physicsBody?.isDynamic = false
-//        mountain.physicsBody?.affectedByGravity = false
-//        mountain.physicsBody?.categoryBitMask = ColliderType.HidingPlace
-//        self.addChild(mountain)
         drawCampfire()
         drawRiver()
+    }
+    
+    func createBariars()  {
+        drawBariar(size: CGSize(width: gameArea.width, height: 5),
+                   position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
+        drawBariar(size: CGSize(width: gameArea.width, height: 5),
+                   position: CGPoint(x: gameArea.width / 2, y: 0))
+        drawBariar(size: CGSize(width: 5 , height: gameArea.height),
+                   position: CGPoint(x: 0, y: gameArea.height / 2))
+        drawBariar(size: CGSize(width: 5 , height: gameArea.height),
+                   position: CGPoint(x: gameArea.width, y: gameArea.height / 2))
+    }
+    
+    func drawBariar(size: CGSize, position: CGPoint) {
+        let bariar = SKSpriteNode(color: .clear, size: size)
+        bariar.position = position
+        bariar.physicsBody = SKPhysicsBody(rectangleOf: bariar.frame.size)
+        bariar.physicsBody?.isDynamic = false
+        bariar.physicsBody?.affectedByGravity = false
+        bariar.physicsBody?.categoryBitMask = ColliderType.HidingPlace
+        self.addChild(bariar)
     }
     
     fileprivate func drawCampfire(){
@@ -346,15 +360,9 @@ class GameScene: SKScene {
     }
     
     fileprivate func constainGameArea(){
-        let bottomLeft = CGPoint(x: gameBounds.minX, y: gameBounds.minY)
-        let topRight = CGPoint(x: gameBounds.maxX, y: gameBounds.maxY)
-        
-        constrainCamera(bottomLeft, topRight)
-//        constrainPlayer(bottomLeft, topRight)
-        
-    }
-    
-    fileprivate func constrainCamera(_ bottomLeft: CGPoint, _ topRight: CGPoint) {
+        let bottomLeft = CGPoint(x: playableArea.width / 2, y: playableArea.height / 2)
+        let topRight = CGPoint(x: gameArea.width - playableArea.width / 2, y: gameArea.height - playableArea.height / 2)
+
         let positionX = player.spriteNode.position.x
         let positionY = player.spriteNode.position.y
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
@@ -377,28 +385,6 @@ class GameScene: SKScene {
             }
         }
     }
-    
-//    fileprivate func constrainPlayer(_ bottomLeft: CGPoint, _ topRight: CGPoint) {
-//        let bottomLeft = CGPoint(x: playableArea.minX, y: playableArea.minY)
-//        let topRight = CGPoint(x: playableArea.maxX, y: playableArea.maxY)
-//        let positionX = player.spriteNode.position.x
-//        let positionY = player.spriteNode.position.y
-//        if (positionX <= bottomLeft.x || positionX >= topRight.x) {
-//
-//        } else if (positionY >= bottomLeft.y && positionY <= topRight.y) {
-//            #if DEBUG
-//            print("Outside horizontal game area")
-//            #endif
-//        }
-//        if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
-//            (positionY <= bottomLeft.y || positionY >= topRight.y) {
-//            #if DEBUG
-//            print("Outside vertical game area")
-//            #endif
-//        }
-//    }
-    
-
     
     fileprivate func updateButtonPosition() {
         actionButton.position = CGPoint(
@@ -485,7 +471,6 @@ class GameScene: SKScene {
                 moveTo(location)
                 player.spriteNode.zRotation = angle
                 movingDirection = getDirection(for: angle)
-                print(movingDirection.rawValue)
             }
         }
     }

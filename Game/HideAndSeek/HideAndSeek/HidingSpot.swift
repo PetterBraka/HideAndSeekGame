@@ -113,7 +113,7 @@ class HidingSpot: NSObject {
         #if DEBUG
         print("-------------------------------")
         print("Type: \(type)")
-        print("Capacity: \(capacity ?? 0)")
+        print("Capacity: \(capacity)")
         print("Image: \(String(describing: spriteNode.texture))")
         print("-------------------------------")
         #endif
