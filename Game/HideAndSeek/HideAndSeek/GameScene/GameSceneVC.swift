@@ -15,7 +15,7 @@ class GameSceneVC: UIViewController {
     var duration: Int?
     
     @IBAction func exitButton(_ sender: UIButton) {
-        self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -40,6 +40,7 @@ class GameSceneVC: UIViewController {
             view?.ignoresSiblingOrder = true
             view?.showsFPS = true
             view?.showsNodeCount = true
+            view?.showsPhysics = true
         }
     }
 }

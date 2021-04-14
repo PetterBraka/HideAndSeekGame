@@ -137,6 +137,7 @@ class SetUpVC: UIViewController {
         gameScene.numberOfPlayers = numberOfPlayer
         gameScene.gameDifficulty = difficulty
         gameScene.duration = duration
+        gameScene.modalPresentationStyle = .fullScreen
         self.present(gameScene, animated: true, completion: nil)
     }
     

@@ -13,13 +13,6 @@ class SegmentCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func updateSegmentControler(_ options: [String]){
@@ -27,9 +20,9 @@ class SegmentCell: UITableViewCell {
         for option in options {
             segmentControl.insertSegment(withTitle: option,
                                          at: segmentControl.numberOfSegments,
-                                         animated: true)
+                                         animated: false)
         }
-        segmentControl.selectedSegmentIndex = 0
+        segmentControl.selectedSegmentIndex = segmentControl.numberOfSegments / 3
     }
     
     func getData() -> String {
