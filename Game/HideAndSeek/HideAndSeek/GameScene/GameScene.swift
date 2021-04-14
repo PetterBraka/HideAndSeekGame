@@ -103,7 +103,7 @@ class GameScene: SKScene {
         drawTents()
         addCamera()
         debugDrawPlayableArea()
-        createBarriers()()
+        createBarriers()
     }
     
     fileprivate func addCamera(){
