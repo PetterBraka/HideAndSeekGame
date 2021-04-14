@@ -206,8 +206,8 @@ class GameScene: SKScene {
         joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
         joystickBackground.position = CGPoint(
-            x: (joystickBackground.size.width / 2 + 20) - playableArea.width / 2,
-            y: (joystickBackground.size.height / 2 + 20) - playableArea.height / 2)
+            x: (joystickBackground.size.width / 2 + 50) - playableArea.width / 2,
+            y: (joystickBackground.size.height / 2 + 50) - playableArea.height / 2)
         joystickBackground.alpha = 0.7
         joystickBackground.zPosition = 9
         cameraNode.addChild(joystickBackground)
@@ -227,7 +227,7 @@ class GameScene: SKScene {
         actionButton.zPosition = 10
         actionButton.position = CGPoint(
             x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
-            y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
+            y: ( joystickBackground.position.y))
         cameraNode.addChild(actionButton)
         createButtonLable()
     }
@@ -352,15 +352,10 @@ class GameScene: SKScene {
         player.nodeReach?.position = player.spriteNode.position
         if let bot = checkBotsIntersections(){
             catchPlayer(bot)
-            updateButtonPosition()
         } else if checkHidingSpotsIntersections() != nil {
             hidePlayer()
-            updateButtonPosition()
         } else {
             buttonLabel.text = ""
-            actionButton.position = CGPoint(
-                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
-                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         }
         constrainGameArea()
     }
@@ -428,15 +423,6 @@ class GameScene: SKScene {
         }
     }
     
-    fileprivate func updateButtonPosition() {
-        actionButton.position = CGPoint(
-            x: (size.width - 50 - (actionButton.size.width / 2) - playableArea.width / 2),
-            y: (20 + actionButton.size.height / 2 + buttonLabel.frame.height) - playableArea.height / 2)
-        buttonLabel.position = CGPoint(
-            x: actionButton.position.x,
-            y: actionButton.position.y - actionButton.size.height / 2)
-    }
-    
     fileprivate func hidePlayer(){
         if player.role == .hider {
             if hidingSpots.contains(where: {$0.reachable == true}) {
@@ -463,16 +449,12 @@ class GameScene: SKScene {
     
     func getDirection(for value: CGFloat) -> Direction{
         if (value * 100) < 100 && (value * 100) > -100{
-            print("Up")
             return .Up
         } else if (value * 100) < -100 && (value * 100) > -200 {
-            print("Right")
             return .Right
         } else if (value * 100) < -200 && (value * 100) > -400 {
-            print("Down")
             return .Down
         } else if (value * 100) < -400 || (value * 100) > 100{
-            print("Left")
             return .Left
         }
         return .Still
@@ -498,6 +480,9 @@ class GameScene: SKScene {
                 moveTo(location)
                 player.spriteNode.zRotation = angle
                 movingDirection = getDirection(for: angle)
+                #if DEBUG
+                print(movingDirection.rawValue)
+                #endif
             }
         }
     }
