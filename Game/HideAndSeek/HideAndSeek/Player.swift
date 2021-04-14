@@ -102,38 +102,6 @@ class Player: NSObject {
         }
     }
     
-    func checkIntersections(_ scene: SKScene, _ allBots: [Bot]) -> Bot? {
-        scene.enumerateChildNodes(withName: "bot") { (node, _) in
-            let sprite = node as! SKSpriteNode
-            if let bot = allBots.first(where: {$0.spriteNode == sprite}){
-                if bot.nodeReach!.intersects(self.spriteNode) {
-                    print("Collided with \(sprite.name ?? "")")
-                    bot.reachable = true
-                }
-            }
-        }
-        if let bot = allBots.first(where: {$0.reachable == true}){
-            return bot
-        }
-        return nil
-    }
-    
-    func checkIntersections(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
-        scene.enumerateChildNodes(withName: "hidingSpot") { (node, _) in
-            let sprite = node as! SKSpriteNode
-            if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
-                if spot.nodeReach!.intersects(self.spriteNode) {
-                    print("Collided with \(sprite.name ?? "")")
-                    spot.reachable = true
-                }
-            }
-        }
-        if let spot = hidingSpots.first(where: {$0.reachable == true}){
-            return spot
-        }
-        return nil
-    }
-    
     func toString(){
         #if DEBUG
         print("-------------------------------")

@@ -229,12 +229,12 @@ class GameScene: SKScene {
             x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
             y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         cameraNode.addChild(actionButton)
-        createButtonLable()
+        createButtonLabel()
     }
     
-    fileprivate func createButtonLable() {
-        buttonLabel.text = "Action button"
-        buttonLabel.name = "ButtonLabel"
+    fileprivate func createButtonLabel() {
+        buttonLabel.text = ""
+        buttonLabel.name = "actionButtonLabel"
         buttonLabel.color = .black
         buttonLabel.fontSize = 20
         buttonLabel.numberOfLines = 2
@@ -350,16 +350,56 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         move(player.spriteNode, velocity)
         player.nodeReach?.position = player.spriteNode.position
-        if scene != nil {
-            player.checkIntersections(scene!, bots)?.toString()
-            player.checkIntersections(scene!, hidingSpots)?.toString()
+        if let bot = checkBotsIntersections(){
+            catchPlayer(bot)
+        } else if checkHidingSpotsIntersections() != nil {
+            hidePlayer()
+        } else {
+            buttonLabel.text = ""
+            actionButton.position = CGPoint(
+                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
+                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         }
-        hidePlayer()
-        catchPlayer()
-        constainGameArea()
+        constrainGameArea()
     }
     
-    fileprivate func constainGameArea(){
+    func checkBotsIntersections() -> Bot? {
+        enumerateChildNodes(withName: "bot") { [self] (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let bot = bots.first(where: {$0.spriteNode == sprite}){
+                if bot.nodeReach!.intersects(player.nodeReach!) {
+                    print("Collided with \(sprite.name ?? "")")
+                    bot.reachable = true
+                } else {
+                    bot.reachable = false
+                }
+            }
+        }
+        if let bot = bots.first(where: {$0.reachable == true}){
+            return bot
+        }
+        return nil
+    }
+    
+    func checkHidingSpotsIntersections() -> HidingSpot? {
+        enumerateChildNodes(withName: "hidingSpot") { [self] (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
+                if spot.nodeReach!.intersects(player.nodeReach!) {
+                    print("Collided with \(sprite.name ?? "")")
+                    spot.reachable = true
+                } else {
+                    spot.reachable = false
+                }
+            }
+        }
+        if let spot = hidingSpots.first(where: {$0.reachable == true}){
+            return spot
+        }
+        return nil
+    }
+    
+    fileprivate func constrainGameArea(){
         let bottomLeft = CGPoint(x: playableArea.width / 2, y: playableArea.height / 2)
         let topRight = CGPoint(x: gameArea.width - playableArea.width / 2, y: gameArea.height - playableArea.height / 2)
 
@@ -396,9 +436,6 @@ class GameScene: SKScene {
     }
     
     fileprivate func hidePlayer(){
-        hidingSpots.forEach { (hidingSpot) in
-            hidingSpot.checkReach(player)
-        }
         if hidingSpots.contains(where: {$0.reachable == true}) {
             if !freezeJoystick{
                 buttonLabel.text = "Hide"
@@ -406,31 +443,19 @@ class GameScene: SKScene {
                 buttonLabel.text = "Leave"
             }
             updateButtonPosition()
-        } else {
-            buttonLabel.text = ""
-            actionButton.position = CGPoint(
-                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
-                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         }
     }
     
-    fileprivate func catchPlayer(){
-        bots.forEach { (bot) in
-            bot.checkReach(player)
-        }
-        if bots.contains(where: {$0.reachable == true}){
-        let bot = bots.first(where: {$0.reachable == true})
-            if bot?.movmentSpeed == .frozen {
-                buttonLabel.text = "Free"
-            } else {
+    fileprivate func catchPlayer(_ bot: Bot){
+        if player.role == .seeker {
+            if bot.movmentSpeed != .frozen {
                 buttonLabel.text = "Catch"
             }
-            updateButtonPosition()
         } else {
-            buttonLabel.text = ""
-            actionButton.position = CGPoint(
-                x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
-                y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
+            if bot.movmentSpeed == .frozen {
+                buttonLabel.text = "Free"
+            }
+            updateButtonPosition()
         }
     }
     
