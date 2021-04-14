@@ -140,13 +140,13 @@ class GameScene: SKScene {
     
     func createBarriers()  {
         drawBarrier(size: CGSize(width: gameArea.width, height: 5),
-                   position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
+                    position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
         drawBarrier(size: CGSize(width: gameArea.width, height: 5),
-                   position: CGPoint(x: gameArea.width / 2, y: 0))
+                    position: CGPoint(x: gameArea.width / 2, y: 0))
         drawBarrier(size: CGSize(width: 5 , height: gameArea.height),
-                   position: CGPoint(x: 0, y: gameArea.height / 2))
+                    position: CGPoint(x: 0, y: gameArea.height / 2))
         drawBarrier(size: CGSize(width: 5 , height: gameArea.height),
-                   position: CGPoint(x: gameArea.width, y: gameArea.height / 2))
+                    position: CGPoint(x: gameArea.width, y: gameArea.height / 2))
     }
     
     func drawBarrier(size: CGSize, position: CGPoint) {
@@ -229,12 +229,12 @@ class GameScene: SKScene {
             x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
             y: (20 + actionButton.size.height / 2) - playableArea.height / 2)
         cameraNode.addChild(actionButton)
-        createButtonLabel()
+        createButtonLable()
     }
     
-    fileprivate func createButtonLabel() {
-        buttonLabel.text = ""
-        buttonLabel.name = "actionButtonLabel"
+    fileprivate func createButtonLable() {
+        buttonLabel.text = "Action button"
+        buttonLabel.name = "ButtonLabel"
         buttonLabel.color = .black
         buttonLabel.fontSize = 20
         buttonLabel.numberOfLines = 2
@@ -263,7 +263,7 @@ class GameScene: SKScene {
             role = .seeker
             let seekerBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
             seekerBot.createSprite(size: botSize,
-                                 location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
+                                   location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(seekerBot.spriteNode)
             seekerBot.drawReach()
             self.addChild(seekerBot.nodeReach!)
@@ -352,8 +352,10 @@ class GameScene: SKScene {
         player.nodeReach?.position = player.spriteNode.position
         if let bot = checkBotsIntersections(){
             catchPlayer(bot)
+            updateButtonPosition()
         } else if checkHidingSpotsIntersections() != nil {
             hidePlayer()
+            updateButtonPosition()
         } else {
             buttonLabel.text = ""
             actionButton.position = CGPoint(
@@ -402,7 +404,7 @@ class GameScene: SKScene {
     fileprivate func constrainGameArea(){
         let bottomLeft = CGPoint(x: playableArea.width / 2, y: playableArea.height / 2)
         let topRight = CGPoint(x: gameArea.width - playableArea.width / 2, y: gameArea.height - playableArea.height / 2)
-
+        
         let positionX = player.spriteNode.position.x
         let positionY = player.spriteNode.position.y
         if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
@@ -436,13 +438,14 @@ class GameScene: SKScene {
     }
     
     fileprivate func hidePlayer(){
-        if hidingSpots.contains(where: {$0.reachable == true}) {
-            if !freezeJoystick{
-                buttonLabel.text = "Hide"
-            } else {
-                buttonLabel.text = "Leave"
+        if player.role == .hider {
+            if hidingSpots.contains(where: {$0.reachable == true}) {
+                if !freezeJoystick{
+                    buttonLabel.text = "Hide"
+                } else {
+                    buttonLabel.text = "Leave"
+                }
             }
-            updateButtonPosition()
         }
     }
     
@@ -455,7 +458,6 @@ class GameScene: SKScene {
             if bot.movmentSpeed == .frozen {
                 buttonLabel.text = "Free"
             }
-            updateButtonPosition()
         }
     }
     
@@ -487,7 +489,7 @@ class GameScene: SKScene {
                     x: sin(angle) * length,
                     y: cos(angle) * length)
                 if joystickBackground.frame.contains(location) {
-                        joystick.position = location
+                    joystick.position = location
                 } else {
                     joystick.position = CGPoint(
                         x: joystickBackground.position.x - distance.x,
