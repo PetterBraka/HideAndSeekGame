@@ -1,11 +1,8 @@
-//
-//  GameScene.swift
-//  HideAndSeek
-//
-//  Created by Petter vang Brakalsvålet on 26/02/2021.
-//
+//: A SpriteKit based Playground
 
+import PlaygroundSupport
 import SpriteKit
+
 
 enum ChallangeRating : String {
     case easy = "Easy"
@@ -13,14 +10,6 @@ enum ChallangeRating : String {
     case hard = "Hard"
     
     static var count: Int {return ChallangeRating.hard.hashValue + 1}
-}
-
-enum Direction: String {
-    case Up = "Up"
-    case Down = "Down"
-    case Left = "Left"
-    case Right = "Right"
-    case Still = "Still"
 }
 
 struct ColliderType {
@@ -39,9 +28,8 @@ class GameScene: SKScene {
     let cameraNode = SKCameraNode()
     
     var seeker: Player?
-    var bots: [Bot]
+    var bots: [Player]
     var player: Player
-    var movingDirection: Direction = .Still
     var nodesHit: [SKSpriteNode] = []
     var playableArea: CGRect
     var gameBounds: CGRect
@@ -84,15 +72,15 @@ class GameScene: SKScene {
         return rect
     }
     
+    @objc static override var supportsSecureCoding: Bool {
+        // SKNode conforms to NSSecureCoding, so any subclass going
+        // through the decoding process must support secure coding
+        get {
+            return true
+        }
+    }
+    
     override func didMove(to view: SKView) {
-        #if DEBUG
-        print("============================")
-        print("Duration: \(duration)")
-        print("Difficulty: \(gameDifficulty)")
-        print("Amount of player: \(numberOfPlayers)")
-        player.toString()
-        print("============================")
-        #endif
         createMap()
         createJoystick()
         createButton()
@@ -124,7 +112,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func createMap() {
-        let background = SKSpriteNode(imageNamed: "gameBackground")
+        let background = SKSpriteNode(imageNamed: "map")
         background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
         background.zPosition = -1
         background.aspectFillToSize(size: gameArea.size)
@@ -232,7 +220,7 @@ class GameScene: SKScene {
     }
     
     fileprivate func createButtonLable() {
-        buttonLabel.text = "Action button"
+        buttonLabel.text = ""
         buttonLabel.name = "ButtonLabel"
         buttonLabel.color = .black
         buttonLabel.fontSize = 20
@@ -260,7 +248,7 @@ class GameScene: SKScene {
         var role: Player.Role
         if roleIndex != Player.Role.seeker.hashValue {
             role = .seeker
-            let seekerBot = Bot(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
+            let seekerBot = Player(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
             seekerBot.createSprite(size: botSize,
                                    location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(seekerBot.spriteNode)
@@ -270,7 +258,7 @@ class GameScene: SKScene {
             bots.append(seekerBot)
         }
         while bots.count < numberOfPlayers {
-            let bot = Bot(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
+            let bot = Player(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
             bot.createSprite(size: botSize,
                              location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(bots.count) + 20,
                                                y:  self.gameArea.height / 2 - 60))
@@ -290,26 +278,15 @@ class GameScene: SKScene {
                 stickActive = false
             }
             if actionButton.contains(location) {
-                #if DEBUG
-                print("button taped")
-                #endif
                 switch buttonLabel.text {
                 case "Hide":
                     let hidePlayer = SKAction.hide()
                     player.spriteNode.run(hidePlayer)
                     freezeJoystick = true
-                    #if DEBUG
-                    print("Player is hidden")
-                    print("Freezing controlls")
-                    #endif
                 case "Leave":
                     let showPlayer = SKAction.unhide()
                     player.spriteNode.run(showPlayer)
                     freezeJoystick = false
-                    #if DEBUG
-                    print("Player isn't hidden")
-                    print("Unfreezing controlls")
-                    #endif
                 case "Catch":
                     if let bot = bots.first(where: {$0.reachable == true}){
                         bot.chought()
@@ -340,6 +317,14 @@ class GameScene: SKScene {
         velocity = CGPoint.zero
     }
     
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if stickActive {
+            let move = SKAction.move(to: joystickBackground.position, duration: 0.2)
+            joystick.run(move)
+        }
+        velocity = CGPoint.zero
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -359,7 +344,7 @@ class GameScene: SKScene {
         constrainGameArea()
     }
     
-    func checkBotsIntersections() -> Bot? {
+    func checkBotsIntersections() -> Player? {
         enumerateChildNodes(withName: "bot") { [self] (node, _) in
             let sprite = node as! SKSpriteNode
             if let bot = bots.first(where: {$0.spriteNode == sprite}){
@@ -432,7 +417,7 @@ class GameScene: SKScene {
         }
     }
     
-    fileprivate func catchPlayer(_ bot: Bot){
+    fileprivate func catchPlayer(_ bot: Player){
         if player.role == .seeker {
             if bot.movmentSpeed != .frozen {
                 buttonLabel.text = "Catch"
@@ -442,19 +427,6 @@ class GameScene: SKScene {
                 buttonLabel.text = "Free"
             }
         }
-    }
-    
-    func getDirection(for value: CGFloat) -> Direction{
-        if (value * 100) < 100 && (value * 100) > -100{
-            return .Up
-        } else if (value * 100) < -100 && (value * 100) > -200 {
-            return .Right
-        } else if (value * 100) < -200 && (value * 100) > -400 {
-            return .Down
-        } else if (value * 100) < -400 || (value * 100) > 100{
-            return .Left
-        }
-        return .Still
     }
     
     fileprivate func moveJoystick(_ location: CGPoint) {
@@ -476,22 +448,238 @@ class GameScene: SKScene {
                 }
                 moveTo(location)
                 player.spriteNode.zRotation = angle
-                movingDirection = getDirection(for: angle)
-                #if DEBUG
-                print(movingDirection.rawValue)
-                #endif
             }
         }
     }
     
     func moveTo(_ location: CGPoint){
-        let offset = location - joystickBackground.position
-        let direction = offset.normalized()
-        velocity = direction * player.movmentSpeed.rawValue
+        let offset = CGPoint(x: location.x - joystickBackground.position.x,
+                             y: location.y - joystickBackground.position.y)
+        let direction = CGPoint(x: offset.x / sqrt(offset.x * offset.x + offset.y * offset.y),
+                                y: offset.y / sqrt(offset.x * offset.x + offset.y * offset.y))
+        velocity = CGPoint(x: direction.x * player.movmentSpeed.rawValue,
+                           y: direction.y * player.movmentSpeed.rawValue)
     }
     
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
-        let amountToMove = velocity * CGFloat(dt)
-        sprite.position += amountToMove
+        let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
+                                   y: velocity.y * CGFloat(dt))
+        sprite.position = CGPoint(x: sprite.position.x + amountToMove.x,
+                                  y: sprite.position.y + amountToMove.y)
     }
 }
+
+class Player: NSObject {
+    enum Role: String {
+        case hider = "Hider"
+        case seeker = "Seeker"
+    }
+
+    enum Reach: Float {
+        case short = 10
+        case medium = 20
+        case far = 30
+    }
+    
+    enum Speed: CGFloat {
+        case slow = 100
+        case normal = 200
+        case fast = 300
+        case frozen = 0
+    }
+    
+    var reach: Reach
+    var role: Role
+    let speed: Speed
+    var movmentSpeed: Speed
+    var spriteNode: SKSpriteNode
+    var nodeReach: SKShapeNode?
+    var reachable: Bool = false
+    
+    internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed) {
+        self.reach = reach
+        self.role = role
+        self.speed = movmentSpeed
+        self.movmentSpeed = movmentSpeed
+        switch role {
+        case .hider:
+            self.spriteNode = SKSpriteNode(imageNamed: "Hider")
+        default:
+            self.spriteNode = SKSpriteNode(imageNamed: "Seeker")
+        }
+    }
+    
+    func createSprite(size: CGSize, location: CGPoint) {
+        let player = SKSpriteNode(imageNamed: role.rawValue)
+        player.position = location
+        player.zPosition = 1
+        player.aspectFillToSize(size: size)
+        player.name = "player"
+        player.physicsBody = SKPhysicsBody(texture: player.texture!, size: size)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.affectedByGravity = false
+        player.physicsBody?.categoryBitMask = ColliderType.Player
+        player.physicsBody?.collisionBitMask = ColliderType.HidingPlace
+        
+        spriteNode = player
+    }
+    
+    func chought(){
+        movmentSpeed = .frozen
+        spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0.5, duration: 0.8))
+    }
+    
+    func freed(){
+        movmentSpeed = speed
+        spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0, duration: 0.8))
+    }
+    
+    func drawReach(){
+        let raidus = CGFloat(reach.rawValue) + (spriteNode.size.width / 2)
+        let shape = SKShapeNode(circleOfRadius: raidus)
+        shape.position = spriteNode.position
+        shape.lineWidth = 2
+        shape.strokeColor = .orange
+        shape.zPosition = 99
+        nodeReach = shape
+    }
+    
+    func checkReach(_ player: Player) {
+        let distance = abs(Float(hypot(player.spriteNode.position.x - spriteNode.position.x,
+                                       player.spriteNode.position.y - spriteNode.position.y)))
+        let nodeRadius = spriteNode.size.width / 2
+        let range = player.reach.rawValue + Float(nodeRadius)
+        if distance <= range {
+            reachable = true
+        } else {
+            reachable = false
+        }
+    }
+}
+
+class HidingSpot: NSObject {
+    enum Variant: String {
+        case mountain = "mountain"
+        case house = "house"
+        case tent = "tent"
+        case tree = "tree"
+        case lake = "lake"
+    }
+    
+    let type: Variant
+    let location: CGPoint
+    let capacity: Int
+    
+    var spriteNode: SKSpriteNode = SKSpriteNode()
+    var image: String
+    var reachable: Bool
+    var nodeReach: SKShapeNode?
+    
+    init(_ variant: Variant, _ location: CGPoint, capacity: Int) {
+        self.type = variant
+        self.image = variant.rawValue
+        self.capacity = capacity
+        self.location = location
+        self.reachable = false
+        super.init()
+        self.spriteNode = createSprite()
+    }
+    
+    init(_ variant: Variant, _ location: CGPoint, newTent: Bool, capacity: Int) {
+        self.type = variant
+        self.capacity = capacity
+        self.location = location
+        self.reachable = false
+        switch variant {
+        case .tent:
+            if newTent {
+                image = "tentNew"
+            } else {
+                image = "tentOld"
+            }
+        default:
+            self.image = variant.rawValue
+        }
+        super.init()
+        self.spriteNode = createSprite()
+    }
+    
+    private func getSize() -> CGSize {
+        switch type {
+        case .mountain:
+            return CGSize(width: 500, height: 700)
+        case .house:
+            return CGSize(width: 250, height: 250)
+        case .tent:
+            return CGSize(width: 80, height: 80)
+        case .tree:
+            return CGSize(width: 60, height: 120)
+        case .lake:
+            return CGSize(width: 4000, height: 150)
+        }
+    }
+    
+    private func createSprite() -> SKSpriteNode {
+        let place = SKSpriteNode(imageNamed: image)
+        place.position = location
+        place.name = "hidingSpot"
+        place.aspectFillToSize(size: getSize())
+        place.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        place.zPosition = 1
+        switch type {
+        case .house:
+            place.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: place.size.width - 30, height: place.size.height - 50))
+        case .tent:
+            place.physicsBody = SKPhysicsBody(circleOfRadius: place.size.width / 2)
+        default:
+            place.physicsBody = SKPhysicsBody(texture: place.texture!, size: place.size)
+        }
+        place.physicsBody?.isDynamic = false
+        place.physicsBody?.affectedByGravity = false
+        place.physicsBody?.categoryBitMask = ColliderType.HidingPlace
+        return place
+    }
+    
+    func drawDebugArea() {
+        let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
+        shape.position = CGPoint(
+            x: spriteNode.position.x,
+            y: spriteNode.position.y)
+        shape.lineWidth = 2
+        shape.strokeColor = .orange
+        shape.zPosition = 99
+        nodeReach = shape
+    }
+}
+
+extension SKSpriteNode {
+    func aspectFillToSize(size: CGSize) {
+        guard let texture = self.texture else {
+            print("Can't set aspect ratio of node. No textures found for node")
+            return
+        }
+        self.size = texture.size()
+        let heightRatio = size.height / texture.size().height
+        let widthRatio = size.width / texture.size().width
+        
+        let scaleingRatio = widthRatio > heightRatio ? widthRatio : heightRatio
+        
+        setScale(scaleingRatio)
+    }
+}
+
+// Load the SKScene from 'GameScene.sks'
+let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 640, height: 480))
+let player = Player(reach: .medium, role: .hider, movmentSpeed: .normal)
+let scene = GameScene(size: sceneView.bounds.size,
+                         difficulty: .normal,
+                         player: player,
+                         duration: 1,
+                         amountOfPlayers: 3)
+    // Set the scale mode to scale to fit the window
+    scene.scaleMode = .aspectFill
+    
+    // Present the scene
+    sceneView.presentScene(scene)
+
+PlaygroundSupport.PlaygroundPage.current.liveView = sceneView

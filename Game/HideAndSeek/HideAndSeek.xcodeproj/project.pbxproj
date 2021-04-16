@@ -37,6 +37,7 @@
 		3371F2E125E9125A008E983E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		3371F2E725E91822008E983E /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		3382B456262A1ED10091CBF1 /* HideAndSeek.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = HideAndSeek.playground; path = ../../../../../HideAndSeekGame/Playground/HideAndSeek.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		339157972608B097008FFCA2 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3391579C2608B8E8008FFCA2 /* Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bot.swift; sourceTree = "<group>"; };
 		33DAC07F25FF7B18007FA28F /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		33E5BDB625E5369600D337F9 = {
 			isa = PBXGroup;
 			children = (
+				3382B456262A1ED10091CBF1 /* HideAndSeek.playground */,
 				33E5BDC125E5369600D337F9 /* HideAndSeek */,
 				33E5BDC025E5369600D337F9 /* Products */,
 			);
