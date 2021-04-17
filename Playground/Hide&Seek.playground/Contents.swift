@@ -72,24 +72,11 @@ class GameScene: SKScene {
         return rect
     }
     
-    @objc static override var supportsSecureCoding: Bool {
-        // SKNode conforms to NSSecureCoding, so any subclass going
-        // through the decoding process must support secure coding
-        get {
-            return true
-        }
-    }
-    
     override func didMove(to view: SKView) {
         createMap()
         createJoystick()
         createButton()
-        spawnPlayer()
-        spawnBots()
-        drawHouse()
-        drawTents()
         addCamera()
-        debugDrawPlayableArea()
         createBarriers()
     }
     
@@ -99,18 +86,7 @@ class GameScene: SKScene {
         cameraNode.position = player.spriteNode.position
     }
     
-    func debugDrawPlayableArea() {
-        let aspectRatio = frame.width / frame.height
-        let playableHeight = playableArea.width / aspectRatio
-        let playableMargin = (playableArea.height - playableHeight) / 2.0
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: playableMargin, width: size.width, height: playableArea.height))
-        shape.strokeColor = .systemRed
-        shape.lineWidth = 5
-        shape.zPosition = 20
-        shape.position = CGPoint(x: -playableArea.width / 2, y: playableMargin - playableArea.height / 2)
-        cameraNode.addChild(shape)
-    }
-    
+    //: Creating the map for the game
     fileprivate func createMap() {
         let background = SKSpriteNode(imageNamed: "map")
         background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
@@ -123,6 +99,10 @@ class GameScene: SKScene {
         self.addChild(mountain.spriteNode)
         drawCampfire()
         drawRiver()
+        spawnPlayer()
+        spawnBots()
+        drawHouse()
+        drawTents()
     }
     
     func createBarriers()  {
@@ -189,6 +169,41 @@ class GameScene: SKScene {
         self.addChild(tent.nodeReach!)
     }
     
+    fileprivate func spawnPlayer() {
+        player.createSprite(size: CGSize(width: 50, height: 50), location: CGPoint(x: gameArea.width / 2, y: gameArea.height / 2))
+        self.addChild(player.spriteNode)
+        player.drawReach()
+        self.addChild(player.nodeReach!)
+    }
+    
+    fileprivate func spawnBots() {
+        let botSize = CGSize(width: 50, height: 50)
+        let roleIndex = player.role.hashValue
+        var role: Player.Role
+        if roleIndex != Player.Role.seeker.hashValue {
+            role = .seeker
+            let seekerBot = Player(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
+            seekerBot.createSprite(size: botSize,
+                                   location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
+            self.addChild(seekerBot.spriteNode)
+            seekerBot.drawReach()
+            self.addChild(seekerBot.nodeReach!)
+            seeker = seekerBot
+            bots.append(seekerBot)
+        }
+        while bots.count < numberOfPlayers {
+            let bot = Player(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
+            bot.createSprite(size: botSize,
+                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(bots.count) + 20,
+                                               y:  self.gameArea.height / 2 - 60))
+            bots.append(bot)
+            self.addChild(bot.spriteNode)
+            bot.drawReach()
+            self.addChild(bot.nodeReach!)
+        }
+    }
+    
+    //: Creates the UI
     fileprivate func createJoystick() {
         joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
@@ -233,40 +248,6 @@ class GameScene: SKScene {
             y: actionButton.position.y - actionButton.size.height / 2)
         buttonLabel.zPosition = 10
         cameraNode.addChild(buttonLabel)
-    }
-    
-    fileprivate func spawnPlayer() {
-        player.createSprite(size: CGSize(width: 50, height: 50), location: CGPoint(x: gameArea.width / 2, y: gameArea.height / 2))
-        self.addChild(player.spriteNode)
-        player.drawReach()
-        self.addChild(player.nodeReach!)
-    }
-    
-    fileprivate func spawnBots() {
-        let botSize = CGSize(width: 50, height: 50)
-        let roleIndex = player.role.hashValue
-        var role: Player.Role
-        if roleIndex != Player.Role.seeker.hashValue {
-            role = .seeker
-            let seekerBot = Player(reach: player.reach, role: role, movmentSpeed: player.movmentSpeed)
-            seekerBot.createSprite(size: botSize,
-                                   location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
-            self.addChild(seekerBot.spriteNode)
-            seekerBot.drawReach()
-            self.addChild(seekerBot.nodeReach!)
-            seeker = seekerBot
-            bots.append(seekerBot)
-        }
-        while bots.count < numberOfPlayers {
-            let bot = Player(reach: player.reach, role: .hider, movmentSpeed: player.movmentSpeed)
-            bot.createSprite(size: botSize,
-                             location: CGPoint(x: self.gameArea.width / 32 * 13 + botSize.width * CGFloat(bots.count) + 20,
-                                               y:  self.gameArea.height / 2 - 60))
-            bots.append(bot)
-            self.addChild(bot.spriteNode)
-            bot.drawReach()
-            self.addChild(bot.nodeReach!)
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -391,16 +372,10 @@ class GameScene: SKScene {
             if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
                 (positionY >= bottomLeft.y && positionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
-                #if DEBUG
-                //print("Outside horizontal game area")
-                #endif
             }
             if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
                 (positionY <= bottomLeft.y || positionY >= topRight.y) {
                 cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
-                #if DEBUG
-                //print("Outside vertical game area")
-                #endif
             }
         }
     }
@@ -515,7 +490,7 @@ class Player: NSObject {
         player.zPosition = 1
         player.aspectFillToSize(size: size)
         player.name = "player"
-        player.physicsBody = SKPhysicsBody(texture: player.texture!, size: size)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width / 2)
         player.physicsBody?.isDynamic = true
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.categoryBitMask = ColliderType.Player
@@ -539,21 +514,9 @@ class Player: NSObject {
         let shape = SKShapeNode(circleOfRadius: raidus)
         shape.position = spriteNode.position
         shape.lineWidth = 2
-        shape.strokeColor = .orange
+        shape.strokeColor = .clear
         shape.zPosition = 99
         nodeReach = shape
-    }
-    
-    func checkReach(_ player: Player) {
-        let distance = abs(Float(hypot(player.spriteNode.position.x - spriteNode.position.x,
-                                       player.spriteNode.position.y - spriteNode.position.y)))
-        let nodeRadius = spriteNode.size.width / 2
-        let range = player.reach.rawValue + Float(nodeRadius)
-        if distance <= range {
-            reachable = true
-        } else {
-            reachable = false
-        }
     }
 }
 
@@ -646,7 +609,7 @@ class HidingSpot: NSObject {
             x: spriteNode.position.x,
             y: spriteNode.position.y)
         shape.lineWidth = 2
-        shape.strokeColor = .orange
+        shape.strokeColor = .clear
         shape.zPosition = 99
         nodeReach = shape
     }
@@ -683,3 +646,4 @@ let scene = GameScene(size: sceneView.bounds.size,
     sceneView.presentScene(scene)
 
 PlaygroundSupport.PlaygroundPage.current.liveView = sceneView
+
