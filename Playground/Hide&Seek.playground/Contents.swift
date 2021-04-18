@@ -3,15 +3,6 @@
 import PlaygroundSupport
 import SpriteKit
 
-
-enum ChallangeRating : String {
-    case easy = "Easy"
-    case normal = "Normal"
-    case hard = "Hard"
-    
-    static var count: Int {return ChallangeRating.hard.hashValue + 1}
-}
-
 struct ColliderType {
     static let Player: UInt32 = 1
     static let HidingPlace: UInt32 = 2
@@ -19,7 +10,6 @@ struct ColliderType {
 
 class GameScene: SKScene {
     var numberOfPlayers: Int
-    let gameDifficulty: ChallangeRating
     let duration: Int
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
@@ -32,7 +22,6 @@ class GameScene: SKScene {
     var player: Player
     var nodesHit: [SKSpriteNode] = []
     var playableArea: CGRect
-    var gameBounds: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -41,35 +30,26 @@ class GameScene: SKScene {
     var velocity: CGPoint = .zero
     var freezeJoystick: Bool = false
     
-    init(size: CGSize, difficulty: ChallangeRating, player: Player, duration: Int, amountOfPlayers: Int) {
+    init(size: CGSize, player: Player, duration: Int, amountOfPlayers: Int) {
         self.numberOfPlayers = amountOfPlayers
-        self.gameDifficulty = difficulty
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
-        self.gameBounds = playableArea
         self.bots = []
         super.init(size: size)
         self.playableArea = getPlayableArea()
-        self.gameBounds = getCameraBounds()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //This will get the size of the screen.
     private func getPlayableArea() -> CGRect{
         let aspectRatio = frame.width / frame.height
         let playableHeight = size.width / aspectRatio
         let playableMargin = (size.height - playableHeight) / 2.0
         return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
-    }
-    
-    private func getCameraBounds() -> CGRect {
-        let rect = CGRect(x: frame.width / 2 , y: frame.height / 2,
-                          width: playableArea.width - frame.width / 4,
-                          height: playableArea.height)
-        return rect
     }
     
     override func didMove(to view: SKView) {
@@ -80,13 +60,14 @@ class GameScene: SKScene {
         createBarriers()
     }
     
+    // Adds a camera too the scene and centers it on the player.
     fileprivate func addCamera(){
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = player.spriteNode.position
     }
     
-    //: Creating the map for the game
+    // Setts the game background and creates sprites for the player to interact with.
     fileprivate func createMap() {
         let background = SKSpriteNode(imageNamed: "map")
         background.position = CGPoint(x: gameArea.width / 2, y: gameArea.height / 2)
@@ -102,9 +83,10 @@ class GameScene: SKScene {
         spawnPlayer()
         spawnBots()
         drawHouse()
-        drawTents()
+        drawMultipleTents()
     }
     
+    // This creates a physical barriar the player can't go though.
     func createBarriers()  {
         drawBarrier(size: CGSize(width: gameArea.width, height: 5),
                     position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
@@ -146,27 +128,27 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        house.drawDebugArea()
+        house.drawReach()
         self.addChild(house.nodeReach!)
     }
     
-    fileprivate func drawTents(){
-        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 5),
-                                         y: (gameArea.height / 4 * 3)))
-        spawnTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 3) + 50,
-                                         y: (gameArea.height / 8 * 5) + 50))
-        spawnTent(newTent: false, CGPoint(x: (gameArea.width / 16 * 5),
-                                          y: (gameArea.height / 8 * 4)))
-        spawnTent(newTent: false, CGPoint(x: (gameArea.width / 8 * 2),
-                                          y: (gameArea.height / 8 * 3.5)))
-    }
-    
-    fileprivate func spawnTent(newTent: Bool, _ position: CGPoint){
+    fileprivate func drawTent(newTent: Bool, _ position: CGPoint){
         let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        tent.drawDebugArea()
+        tent.drawReach()
         self.addChild(tent.nodeReach!)
+    }
+    
+    fileprivate func drawMultipleTents(){
+        drawTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 5),
+                                        y: (gameArea.height / 4 * 3)))
+        drawTent(newTent: true, CGPoint(x: (gameArea.width / 16 * 3) + 50,
+                                        y: (gameArea.height / 8 * 5) + 50))
+        drawTent(newTent: false, CGPoint(x: (gameArea.width / 16 * 5),
+                                         y: (gameArea.height / 8 * 4)))
+        drawTent(newTent: false, CGPoint(x: (gameArea.width / 8 * 2),
+                                         y: (gameArea.height / 8 * 3.5)))
     }
     
     fileprivate func spawnPlayer() {
@@ -176,6 +158,7 @@ class GameScene: SKScene {
         self.addChild(player.nodeReach!)
     }
     
+    // This will spawn bots and depening on what role the player has it will then fill the rest of the roles.
     fileprivate func spawnBots() {
         let botSize = CGSize(width: 50, height: 50)
         let roleIndex = player.role.hashValue
@@ -203,7 +186,7 @@ class GameScene: SKScene {
         }
     }
     
-    //: Creates the UI
+    // Creates the User interface
     fileprivate func createJoystick() {
         joystickBackground.name = "joystick"
         joystickBackground.size = CGSize(width: 110, height: 110)
@@ -258,24 +241,29 @@ class GameScene: SKScene {
             } else {
                 stickActive = false
             }
+            //This checks if the button was pressed and what current options is avalible at the moment.
             if actionButton.contains(location) {
                 switch buttonLabel.text {
                 case "Hide":
                     let hidePlayer = SKAction.hide()
                     player.spriteNode.run(hidePlayer)
                     freezeJoystick = true
+                    print("Hiding player")
                 case "Leave":
                     let showPlayer = SKAction.unhide()
                     player.spriteNode.run(showPlayer)
                     freezeJoystick = false
+                    print("Player leaving hiding place")
                 case "Catch":
                     if let bot = bots.first(where: {$0.reachable == true}){
                         bot.chought()
                     }
+                    print("Catching bot")
                 case "Free":
                     if let bot = bots.first(where: {$0.reachable == true}){
                         bot.freed()
                     }
+                    print("Freeing player")
                 default:
                     print("can't do anything")
                 }
@@ -325,6 +313,7 @@ class GameScene: SKScene {
         constrainGameArea()
     }
     
+    // Goes thought every bot in the scene and checks if the player is within reach.
     func checkBotsIntersections() -> Player? {
         enumerateChildNodes(withName: "bot") { [self] (node, _) in
             let sprite = node as! SKSpriteNode
@@ -342,6 +331,7 @@ class GameScene: SKScene {
         return nil
     }
     
+    // Goes thought every hiding spot in the scene and checks if the player is within reach.
     func checkHidingSpotsIntersections() -> HidingSpot? {
         enumerateChildNodes(withName: "hidingSpot") { [self] (node, _) in
             let sprite = node as! SKSpriteNode
@@ -359,27 +349,34 @@ class GameScene: SKScene {
         return nil
     }
     
+    // Thias will contraint the camera to the edges of the map.
     fileprivate func constrainGameArea(){
         let bottomLeft = CGPoint(x: playableArea.width / 2, y: playableArea.height / 2)
         let topRight = CGPoint(x: gameArea.width - playableArea.width / 2, y: gameArea.height - playableArea.height / 2)
         
-        let positionX = player.spriteNode.position.x
-        let positionY = player.spriteNode.position.y
-        if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
-            (positionY >= bottomLeft.y && positionY <= topRight.y){
+        let playersPositionX = player.spriteNode.position.x
+        let playersPositionY = player.spriteNode.position.y
+        
+        // Check if the player is within the gamearea,
+        // and if so it sets the cameras position to the players position.
+        if (playersPositionX >= bottomLeft.x && playersPositionX <= topRight.x) &&
+            (playersPositionY >= bottomLeft.y && playersPositionY <= topRight.y){
             cameraNode.position = player.spriteNode.position
         } else {
-            if (positionX <= bottomLeft.x || positionX >= topRight.x) &&
-                (positionY >= bottomLeft.y && positionY <= topRight.y) {
+            //Checks if the camera is on the left or right edge of the game scene.
+            if (playersPositionX <= bottomLeft.x || playersPositionX >= topRight.x) &&
+                (playersPositionY >= bottomLeft.y && playersPositionY <= topRight.y) {
                 cameraNode.position = CGPoint(x: cameraNode.position.x, y: player.spriteNode.position.y)
             }
-            if (positionX >= bottomLeft.x && positionX <= topRight.x) &&
-                (positionY <= bottomLeft.y || positionY >= topRight.y) {
+            //Checks if the camera is on the top or bottom edge of the game scene.
+            if (playersPositionX >= bottomLeft.x && playersPositionX <= topRight.x) &&
+                (playersPositionY <= bottomLeft.y || playersPositionY >= topRight.y) {
                 cameraNode.position = CGPoint(x: player.spriteNode.position.x, y: cameraNode.position.y)
             }
         }
     }
     
+    // updates the button lable for hiding or leaving a hiding spot
     fileprivate func hidePlayer(){
         if player.role == .hider {
             if hidingSpots.contains(where: {$0.reachable == true}) {
@@ -392,6 +389,7 @@ class GameScene: SKScene {
         }
     }
     
+    // Updates the button lable for chatching or freeing a player or bot
     fileprivate func catchPlayer(_ bot: Player){
         if player.role == .seeker {
             if bot.movmentSpeed != .frozen {
@@ -404,6 +402,7 @@ class GameScene: SKScene {
         }
     }
     
+    // Constraints the joystick to the joystick background.
     fileprivate func moveJoystick(_ location: CGPoint) {
         if !freezeJoystick {
             if stickActive {
@@ -427,6 +426,7 @@ class GameScene: SKScene {
         }
     }
     
+    // Calculates the celocity of the player depening on the joysticks movement.
     func moveTo(_ location: CGPoint){
         let offset = CGPoint(x: location.x - joystickBackground.position.x,
                              y: location.y - joystickBackground.position.y)
@@ -436,6 +436,7 @@ class GameScene: SKScene {
                            y: direction.y * player.movmentSpeed.rawValue)
     }
     
+    // Moves the player in the direction the joystick has been moved.
     func move(_ sprite: SKSpriteNode, _ location: CGPoint){
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
                                    y: velocity.y * CGFloat(dt))
@@ -449,7 +450,7 @@ class Player: NSObject {
         case hider = "Hider"
         case seeker = "Seeker"
     }
-
+    
     enum Reach: Float {
         case short = 10
         case medium = 20
@@ -484,12 +485,14 @@ class Player: NSObject {
         }
     }
     
+    // Creates and assigns a sprite node.
     func createSprite(size: CGSize, location: CGPoint) {
         let player = SKSpriteNode(imageNamed: role.rawValue)
         player.position = location
         player.zPosition = 1
         player.aspectFillToSize(size: size)
         player.name = "player"
+        // gives the sprite node a physics body and sets the collider options
         player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width / 2)
         player.physicsBody?.isDynamic = true
         player.physicsBody?.affectedByGravity = false
@@ -499,16 +502,19 @@ class Player: NSObject {
         spriteNode = player
     }
     
+    // Runs an animation and frezzes the players movement
     func chought(){
         movmentSpeed = .frozen
         spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0.5, duration: 0.8))
     }
     
+    // Runs an animation and unfrezzes the players movement
     func freed(){
         movmentSpeed = speed
         spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0, duration: 0.8))
     }
     
+    // Draws the players reach.
     func drawReach(){
         let raidus = CGFloat(reach.rawValue) + (spriteNode.size.width / 2)
         let shape = SKShapeNode(circleOfRadius: raidus)
@@ -532,7 +538,6 @@ class HidingSpot: NSObject {
     let type: Variant
     let location: CGPoint
     let capacity: Int
-    
     var spriteNode: SKSpriteNode = SKSpriteNode()
     var image: String
     var reachable: Bool
@@ -567,6 +572,7 @@ class HidingSpot: NSObject {
         self.spriteNode = createSprite()
     }
     
+    // Returns the size for the hiding spot depending on the type
     private func getSize() -> CGSize {
         switch type {
         case .mountain:
@@ -582,6 +588,7 @@ class HidingSpot: NSObject {
         }
     }
     
+    // Creates a sprite node for the hiding spot.
     private func createSprite() -> SKSpriteNode {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
@@ -589,6 +596,7 @@ class HidingSpot: NSObject {
         place.aspectFillToSize(size: getSize())
         place.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         place.zPosition = 1
+        // Creats a physics body for the differen types of spots.
         switch type {
         case .house:
             place.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: place.size.width - 30, height: place.size.height - 50))
@@ -603,7 +611,8 @@ class HidingSpot: NSObject {
         return place
     }
     
-    func drawDebugArea() {
+    // Draws the players reach for a hiding spot.
+    func drawReach() {
         let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
         shape.position = CGPoint(
             x: spriteNode.position.x,
@@ -616,6 +625,7 @@ class HidingSpot: NSObject {
 }
 
 extension SKSpriteNode {
+    // Scales a sprite node and keeps the aspect ratio of the textrure.
     func aspectFillToSize(size: CGSize) {
         guard let texture = self.texture else {
             print("Can't set aspect ratio of node. No textures found for node")
@@ -633,17 +643,17 @@ extension SKSpriteNode {
 
 // Load the SKScene from 'GameScene.sks'
 let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 640, height: 480))
+// Creates a player for the game.
+
 let player = Player(reach: .medium, role: .hider, movmentSpeed: .normal)
 let scene = GameScene(size: sceneView.bounds.size,
-                         difficulty: .normal,
-                         player: player,
-                         duration: 1,
-                         amountOfPlayers: 3)
-    // Set the scale mode to scale to fit the window
-    scene.scaleMode = .aspectFill
-    
-    // Present the scene
-    sceneView.presentScene(scene)
+                      player: player,
+                      duration: 1,
+                      amountOfPlayers: 3)
+// Set the scale mode to scale to fit the window
+scene.scaleMode = .aspectFill
+
+// Present the scene
+sceneView.presentScene(scene)
 
 PlaygroundSupport.PlaygroundPage.current.liveView = sceneView
-
