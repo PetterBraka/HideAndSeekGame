@@ -183,6 +183,9 @@ class GameScene: SKScene {
             self.addChild(bot.spriteNode)
             bot.drawReach()
             self.addChild(bot.nodeReach!)
+            if bots.count == numberOfPlayers - 1{
+                bot.chought()
+            }
         }
     }
     
