@@ -35,6 +35,7 @@ class GameScene: SKScene {
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let durationLabel = SKLabelNode(fontNamed: "Chalkduster")
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
     
@@ -103,6 +104,7 @@ class GameScene: SKScene {
         addCamera()
         debugDrawPlayableArea()
         createBarriers()
+        createDurationLabel()
     }
     
     fileprivate func addCamera(){
@@ -228,10 +230,10 @@ class GameScene: SKScene {
             x: (size.width - 50 - (actionButton.size.width / 2)) - playableArea.width / 2,
             y: ( joystickBackground.position.y))
         cameraNode.addChild(actionButton)
-        createButtonLable()
+        createButtonLabel()
     }
     
-    fileprivate func createButtonLable() {
+    fileprivate func createButtonLabel() {
         buttonLabel.text = "Action button"
         buttonLabel.name = "ButtonLabel"
         buttonLabel.color = .black
@@ -245,6 +247,28 @@ class GameScene: SKScene {
             y: actionButton.position.y - actionButton.size.height / 2)
         buttonLabel.zPosition = 10
         cameraNode.addChild(buttonLabel)
+    }
+    
+    fileprivate func createDurationLabel(){
+        durationLabel.text = "Time left: \(duration)"
+        durationLabel.color = .white
+        durationLabel.fontSize = 20
+        durationLabel.zPosition = 99
+        durationLabel.numberOfLines = 1
+        durationLabel.horizontalAlignmentMode = .center
+        durationLabel.verticalAlignmentMode = .center
+        durationLabel.position = CGPoint(x: 0, y: playableArea.height / 2 - 20)
+        let background = SKShapeNode(rect: CGRect(x: 0, y: 0,
+                                                  width: durationLabel.frame.size.width + 10,
+                                                  height: durationLabel.frame.size.height + 5),
+                                     cornerRadius: 5)
+        background.fillColor = .black
+        background.lineWidth = 0
+        background.alpha = 0.6
+        background.position = CGPoint(x: -background.frame.width / 2,
+                                      y: -background.frame.height / 2)
+        durationLabel.addChild(background)
+        cameraNode.addChild(durationLabel)
     }
     
     fileprivate func spawnPlayer() {
