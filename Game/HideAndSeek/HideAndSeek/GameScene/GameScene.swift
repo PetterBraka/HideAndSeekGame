@@ -393,7 +393,6 @@ class GameScene: SKScene {
     func updateDurationLabel(){
         let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
         let timeLeft = duration - secondsSinceStart
-        print(timeLeft)
         if timeLeft < 0 {
             checkVictory()
         } else {
@@ -424,9 +423,37 @@ class GameScene: SKScene {
             }
         }
         if forzenBots == bots.count{
-            print("Seeker won the game")
+            createVictoryLabel("Seekers Won")
         } else {
-            print("Hiders Won the game")
+            createVictoryLabel("Hiders Won")
+        }
+    }
+    
+    func createVictoryLabel(_ title: String){
+        let victoryLabel = SKLabelNode(fontNamed: "Chalkduster")
+        victoryLabel.text = title
+        victoryLabel.fontColor = .white
+        victoryLabel.fontSize = 30
+        victoryLabel.zPosition = 99
+        victoryLabel.numberOfLines = 1
+        victoryLabel.horizontalAlignmentMode = .center
+        victoryLabel.verticalAlignmentMode = .center
+        victoryLabel.position = CGPoint(x: 0, y: 0)
+        let background = SKShapeNode(rect: CGRect(x: 0, y: 0,
+                                                  width: victoryLabel.frame.size.width + 10,
+                                                  height: victoryLabel.frame.size.height + 5),
+                                     cornerRadius: 5)
+        background.fillColor = .black
+        background.name = "textBackground"
+        background.lineWidth = 0
+        background.alpha = 0.6
+        background.position = CGPoint(x: -background.frame.width / 2,
+                                      y: -background.frame.height / 2)
+        victoryLabel.addChild(background)
+        cameraNode.addChild(victoryLabel)
+        freezeJoystick = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.view?.window?.rootViewController?.dismiss(animated: true, completion: nil)
         }
     }
     
