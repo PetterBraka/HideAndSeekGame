@@ -238,7 +238,7 @@ class GameScene: SKScene {
     fileprivate func createButtonLabel() {
         buttonLabel.text = "Action button"
         buttonLabel.name = "ButtonLabel"
-        buttonLabel.color = .black
+        buttonLabel.fontColor = .white
         buttonLabel.fontSize = 20
         buttonLabel.numberOfLines = 2
         buttonLabel.preferredMaxLayoutWidth = actionButton.size.width + 20
@@ -253,18 +253,19 @@ class GameScene: SKScene {
     
     fileprivate func createDurationLabel(){
         durationLabel.text = "Time left: \(duration)"
-        durationLabel.color = .white
+        durationLabel.fontColor = .white
         durationLabel.fontSize = 20
         durationLabel.zPosition = 99
         durationLabel.numberOfLines = 1
         durationLabel.horizontalAlignmentMode = .center
         durationLabel.verticalAlignmentMode = .center
-        durationLabel.position = CGPoint(x: 0, y: playableArea.height / 2 - 20)
+        durationLabel.position = CGPoint(x: 0, y: playableArea.height / 2 - 25)
         let background = SKShapeNode(rect: CGRect(x: 0, y: 0,
                                                   width: durationLabel.frame.size.width + 10,
                                                   height: durationLabel.frame.size.height + 5),
                                      cornerRadius: 5)
         background.fillColor = .black
+        background.name = "textBackground"
         background.lineWidth = 0
         background.alpha = 0.6
         background.position = CGPoint(x: -background.frame.width / 2,
@@ -393,6 +394,20 @@ class GameScene: SKScene {
         let difference = abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970)
         print(difference.rounded())
         durationLabel.text = "Time left: \(Int(difference.rounded()))"
+        if var background = durationLabel.childNode(withName: "textBackground") as? SKShapeNode {
+            background.removeFromParent()
+            background = SKShapeNode(rect: CGRect(x: 0, y: 0,
+                                                  width: durationLabel.frame.size.width + 10,
+                                                  height: durationLabel.frame.size.height + 5),
+                                     cornerRadius: 5)
+            background.fillColor = .black
+            background.name = "textBackground"
+            background.lineWidth = 0
+            background.alpha = 0.6
+            background.position = CGPoint(x: -background.frame.width / 2,
+                                          y: -background.frame.height / 2)
+            durationLabel.addChild(background)
+        }
     }
     
     func checkBotsIntersections() -> Bot? {
