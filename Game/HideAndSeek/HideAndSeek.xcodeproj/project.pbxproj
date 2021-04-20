@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
+		335E27B9262F013E00F87AFB /* HideAndSeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E27B8262F013E00F87AFB /* HideAndSeekUITests.swift */; };
+		335E27C9262F014800F87AFB /* HideAndSeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E27C8262F014800F87AFB /* HideAndSeekTests.swift */; };
 		33646E79261336F200B1A9D7 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33646E78261336F200B1A9D7 /* StepperCell.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
 		3365714725E662A300308812 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SegmentCell.swift */; };
@@ -29,14 +31,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */ = {
+		335E27BB262F013E00F87AFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 33E5BDBE25E5369600D337F9;
 			remoteInfo = HideAndSeek;
 		};
-		335E279D262EFD7800F87AFB /* PBXContainerItemProxy */ = {
+		335E27CB262F014800F87AFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
 			proxyType = 1;
@@ -48,8 +50,12 @@
 /* Begin PBXFileReference section */
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		33284B18262B061700C46746 /* Hide&Seek.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = "Hide&Seek.playground"; path = "../../Playground/Hide&Seek.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E27B6262F013E00F87AFB /* HideAndSeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E27B8262F013E00F87AFB /* HideAndSeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideAndSeekUITests.swift; sourceTree = "<group>"; };
+		335E27BA262F013E00F87AFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E27C8262F014800F87AFB /* HideAndSeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideAndSeekTests.swift; sourceTree = "<group>"; };
+		335E27CA262F014800F87AFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33646E78261336F200B1A9D7 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
@@ -73,14 +79,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		335E2785262EFD6B00F87AFB /* Frameworks */ = {
+		335E27B3262F013E00F87AFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		335E2795262EFD7800F87AFB /* Frameworks */ = {
+		335E27C3262F014800F87AFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -97,6 +103,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		335E27B7262F013E00F87AFB /* HideAndSeekUITests */ = {
+			isa = PBXGroup;
+			children = (
+				335E27B8262F013E00F87AFB /* HideAndSeekUITests.swift */,
+				335E27BA262F013E00F87AFB /* Info.plist */,
+			);
+			path = HideAndSeekUITests;
+			sourceTree = "<group>";
+		};
+		335E27C7262F014800F87AFB /* HideAndSeekTests */ = {
+			isa = PBXGroup;
+			children = (
+				335E27C8262F014800F87AFB /* HideAndSeekTests.swift */,
+				335E27CA262F014800F87AFB /* Info.plist */,
+			);
+			path = HideAndSeekTests;
+			sourceTree = "<group>";
+		};
 		3371F2E025E91239008E983E /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +136,8 @@
 			children = (
 				33284B18262B061700C46746 /* Hide&Seek.playground */,
 				33E5BDC125E5369600D337F9 /* HideAndSeek */,
+				335E27B7262F013E00F87AFB /* HideAndSeekUITests */,
+				335E27C7262F014800F87AFB /* HideAndSeekTests */,
 				33E5BDC025E5369600D337F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,8 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				33E5BDBF25E5369600D337F9 /* HideAndSeek.app */,
-				335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */,
-				335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */,
+				335E27B6262F013E00F87AFB /* HideAndSeekUITests.xctest */,
+				335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,40 +204,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		335E2787262EFD6B00F87AFB /* HideAndSeekUITests */ = {
+		335E27B5262F013E00F87AFB /* HideAndSeekUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */;
+			buildConfigurationList = 335E27BD262F013E00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */;
 			buildPhases = (
-				335E2784262EFD6B00F87AFB /* Sources */,
-				335E2785262EFD6B00F87AFB /* Frameworks */,
-				335E2786262EFD6B00F87AFB /* Resources */,
+				335E27B2262F013E00F87AFB /* Sources */,
+				335E27B3262F013E00F87AFB /* Frameworks */,
+				335E27B4262F013E00F87AFB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				335E278E262EFD6B00F87AFB /* PBXTargetDependency */,
+				335E27BC262F013E00F87AFB /* PBXTargetDependency */,
 			);
 			name = HideAndSeekUITests;
 			productName = HideAndSeekUITests;
-			productReference = 335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */;
+			productReference = 335E27B6262F013E00F87AFB /* HideAndSeekUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		335E2797262EFD7800F87AFB /* HideAndSeekTests */ = {
+		335E27C5262F014800F87AFB /* HideAndSeekTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */;
+			buildConfigurationList = 335E27CD262F014800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */;
 			buildPhases = (
-				335E2794262EFD7800F87AFB /* Sources */,
-				335E2795262EFD7800F87AFB /* Frameworks */,
-				335E2796262EFD7800F87AFB /* Resources */,
+				335E27C2262F014800F87AFB /* Sources */,
+				335E27C3262F014800F87AFB /* Frameworks */,
+				335E27C4262F014800F87AFB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				335E279E262EFD7800F87AFB /* PBXTargetDependency */,
+				335E27CC262F014800F87AFB /* PBXTargetDependency */,
 			);
 			name = HideAndSeekTests;
 			productName = HideAndSeekTests;
-			productReference = 335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */;
+			productReference = 335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		33E5BDBE25E5369600D337F9 /* HideAndSeek */ = {
@@ -240,11 +266,11 @@
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					335E2787262EFD6B00F87AFB = {
+					335E27B5262F013E00F87AFB = {
 						CreatedOnToolsVersion = 12.4;
 						TestTargetID = 33E5BDBE25E5369600D337F9;
 					};
-					335E2797262EFD7800F87AFB = {
+					335E27C5262F014800F87AFB = {
 						CreatedOnToolsVersion = 12.4;
 						TestTargetID = 33E5BDBE25E5369600D337F9;
 					};
@@ -267,21 +293,21 @@
 			projectRoot = "";
 			targets = (
 				33E5BDBE25E5369600D337F9 /* HideAndSeek */,
-				335E2787262EFD6B00F87AFB /* HideAndSeekUITests */,
-				335E2797262EFD7800F87AFB /* HideAndSeekTests */,
+				335E27B5262F013E00F87AFB /* HideAndSeekUITests */,
+				335E27C5262F014800F87AFB /* HideAndSeekTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		335E2786262EFD6B00F87AFB /* Resources */ = {
+		335E27B4262F013E00F87AFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		335E2796262EFD7800F87AFB /* Resources */ = {
+		335E27C4262F014800F87AFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,17 +329,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		335E2784262EFD6B00F87AFB /* Sources */ = {
+		335E27B2262F013E00F87AFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335E27B9262F013E00F87AFB /* HideAndSeekUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		335E2794262EFD7800F87AFB /* Sources */ = {
+		335E27C2262F014800F87AFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335E27C9262F014800F87AFB /* HideAndSeekTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,15 +369,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		335E278E262EFD6B00F87AFB /* PBXTargetDependency */ = {
+		335E27BC262F013E00F87AFB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
-			targetProxy = 335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */;
+			targetProxy = 335E27BB262F013E00F87AFB /* PBXContainerItemProxy */;
 		};
-		335E279E262EFD7800F87AFB /* PBXTargetDependency */ = {
+		335E27CC262F014800F87AFB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
-			targetProxy = 335E279D262EFD7800F87AFB /* PBXContainerItemProxy */;
+			targetProxy = 335E27CB262F014800F87AFB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -365,7 +393,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		335E278F262EFD6B00F87AFB /* Debug */ = {
+		335E27BE262F013E00F87AFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -384,7 +412,7 @@
 			};
 			name = Debug;
 		};
-		335E2790262EFD6B00F87AFB /* Release */ = {
+		335E27BF262F013E00F87AFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -403,7 +431,7 @@
 			};
 			name = Release;
 		};
-		335E27A0262EFD7800F87AFB /* Debug */ = {
+		335E27CE262F014800F87AFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -423,7 +451,7 @@
 			};
 			name = Debug;
 		};
-		335E27A1262EFD7800F87AFB /* Release */ = {
+		335E27CF262F014800F87AFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -602,20 +630,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */ = {
+		335E27BD262F013E00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				335E278F262EFD6B00F87AFB /* Debug */,
-				335E2790262EFD6B00F87AFB /* Release */,
+				335E27BE262F013E00F87AFB /* Debug */,
+				335E27BF262F013E00F87AFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */ = {
+		335E27CD262F014800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				335E27A0262EFD7800F87AFB /* Debug */,
-				335E27A1262EFD7800F87AFB /* Release */,
+				335E27CE262F014800F87AFB /* Debug */,
+				335E27CF262F014800F87AFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
