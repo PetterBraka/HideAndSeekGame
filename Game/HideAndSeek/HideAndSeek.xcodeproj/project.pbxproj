@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
+		335E27F6262F0EB800F87AFB /* MainMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E27F5262F0EB800F87AFB /* MainMenuTests.swift */; };
 		33646E79261336F200B1A9D7 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33646E78261336F200B1A9D7 /* StepperCell.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
 		3365714725E662A300308812 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SegmentCell.swift */; };
@@ -19,7 +20,7 @@
 		3391579D2608B8E8008FFCA2 /* Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3391579C2608B8E8008FFCA2 /* Bot.swift */; };
 		33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DAC07F25FF7B18007FA28F /* HelpVC.swift */; };
 		33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDC225E5369600D337F9 /* AppDelegate.swift */; };
-		33E5BDCB25E5369600D337F9 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDCA25E5369600D337F9 /* GameViewController.swift */; };
+		33E5BDCB25E5369600D337F9 /* MainMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDCA25E5369600D337F9 /* MainMenuVC.swift */; };
 		33E5BDCE25E5369600D337F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDCC25E5369600D337F9 /* Main.storyboard */; };
 		33E5BDD025E5369700D337F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDCF25E5369700D337F9 /* Assets.xcassets */; };
 		33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */; };
@@ -29,14 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 33E5BDBE25E5369600D337F9;
-			remoteInfo = HideAndSeek;
-		};
-		335E279D262EFD7800F87AFB /* PBXContainerItemProxy */ = {
+		335E27CB262F014800F87AFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
 			proxyType = 1;
@@ -48,8 +42,9 @@
 /* Begin PBXFileReference section */
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		33284B18262B061700C46746 /* Hide&Seek.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = "Hide&Seek.playground"; path = "../../Playground/Hide&Seek.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E27CA262F014800F87AFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		335E27F5262F0EB800F87AFB /* MainMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuTests.swift; sourceTree = "<group>"; };
 		33646E78261336F200B1A9D7 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
@@ -62,7 +57,7 @@
 		33DAC07F25FF7B18007FA28F /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
 		33E5BDBF25E5369600D337F9 /* HideAndSeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HideAndSeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E5BDC225E5369600D337F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		33E5BDCA25E5369600D337F9 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		33E5BDCA25E5369600D337F9 /* MainMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuVC.swift; sourceTree = "<group>"; };
 		33E5BDCD25E5369600D337F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33E5BDCF25E5369700D337F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33E5BDD125E5369700D337F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -73,14 +68,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		335E2785262EFD6B00F87AFB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		335E2795262EFD7800F87AFB /* Frameworks */ = {
+		335E27C3262F014800F87AFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -97,6 +85,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		335E27C7262F014800F87AFB /* HideAndSeekTests */ = {
+			isa = PBXGroup;
+			children = (
+				335E27D6262F02A000F87AFB /* Cases */,
+				335E27D7262F02A800F87AFB /* Data */,
+				335E27CA262F014800F87AFB /* Info.plist */,
+			);
+			path = HideAndSeekTests;
+			sourceTree = "<group>";
+		};
+		335E27D6262F02A000F87AFB /* Cases */ = {
+			isa = PBXGroup;
+			children = (
+				335E27F5262F0EB800F87AFB /* MainMenuTests.swift */,
+			);
+			path = Cases;
+			sourceTree = "<group>";
+		};
+		335E27D7262F02A800F87AFB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		3371F2E025E91239008E983E /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 			children = (
 				33284B18262B061700C46746 /* Hide&Seek.playground */,
 				33E5BDC125E5369600D337F9 /* HideAndSeek */,
+				335E27C7262F014800F87AFB /* HideAndSeekTests */,
 				33E5BDC025E5369600D337F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,8 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				33E5BDBF25E5369600D337F9 /* HideAndSeek.app */,
-				335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */,
-				335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */,
+				335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,7 +161,7 @@
 		33E5BDEB25E5612400D337F9 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
-				33E5BDCA25E5369600D337F9 /* GameViewController.swift */,
+				33E5BDCA25E5369600D337F9 /* MainMenuVC.swift */,
 				33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */,
 				33E5BDDC25E5375700D337F9 /* MainMenu.swift */,
 			);
@@ -178,40 +191,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		335E2787262EFD6B00F87AFB /* HideAndSeekUITests */ = {
+		335E27C5262F014800F87AFB /* HideAndSeekTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */;
+			buildConfigurationList = 335E27CD262F014800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */;
 			buildPhases = (
-				335E2784262EFD6B00F87AFB /* Sources */,
-				335E2785262EFD6B00F87AFB /* Frameworks */,
-				335E2786262EFD6B00F87AFB /* Resources */,
+				335E27C2262F014800F87AFB /* Sources */,
+				335E27C3262F014800F87AFB /* Frameworks */,
+				335E27C4262F014800F87AFB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				335E278E262EFD6B00F87AFB /* PBXTargetDependency */,
-			);
-			name = HideAndSeekUITests;
-			productName = HideAndSeekUITests;
-			productReference = 335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		335E2797262EFD7800F87AFB /* HideAndSeekTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */;
-			buildPhases = (
-				335E2794262EFD7800F87AFB /* Sources */,
-				335E2795262EFD7800F87AFB /* Frameworks */,
-				335E2796262EFD7800F87AFB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				335E279E262EFD7800F87AFB /* PBXTargetDependency */,
+				335E27CC262F014800F87AFB /* PBXTargetDependency */,
 			);
 			name = HideAndSeekTests;
 			productName = HideAndSeekTests;
-			productReference = 335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */;
+			productReference = 335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		33E5BDBE25E5369600D337F9 /* HideAndSeek */ = {
@@ -240,12 +235,9 @@
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					335E2787262EFD6B00F87AFB = {
+					335E27C5262F014800F87AFB = {
 						CreatedOnToolsVersion = 12.4;
-						TestTargetID = 33E5BDBE25E5369600D337F9;
-					};
-					335E2797262EFD7800F87AFB = {
-						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 						TestTargetID = 33E5BDBE25E5369600D337F9;
 					};
 					33E5BDBE25E5369600D337F9 = {
@@ -267,21 +259,13 @@
 			projectRoot = "";
 			targets = (
 				33E5BDBE25E5369600D337F9 /* HideAndSeek */,
-				335E2787262EFD6B00F87AFB /* HideAndSeekUITests */,
-				335E2797262EFD7800F87AFB /* HideAndSeekTests */,
+				335E27C5262F014800F87AFB /* HideAndSeekTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		335E2786262EFD6B00F87AFB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		335E2796262EFD7800F87AFB /* Resources */ = {
+		335E27C4262F014800F87AFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,17 +287,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		335E2784262EFD6B00F87AFB /* Sources */ = {
+		335E27C2262F014800F87AFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		335E2794262EFD7800F87AFB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				335E27F6262F0EB800F87AFB /* MainMenuTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +308,7 @@
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
 				33E5BDF925E564D300D337F9 /* Help.swift in Sources */,
 				3371F2E825E91822008E983E /* extensions.swift in Sources */,
-				33E5BDCB25E5369600D337F9 /* GameViewController.swift in Sources */,
+				33E5BDCB25E5369600D337F9 /* MainMenuVC.swift in Sources */,
 				33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */,
 				3371F2E525E91266008E983E /* GameScene.swift in Sources */,
 				330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */,
@@ -341,15 +319,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		335E278E262EFD6B00F87AFB /* PBXTargetDependency */ = {
+		335E27CC262F014800F87AFB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
-			targetProxy = 335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */;
-		};
-		335E279E262EFD7800F87AFB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
-			targetProxy = 335E279D262EFD7800F87AFB /* PBXContainerItemProxy */;
+			targetProxy = 335E27CB262F014800F87AFB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -365,48 +338,11 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		335E278F262EFD6B00F87AFB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DCQ3V8BLU5;
-				INFOPLIST_FILE = HideAndSeekUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = HideAndSeek;
-			};
-			name = Debug;
-		};
-		335E2790262EFD6B00F87AFB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DCQ3V8BLU5;
-				INFOPLIST_FILE = HideAndSeekUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = HideAndSeek;
-			};
-			name = Release;
-		};
-		335E27A0262EFD7800F87AFB /* Debug */ = {
+		335E27CE262F014800F87AFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DCQ3V8BLU5;
 				INFOPLIST_FILE = HideAndSeekTests/Info.plist;
@@ -417,16 +353,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HideAndSeek.app/HideAndSeek";
 			};
 			name = Debug;
 		};
-		335E27A1262EFD7800F87AFB /* Release */ = {
+		335E27CF262F014800F87AFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DCQ3V8BLU5;
 				INFOPLIST_FILE = HideAndSeekTests/Info.plist;
@@ -602,20 +540,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */ = {
+		335E27CD262F014800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				335E278F262EFD6B00F87AFB /* Debug */,
-				335E2790262EFD6B00F87AFB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				335E27A0262EFD7800F87AFB /* Debug */,
-				335E27A1262EFD7800F87AFB /* Release */,
+				335E27CE262F014800F87AFB /* Debug */,
+				335E27CF262F014800F87AFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
