@@ -29,9 +29,8 @@ struct ColliderType {
 }
 
 class GameScene: SKScene {
-    var numberOfPlayers: Int
-    let gameDifficulty: ChallangeRating
     let duration: Int
+    let gameDifficulty: ChallangeRating
     let joystickBackground = SKSpriteNode(imageNamed: "joystick_background")
     let joystick = SKSpriteNode(imageNamed: "joystick")
     let buttonLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -40,6 +39,7 @@ class GameScene: SKScene {
     let cameraNode = SKCameraNode()
     let gameStartDate : Date
     
+    var numberOfPlayers: Int
     var seeker: Player?
     var bots: [Bot]
     var player: Player
@@ -391,9 +391,14 @@ class GameScene: SKScene {
     }
     
     func updateDurationLabel(){
-        let difference = abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970)
-        print(difference.rounded())
-        durationLabel.text = "Time left: \(Int(difference.rounded()))"
+        let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
+        let timeLeft = duration - secondsSinceStart
+        print(timeLeft)
+        if timeLeft < 0 {
+            checkVictory()
+        } else {
+            durationLabel.text = "Time left: \(timeLeft)"
+        }
         if var background = durationLabel.childNode(withName: "textBackground") as? SKShapeNode {
             background.removeFromParent()
             background = SKShapeNode(rect: CGRect(x: 0, y: 0,
@@ -407,6 +412,21 @@ class GameScene: SKScene {
             background.position = CGPoint(x: -background.frame.width / 2,
                                           y: -background.frame.height / 2)
             durationLabel.addChild(background)
+        }
+        
+    }
+    
+    func checkVictory(){
+        var forzenBots = 0
+        bots.forEach { (bot) in
+            if bot.movmentSpeed == .frozen{
+                forzenBots = forzenBots + 1
+            }
+        }
+        if forzenBots == bots.count{
+            print("Seeker won the game")
+        } else {
+            print("Hiders Won the game")
         }
     }
     

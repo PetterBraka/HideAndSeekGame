@@ -157,7 +157,18 @@ extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "StepperCell", for: indexPath) as! StepperCell
             cell.title.text = gameOptions[indexPath.row].title
+            if gameOptions[indexPath.row].title == "Duration" {
+                cell.stepper.value = 30
+                cell.stepper.minimumValue = 30
+                cell.stepper.maximumValue = 360
+                cell.stepper.stepValue = 15
+                cell.steppNumber.text = "\(Int(cell.stepper.value))"
+            }
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
 }
