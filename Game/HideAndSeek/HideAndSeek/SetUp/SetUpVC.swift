@@ -6,17 +6,16 @@
 //
 
 import UIKit
-import SpriteKit
 
 class SetUpVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBarItem: UINavigationItem!
-    private struct GameOptions {
+    struct GameOptions {
         var title: String
         var hasSegments: Bool
         var options: [String]?
     }
-    private var gameOptions = [
+    var gameOptions = [
         GameOptions(title: "Role", hasSegments: true,
                     options: [Player.Role.hider.rawValue, Player.Role.seeker.rawValue]),
         GameOptions(title: "Difficulty", hasSegments: true, options: [ChallangeRating.easy.rawValue,
@@ -32,7 +31,6 @@ class SetUpVC: UIViewController {
     var numberOfPlayer = 2
     var duration = 2
     var movementSpeed = Player.Speed.normal
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,7 +138,6 @@ class SetUpVC: UIViewController {
         gameScene.modalPresentationStyle = .fullScreen
         self.present(gameScene, animated: true, completion: nil)
     }
-    
 }
 
 extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
