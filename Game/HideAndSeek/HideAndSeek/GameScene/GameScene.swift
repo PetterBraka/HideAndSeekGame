@@ -38,6 +38,7 @@ class GameScene: SKScene {
     let durationLabel = SKLabelNode(fontNamed: "Chalkduster")
     let gameArea = CGRect(x: 0.5, y: 0.5, width: 1600, height: 800)
     let cameraNode = SKCameraNode()
+    let gameStartDate : Date
     
     var seeker: Player?
     var bots: [Bot]
@@ -62,6 +63,7 @@ class GameScene: SKScene {
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
         self.gameBounds = playableArea
         self.bots = []
+        self.gameStartDate = Date()
         super.init(size: size)
         self.playableArea = getPlayableArea()
         self.gameBounds = getCameraBounds()
@@ -384,6 +386,13 @@ class GameScene: SKScene {
             buttonLabel.text = ""
         }
         constrainGameArea()
+        updateDurationLabel()
+    }
+    
+    func updateDurationLabel(){
+        let difference = abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970)
+        print(difference.rounded())
+        durationLabel.text = "Time left: \(Int(difference.rounded()))"
     }
     
     func checkBotsIntersections() -> Bot? {
