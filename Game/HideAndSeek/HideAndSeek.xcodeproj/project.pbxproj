@@ -28,9 +28,28 @@
 		33E5BDF925E564D300D337F9 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDF825E564D300D337F9 /* Help.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33E5BDBE25E5369600D337F9;
+			remoteInfo = HideAndSeek;
+		};
+		335E279D262EFD7800F87AFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33E5BDB725E5369600D337F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33E5BDBE25E5369600D337F9;
+			remoteInfo = HideAndSeek;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		33284B18262B061700C46746 /* Hide&Seek.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = "Hide&Seek.playground"; path = "../../Playground/Hide&Seek.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33646E78261336F200B1A9D7 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
@@ -54,6 +73,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		335E2785262EFD6B00F87AFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		335E2795262EFD7800F87AFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33E5BDBC25E5369600D337F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				33E5BDBF25E5369600D337F9 /* HideAndSeek.app */,
+				335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */,
+				335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,6 +178,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		335E2787262EFD6B00F87AFB /* HideAndSeekUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */;
+			buildPhases = (
+				335E2784262EFD6B00F87AFB /* Sources */,
+				335E2785262EFD6B00F87AFB /* Frameworks */,
+				335E2786262EFD6B00F87AFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				335E278E262EFD6B00F87AFB /* PBXTargetDependency */,
+			);
+			name = HideAndSeekUITests;
+			productName = HideAndSeekUITests;
+			productReference = 335E2788262EFD6B00F87AFB /* HideAndSeekUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		335E2797262EFD7800F87AFB /* HideAndSeekTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */;
+			buildPhases = (
+				335E2794262EFD7800F87AFB /* Sources */,
+				335E2795262EFD7800F87AFB /* Frameworks */,
+				335E2796262EFD7800F87AFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				335E279E262EFD7800F87AFB /* PBXTargetDependency */,
+			);
+			name = HideAndSeekTests;
+			productName = HideAndSeekTests;
+			productReference = 335E2798262EFD7800F87AFB /* HideAndSeekTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		33E5BDBE25E5369600D337F9 /* HideAndSeek */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33E5BDD425E5369700D337F9 /* Build configuration list for PBXNativeTarget "HideAndSeek" */;
@@ -169,6 +240,14 @@
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					335E2787262EFD6B00F87AFB = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 33E5BDBE25E5369600D337F9;
+					};
+					335E2797262EFD7800F87AFB = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 33E5BDBE25E5369600D337F9;
+					};
 					33E5BDBE25E5369600D337F9 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -188,11 +267,27 @@
 			projectRoot = "";
 			targets = (
 				33E5BDBE25E5369600D337F9 /* HideAndSeek */,
+				335E2787262EFD6B00F87AFB /* HideAndSeekUITests */,
+				335E2797262EFD7800F87AFB /* HideAndSeekTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		335E2786262EFD6B00F87AFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		335E2796262EFD7800F87AFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33E5BDBD25E5369600D337F9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,6 +303,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		335E2784262EFD6B00F87AFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		335E2794262EFD7800F87AFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33E5BDBB25E5369600D337F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -231,6 +340,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		335E278E262EFD6B00F87AFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
+			targetProxy = 335E278D262EFD6B00F87AFB /* PBXContainerItemProxy */;
+		};
+		335E279E262EFD7800F87AFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33E5BDBE25E5369600D337F9 /* HideAndSeek */;
+			targetProxy = 335E279D262EFD7800F87AFB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		33E5BDCC25E5369600D337F9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -243,6 +365,84 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		335E278F262EFD6B00F87AFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DCQ3V8BLU5;
+				INFOPLIST_FILE = HideAndSeekUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HideAndSeek;
+			};
+			name = Debug;
+		};
+		335E2790262EFD6B00F87AFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DCQ3V8BLU5;
+				INFOPLIST_FILE = HideAndSeekUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HideAndSeek;
+			};
+			name = Release;
+		};
+		335E27A0262EFD7800F87AFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DCQ3V8BLU5;
+				INFOPLIST_FILE = HideAndSeekTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HideAndSeek.app/HideAndSeek";
+			};
+			name = Debug;
+		};
+		335E27A1262EFD7800F87AFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DCQ3V8BLU5;
+				INFOPLIST_FILE = HideAndSeekTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.petter.braka.HideAndSeekTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HideAndSeek.app/HideAndSeek";
+			};
+			name = Release;
+		};
 		33E5BDD225E5369700D337F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -402,6 +602,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		335E2791262EFD6B00F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				335E278F262EFD6B00F87AFB /* Debug */,
+				335E2790262EFD6B00F87AFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		335E279F262EFD7800F87AFB /* Build configuration list for PBXNativeTarget "HideAndSeekTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				335E27A0262EFD7800F87AFB /* Debug */,
+				335E27A1262EFD7800F87AFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		33E5BDBA25E5369600D337F9 /* Build configuration list for PBXProject "HideAndSeek" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
