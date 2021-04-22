@@ -191,6 +191,7 @@
         <!--HelpSceneVC-->
         <scene sceneID="udy-U2-AVR">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K7g-hC-CAu" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="HelpVC" title="Help" id="Qog-eQ-J0u" userLabel="HelpSceneVC" customClass="HelpVC" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fXT-kq-Bi7" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
@@ -202,25 +203,78 @@
                                     <navigationItem title="Help" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="wnU-PY-lvN"/>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="dE5-Vo-Y74">
+                                <rect key="frame" x="0.0" y="44" width="896" height="370"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="helpCell" rowHeight="150" id="aft-H6-zhf" customClass="HelpCell" customModule="HideAndSeek" customModuleProvider="target">
+                                        <rect key="frame" x="64" y="55.5" width="768" height="150"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aft-H6-zhf" id="iUv-84-4Sv">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dYa-vD-kjm">
+                                                    <rect key="frame" x="20" y="35" width="728" height="80"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WT-Nq-mfN">
+                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="Igh-MG-95y"/>
+                                                                <constraint firstAttribute="width" constant="80" id="KPr-gJ-kMD"/>
+                                                            </constraints>
+                                                            <inset key="contentEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                                            <state key="normal" image="joystick" backgroundImage="joystick_background"/>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a hider. Your job as a hider is to hide from the seeker." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0z1-aZ-kzz">
+                                                            <rect key="frame" x="90" y="0.0" width="638" height="80"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dYa-vD-kjm" firstAttribute="centerY" secondItem="iUv-84-4Sv" secondAttribute="centerY" id="PEb-KD-esC"/>
+                                                <constraint firstItem="dYa-vD-kjm" firstAttribute="leading" secondItem="iUv-84-4Sv" secondAttribute="leadingMargin" id="RuM-yq-hfL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dYa-vD-kjm" secondAttribute="trailing" id="YIL-B0-3PI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="2WT-Nq-mfN" id="sca-MV-55K"/>
+                                            <outlet property="label" destination="0z1-aZ-kzz" id="mfj-TQ-EjM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hn2-Aw-Mde"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="dE5-Vo-Y74" firstAttribute="leading" secondItem="fXT-kq-Bi7" secondAttribute="leading" id="BFN-BU-BkV"/>
+                            <constraint firstAttribute="bottom" secondItem="dE5-Vo-Y74" secondAttribute="bottom" id="HBc-4P-AhQ"/>
+                            <constraint firstItem="dE5-Vo-Y74" firstAttribute="top" secondItem="bYB-iD-huc" secondAttribute="bottom" id="S7i-r6-op9"/>
                             <constraint firstItem="bYB-iD-huc" firstAttribute="leading" secondItem="fXT-kq-Bi7" secondAttribute="leading" id="Wce-4g-jkJ"/>
+                            <constraint firstAttribute="trailing" secondItem="dE5-Vo-Y74" secondAttribute="trailing" id="cDI-s8-kOG"/>
                             <constraint firstItem="bYB-iD-huc" firstAttribute="top" secondItem="Hn2-Aw-Mde" secondAttribute="top" id="orA-cD-icl"/>
                             <constraint firstAttribute="trailing" secondItem="bYB-iD-huc" secondAttribute="trailing" id="zy0-gV-dcU"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="navBarItem" destination="wnU-PY-lvN" id="YlT-2y-SAh"/>
+                        <outlet property="tableview" destination="dE5-Vo-Y74" id="Enl-yT-um4"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K7g-hC-CAu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="432" y="763"/>
+            <point key="canvasLocation" x="430.58035714285711" y="776.81159420289862"/>
         </scene>
     </scenes>
     <resources>
+        <image name="joystick" width="310" height="310"/>
+        <image name="joystick_background" width="250" height="250"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
