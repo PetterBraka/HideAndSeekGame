@@ -11,8 +11,6 @@ enum ChallangeRating : String {
     case easy = "Easy"
     case normal = "Normal"
     case hard = "Hard"
-    
-    static var count: Int {return ChallangeRating.hard.hashValue + 1}
 }
 
 enum Direction: String {

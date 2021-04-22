@@ -26,8 +26,6 @@
 		33E5BDD025E5369700D337F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDCF25E5369700D337F9 /* Assets.xcassets */; };
 		33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */; };
 		33E5BDDE25E5375700D337F9 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDDC25E5375700D337F9 /* MainMenu.swift */; };
-		33E5BDF625E5644D00D337F9 /* HelpScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDF525E5644D00D337F9 /* HelpScene.sks */; };
-		33E5BDF925E564D300D337F9 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDF825E564D300D337F9 /* Help.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +63,6 @@
 		33E5BDD125E5369700D337F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		33E5BDDC25E5375700D337F9 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		33E5BDF525E5644D00D337F9 /* HelpScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HelpScene.sks; sourceTree = "<group>"; };
-		33E5BDF825E564D300D337F9 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,8 +180,6 @@
 		33E5BDF425E5643300D337F9 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				33E5BDF525E5644D00D337F9 /* HelpScene.sks */,
-				33E5BDF825E564D300D337F9 /* Help.swift */,
 				33DAC07F25FF7B18007FA28F /* HelpVC.swift */,
 			);
 			path = Help;
@@ -281,7 +275,6 @@
 			files = (
 				33E5BDCE25E5369600D337F9 /* Main.storyboard in Resources */,
 				33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */,
-				33E5BDF625E5644D00D337F9 /* HelpScene.sks in Resources */,
 				3371F2E225E9125A008E983E /* GameScene.sks in Resources */,
 				33E5BDD025E5369700D337F9 /* Assets.xcassets in Resources */,
 			);
@@ -310,7 +303,6 @@
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
 				3365714725E662A300308812 /* SegmentCell.swift in Sources */,
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
-				33E5BDF925E564D300D337F9 /* Help.swift in Sources */,
 				3371F2E825E91822008E983E /* extensions.swift in Sources */,
 				33E5BDCB25E5369600D337F9 /* MainMenuVC.swift in Sources */,
 				33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */,

@@ -10,22 +10,24 @@ import SpriteKit
 import GameplayKit
 
 class HelpVC: UIViewController {
+    @IBOutlet weak var navBarItem: UINavigationItem!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = Help(fileNamed: "HelpScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
+        navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
+        navBarItem.leftBarButtonItem?.tintColor = .systemRed
+    }
+    
+    @objc func navBarTapped(sender: UIBarButtonItem){
+        switch sender {
+        case navBarItem.leftBarButtonItem:
+            #if DEBUG
+            print("Cancel button pressed")
+            #endif
+            self.dismiss(animated: true, completion: nil)
+        default:
+            #if DEBUG
+            print("unknown button pressed")
+            #endif
         }
     }
 }
