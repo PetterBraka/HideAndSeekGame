@@ -10,6 +10,7 @@
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
 		335E27F6262F0EB800F87AFB /* MainMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E27F5262F0EB800F87AFB /* MainMenuTests.swift */; };
 		335E2806262F132700F87AFB /* SetUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E2805262F132700F87AFB /* SetUpTests.swift */; };
+		335E28152631C76F00F87AFB /* HelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E28142631C76F00F87AFB /* HelpCell.swift */; };
 		33646E79261336F200B1A9D7 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33646E78261336F200B1A9D7 /* StepperCell.swift */; };
 		3365714125E63CB600308812 /* SetUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714025E63CB600308812 /* SetUpVC.swift */; };
 		3365714725E662A300308812 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SegmentCell.swift */; };
@@ -26,8 +27,6 @@
 		33E5BDD025E5369700D337F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDCF25E5369700D337F9 /* Assets.xcassets */; };
 		33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */; };
 		33E5BDDE25E5375700D337F9 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDDC25E5375700D337F9 /* MainMenu.swift */; };
-		33E5BDF625E5644D00D337F9 /* HelpScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 33E5BDF525E5644D00D337F9 /* HelpScene.sks */; };
-		33E5BDF925E564D300D337F9 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5BDF825E564D300D337F9 /* Help.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +46,7 @@
 		335E27CA262F014800F87AFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E27F5262F0EB800F87AFB /* MainMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuTests.swift; sourceTree = "<group>"; };
 		335E2805262F132700F87AFB /* SetUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpTests.swift; sourceTree = "<group>"; };
+		335E28142631C76F00F87AFB /* HelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCell.swift; sourceTree = "<group>"; };
 		33646E78261336F200B1A9D7 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		3365714025E63CB600308812 /* SetUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpVC.swift; sourceTree = "<group>"; };
 		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
@@ -65,8 +65,6 @@
 		33E5BDD125E5369700D337F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33E5BDDB25E5375700D337F9 /* MainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuScene.sks; sourceTree = "<group>"; };
 		33E5BDDC25E5375700D337F9 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		33E5BDF525E5644D00D337F9 /* HelpScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HelpScene.sks; sourceTree = "<group>"; };
-		33E5BDF825E564D300D337F9 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,9 +182,8 @@
 		33E5BDF425E5643300D337F9 /* Help */ = {
 			isa = PBXGroup;
 			children = (
-				33E5BDF525E5644D00D337F9 /* HelpScene.sks */,
-				33E5BDF825E564D300D337F9 /* Help.swift */,
 				33DAC07F25FF7B18007FA28F /* HelpVC.swift */,
+				335E28142631C76F00F87AFB /* HelpCell.swift */,
 			);
 			path = Help;
 			sourceTree = "<group>";
@@ -281,7 +278,6 @@
 			files = (
 				33E5BDCE25E5369600D337F9 /* Main.storyboard in Resources */,
 				33E5BDDD25E5375700D337F9 /* MainMenuScene.sks in Resources */,
-				33E5BDF625E5644D00D337F9 /* HelpScene.sks in Resources */,
 				3371F2E225E9125A008E983E /* GameScene.sks in Resources */,
 				33E5BDD025E5369700D337F9 /* Assets.xcassets in Resources */,
 			);
@@ -310,10 +306,10 @@
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
 				3365714725E662A300308812 /* SegmentCell.swift in Sources */,
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
-				33E5BDF925E564D300D337F9 /* Help.swift in Sources */,
 				3371F2E825E91822008E983E /* extensions.swift in Sources */,
 				33E5BDCB25E5369600D337F9 /* MainMenuVC.swift in Sources */,
 				33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */,
+				335E28152631C76F00F87AFB /* HelpCell.swift in Sources */,
 				3371F2E525E91266008E983E /* GameScene.swift in Sources */,
 				330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */,
 				33E5BDDE25E5375700D337F9 /* MainMenu.swift in Sources */,
