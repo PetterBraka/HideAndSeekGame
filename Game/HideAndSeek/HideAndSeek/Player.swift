@@ -90,18 +90,6 @@ class Player: NSObject {
         nodeReach = shape
     }
     
-    func checkReach(_ player: Player) {
-        let distance = abs(Float(hypot(player.spriteNode.position.x - spriteNode.position.x,
-                                       player.spriteNode.position.y - spriteNode.position.y)))
-        let nodeRadius = spriteNode.size.width / 2
-        let range = player.reach.rawValue + Float(nodeRadius)
-        if distance <= range {
-            reachable = true
-        } else {
-            reachable = false
-        }
-    }
-    
     func toString(){
         #if DEBUG
         print("-------------------------------")

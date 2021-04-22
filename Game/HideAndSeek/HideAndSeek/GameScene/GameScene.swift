@@ -44,7 +44,6 @@ class GameScene: SKScene {
     var movingDirection: Direction = .Still
     var nodesHit: [SKSpriteNode] = []
     var playableArea: CGRect
-    var gameBounds: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
     var stickActive: Bool = false
@@ -59,12 +58,10 @@ class GameScene: SKScene {
         self.duration = duration
         self.player = player
         self.playableArea = CGRect(x: 0, y: size.height, width: size.width, height: size.height)
-        self.gameBounds = playableArea
         self.bots = []
         self.gameStartDate = Date()
         super.init(size: size)
         self.playableArea = getPlayableArea()
-        self.gameBounds = getCameraBounds()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,13 +75,6 @@ class GameScene: SKScene {
         return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
     }
     
-    private func getCameraBounds() -> CGRect {
-        let rect = CGRect(x: frame.width / 2 , y: frame.height / 2,
-                          width: playableArea.width - frame.width / 4,
-                          height: playableArea.height)
-        return rect
-    }
-    
     override func didMove(to view: SKView) {
         #if DEBUG
         print("============================")
@@ -95,16 +85,7 @@ class GameScene: SKScene {
         print("============================")
         #endif
         createMap()
-        createJoystick()
-        createButton()
-        spawnPlayer()
-        spawnBots()
-        drawHouse()
-        drawTents()
-        addCamera()
-        debugDrawPlayableArea()
-        createBarriers()
-        createDurationLabel()
+        createUI()
     }
     
     fileprivate func addCamera(){
@@ -113,16 +94,11 @@ class GameScene: SKScene {
         cameraNode.position = player.spriteNode.position
     }
     
-    func debugDrawPlayableArea() {
-        let aspectRatio = frame.width / frame.height
-        let playableHeight = playableArea.width / aspectRatio
-        let playableMargin = (playableArea.height - playableHeight) / 2.0
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: playableMargin, width: size.width, height: playableArea.height))
-        shape.strokeColor = .systemRed
-        shape.lineWidth = 5
-        shape.zPosition = 20
-        shape.position = CGPoint(x: -playableArea.width / 2, y: playableMargin - playableArea.height / 2)
-        cameraNode.addChild(shape)
+    fileprivate func createUI() {
+        createJoystick()
+        createButton()
+        addCamera()
+        createDurationLabel()
     }
     
     fileprivate func createMap() {
@@ -137,6 +113,11 @@ class GameScene: SKScene {
         self.addChild(mountain.spriteNode)
         drawCampfire()
         drawRiver()
+        spawnPlayer()
+        spawnBots()
+        drawHouse()
+        drawTents()
+        createBarriers()
     }
     
     func createBarriers()  {
@@ -180,7 +161,7 @@ class GameScene: SKScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        house.drawDebugArea()
+        house.drawReach()
         self.addChild(house.nodeReach!)
     }
     
@@ -199,7 +180,7 @@ class GameScene: SKScene {
         let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        tent.drawDebugArea()
+        tent.drawReach()
         self.addChild(tent.nodeReach!)
     }
     

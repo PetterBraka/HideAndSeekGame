@@ -91,7 +91,7 @@ class HidingSpot: NSObject {
         return place
     }
     
-    func drawDebugArea() {
+    func drawReach() {
         let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
         shape.position = CGPoint(
             x: spriteNode.position.x,
