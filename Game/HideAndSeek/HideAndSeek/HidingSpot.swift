@@ -97,7 +97,7 @@ class HidingSpot: NSObject {
             x: spriteNode.position.x,
             y: spriteNode.position.y)
         shape.lineWidth = 2
-        shape.strokeColor = .orange
+        shape.strokeColor = .clear
         shape.zPosition = 99
         nodeReach = shape
     }
