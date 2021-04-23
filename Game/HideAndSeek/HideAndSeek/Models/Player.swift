@@ -27,18 +27,19 @@ class Player: NSObject {
         case frozen = 0
     }
     
+    let originalSpeed: Speed
+    
     var reach: Reach
     var role: Role
-    let speed: Speed
     var movmentSpeed: Speed
     var spriteNode: SKSpriteNode
     var nodeReach: SKShapeNode?
     var reachable: Bool = false
-    
+
     internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed) {
         self.reach = reach
         self.role = role
-        self.speed = movmentSpeed
+        self.originalSpeed = movmentSpeed
         self.movmentSpeed = movmentSpeed
         switch role {
         case .hider:
@@ -70,13 +71,13 @@ class Player: NSObject {
         spriteNode = player
     }
     
-    func chought(){
+    func caught(){
         movmentSpeed = .frozen
         spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0.5, duration: 0.8))
     }
     
     func freed(){
-        movmentSpeed = speed
+        movmentSpeed = originalSpeed
         spriteNode.run(.colorize(with: .clear, colorBlendFactor: 0, duration: 0.8))
     }
     

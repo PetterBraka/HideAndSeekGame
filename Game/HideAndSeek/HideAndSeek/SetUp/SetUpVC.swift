@@ -28,7 +28,7 @@ class SetUpVC: UIViewController {
     var difficulty = ChallangeRating.normal
     var playersRole = Player.Role.hider
     var playerReach = Player.Reach.medium
-    var numberOfPlayer = 2
+    var numberOfPlayers = 2
     var duration = 2
     var movementSpeed = Player.Speed.normal
     
@@ -118,7 +118,7 @@ class SetUpVC: UIViewController {
                 case "Duration": // Duration
                     duration = Int(cell.stepper.value)
                 case "Bots": // Bots
-                    numberOfPlayer = Int(cell.stepper.value)
+                    numberOfPlayers = Int(cell.stepper.value)
                 default:
                     #if DEBUG
                     print("can't find option")
@@ -132,7 +132,7 @@ class SetUpVC: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
         gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed)
-        gameScene.numberOfPlayers = numberOfPlayer
+        gameScene.numberOfPlayers = numberOfPlayers
         gameScene.gameDifficulty = difficulty
         gameScene.duration = duration
         gameScene.modalPresentationStyle = .fullScreen

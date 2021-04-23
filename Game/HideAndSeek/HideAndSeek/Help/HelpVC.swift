@@ -18,6 +18,7 @@ class HelpVC: UIViewController {
         var secondImage: String?
         var explenation: String
     }
+    
     var helpItems = [HelpItems(image: "Hider", explenation: "This is a hider. Your job as a hider is to hide from the seeker."),
                      HelpItems(image: "Seeker", explenation: "This is a seeker. Your job as a seeker is to catch all other players"),
                      HelpItems(image: "tentNew", explenation: "This is an hiding spot. You can hide here"),

@@ -41,12 +41,10 @@ class GameScene: SKScene {
     var seeker: Player?
     var bots: [Bot]
     var player: Player
-    var movingDirection: Direction = .Still
     var nodesHit: [SKSpriteNode] = []
     var playableArea: CGRect
     var actionButton = SKSpriteNode(color: .red, size: CGSize(width: 100,height: 75))
     var hidingSpots: [HidingSpot] = []
-    var stickActive: Bool = false
     var lastUpdateTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var velocity: CGPoint = .zero
@@ -68,13 +66,6 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func getPlayableArea() -> CGRect{
-        let aspectRatio = frame.width / frame.height
-        let playableHeight = size.width / aspectRatio
-        let playableMargin = (size.height - playableHeight) / 2.0
-        return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
-    }
-    
     override func didMove(to view: SKView) {
         #if DEBUG
         print("============================")
@@ -86,6 +77,13 @@ class GameScene: SKScene {
         #endif
         createMap()
         createUI()
+    }
+    
+    fileprivate func getPlayableArea() -> CGRect{
+        let aspectRatio = frame.width / frame.height
+        let playableHeight = size.width / aspectRatio
+        let playableMargin = (size.height - playableHeight) / 2.0
+        return CGRect(x: 0, y: playableMargin, width: frame.width, height: playableHeight)
     }
     
     fileprivate func addCamera(){
@@ -120,7 +118,7 @@ class GameScene: SKScene {
         createBarriers()
     }
     
-    func createBarriers()  {
+    fileprivate func createBarriers()  {
         drawBarrier(size: CGSize(width: gameArea.width, height: 5),
                     position: CGPoint(x: gameArea.width / 2, y: gameArea.height))
         drawBarrier(size: CGSize(width: gameArea.width, height: 5),
@@ -131,7 +129,7 @@ class GameScene: SKScene {
                     position: CGPoint(x: gameArea.width, y: gameArea.height / 2))
     }
     
-    func drawBarrier(size: CGSize, position: CGPoint) {
+    fileprivate func drawBarrier(size: CGSize, position: CGPoint) {
         let barrier = SKSpriteNode(color: .clear, size: size)
         barrier.position = position
         barrier.physicsBody = SKPhysicsBody(rectangleOf: barrier.frame.size)
@@ -285,7 +283,7 @@ class GameScene: SKScene {
             bot.drawReach()
             self.addChild(bot.nodeReach!)
             if bots.count == numberOfPlayers - 1{
-                bot.chought()
+                bot.caught()
             }
         }
     }
@@ -294,9 +292,9 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: cameraNode)
             if joystickBackground.contains(location) {
-                stickActive = true
+                freezeJoystick = false
             } else {
-                stickActive = false
+                freezeJoystick = true
             }
             if actionButton.contains(location) {
                 #if DEBUG
@@ -321,7 +319,7 @@ class GameScene: SKScene {
                     #endif
                 case "Catch":
                     if let bot = bots.first(where: {$0.reachable == true}){
-                        bot.chought()
+                        bot.caught()
                     }
                 case "Free":
                     if let bot = bots.first(where: {$0.reachable == true}){
@@ -342,7 +340,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if stickActive {
+        if !freezeJoystick {
             let move = SKAction.move(to: joystickBackground.position, duration: 0.2)
             joystick.run(move)
         }
@@ -536,7 +534,6 @@ class GameScene: SKScene {
     
     fileprivate func moveJoystick(_ location: CGPoint) {
         if !freezeJoystick {
-            if stickActive {
                 let radius = CGVector(dx: location.x - joystickBackground.position.x,
                                       dy: location.y - joystickBackground.position.y)
                 let angle: CGFloat = atan2(radius.dy, radius.dx) - 1.57079633
@@ -553,11 +550,9 @@ class GameScene: SKScene {
                 }
                 moveTo(location)
                 player.spriteNode.zRotation = angle
-                movingDirection = getDirection(for: angle)
                 #if DEBUG
-                print(movingDirection.rawValue)
+                print(getDirection(for: angle).rawValue)
                 #endif
-            }
         }
     }
     

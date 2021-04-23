@@ -118,6 +118,16 @@
 			path = GameScene;
 			sourceTree = "<group>";
 		};
+		337648C82632EE660094056A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				336CBBFF260773820090D223 /* HidingSpot.swift */,
+				339157972608B097008FFCA2 /* Player.swift */,
+				3391579C2608B8E8008FFCA2 /* Bot.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		33E5BDB625E5369600D337F9 = {
 			isa = PBXGroup;
 			children = (
@@ -142,9 +152,7 @@
 			children = (
 				33E5BDC225E5369600D337F9 /* AppDelegate.swift */,
 				33E5BDCC25E5369600D337F9 /* Main.storyboard */,
-				336CBBFF260773820090D223 /* HidingSpot.swift */,
-				339157972608B097008FFCA2 /* Player.swift */,
-				3391579C2608B8E8008FFCA2 /* Bot.swift */,
+				337648C82632EE660094056A /* Models */,
 				33E5BDEB25E5612400D337F9 /* MainMenu */,
 				33E5BDEC25E5614100D337F9 /* SetUp */,
 				3371F2E025E91239008E983E /* GameScene */,
