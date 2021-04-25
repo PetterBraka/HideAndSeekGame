@@ -21,16 +21,19 @@ class MainMenuTests: XCTestCase {
     }
     
     func testPlayButton(){
+        // This tests if the play button has been found in the scene.
         let playButton = mainMenu.playButton
         XCTAssert(playButton != nil, "Play button was not found")
     }
     
     func testHelpButton(){
+        // This tests if the help button has been found in the scene.
         let helpButton = mainMenu.helpButton
         XCTAssert(helpButton != nil, "Help button was not found")
     }
     
     func testNumberOfChildrenInScene() {
+        // This tests if the scene has the expected amount of children. 
         let children = mainMenu.children
         XCTAssert(children.count == 2, "Number of children in main menu is not what's expected")
     }
