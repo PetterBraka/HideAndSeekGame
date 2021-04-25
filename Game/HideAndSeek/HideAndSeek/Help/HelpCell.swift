@@ -12,7 +12,7 @@ class HelpCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
     // This will populate the cell with the data passed.
-    func populate(_ item: HelpVC.HelpItems) {
+    func populate(_ item: HelpVC.HelpItem) {
         cellImage.setBackgroundImage(UIImage(named: item.image), for:.normal)
         label.text = item.explenation
         // Checks if a second image is passed, and if not it will set a blank image as the image.

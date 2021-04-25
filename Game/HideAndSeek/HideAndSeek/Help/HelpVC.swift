@@ -13,20 +13,20 @@ class HelpVC: UIViewController {
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var navBarItem: UINavigationItem!
     
-    struct HelpItems {
+    struct HelpItem {
         var image: String
         var secondImage: String?
         var explenation: String
     }
     
     //Creates and array of preset help options
-    var helpItems = [HelpItems(image: "Hider", explenation: "This is a hider. Your job as a hider is to hide from the seeker."),
-                     HelpItems(image: "Seeker", explenation: "This is a seeker. Your job as a seeker is to catch all other players."),
-                     HelpItems(image: "tentNew", explenation: "This is an hiding spot. You can hide here."),
-                     HelpItems(image: "tentOld", explenation: "This is an hiding spot. You can hide here."),
-                     HelpItems(image: "house", explenation: "This is an hiding spot. You can hide here."),
-                     HelpItems(image: "joystick_background",secondImage: "joystick" , explenation: "This is an joystick. You can use this to move around on the map."),
-                     HelpItems(image: "button", explenation: "This is the action button. I will have a label stating the action yo can preform.")]
+    var helpItems = [HelpItem(image: "Hider", explenation: "This is a hider. Your job as a hider is to hide from the seeker."),
+                     HelpItem(image: "Seeker", explenation: "This is a seeker. Your job as a seeker is to catch all other players."),
+                     HelpItem(image: "tentNew", explenation: "This is an hiding spot. You can hide here."),
+                     HelpItem(image: "tentOld", explenation: "This is an hiding spot. You can hide here."),
+                     HelpItem(image: "house", explenation: "This is an hiding spot. You can hide here."),
+                     HelpItem(image: "joystick_background",secondImage: "joystick" , explenation: "This is an joystick. You can use this to move around on the map."),
+                     HelpItem(image: "button", explenation: "This is the action button. I will have a label stating the action yo can preform.")]
     
     override func viewDidLoad() {
         super.viewDidLoad()

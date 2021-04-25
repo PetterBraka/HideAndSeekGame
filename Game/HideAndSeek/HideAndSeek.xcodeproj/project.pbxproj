@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		330125D925EE8BD900C4F4CC /* GameSceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330125D825EE8BD900C4F4CC /* GameSceneVC.swift */; };
+		332923E326358E22002F6135 /* HelpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332923E226358E22002F6135 /* HelpTests.swift */; };
 		335E27F6262F0EB800F87AFB /* MainMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E27F5262F0EB800F87AFB /* MainMenuTests.swift */; };
 		335E2806262F132700F87AFB /* SetUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E2805262F132700F87AFB /* SetUpTests.swift */; };
 		335E28152631C76F00F87AFB /* HelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E28142631C76F00F87AFB /* HelpCell.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		330125D825EE8BD900C4F4CC /* GameSceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneVC.swift; sourceTree = "<group>"; };
 		33284B18262B061700C46746 /* Hide&Seek.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = "Hide&Seek.playground"; path = "../../Playground/Hide&Seek.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		332923E226358E22002F6135 /* HelpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTests.swift; sourceTree = "<group>"; };
 		335E27C6262F014800F87AFB /* HideAndSeekTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HideAndSeekTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E27CA262F014800F87AFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E27F5262F0EB800F87AFB /* MainMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuTests.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				335E27F5262F0EB800F87AFB /* MainMenuTests.swift */,
 				335E2805262F132700F87AFB /* SetUpTests.swift */,
+				332923E226358E22002F6135 /* HelpTests.swift */,
 			);
 			path = Cases;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			files = (
 				335E27F6262F0EB800F87AFB /* MainMenuTests.swift in Sources */,
 				335E2806262F132700F87AFB /* SetUpTests.swift in Sources */,
+				332923E326358E22002F6135 /* HelpTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
