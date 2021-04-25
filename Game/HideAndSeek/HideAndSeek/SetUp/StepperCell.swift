@@ -11,19 +11,9 @@ class StepperCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var steppNumber: UILabel!
     @IBOutlet weak var stepper: UIStepper!
+    
+    // This will update the label with the value of the stepper.
     @IBAction func stepperAction(_ sender: UIStepper) {
         steppNumber.text = Int(sender.value).description
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

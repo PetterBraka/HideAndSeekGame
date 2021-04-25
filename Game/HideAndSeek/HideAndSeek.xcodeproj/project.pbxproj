@@ -89,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				335E27D6262F02A000F87AFB /* Cases */,
-				335E27D7262F02A800F87AFB /* Data */,
 				335E27CA262F014800F87AFB /* Info.plist */,
 			);
 			path = HideAndSeekTests;
@@ -103,13 +102,6 @@
 				332923E226358E22002F6135 /* HelpTests.swift */,
 			);
 			path = Cases;
-			sourceTree = "<group>";
-		};
-		335E27D7262F02A800F87AFB /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		3371F2E025E91239008E983E /* GameScene */ = {
