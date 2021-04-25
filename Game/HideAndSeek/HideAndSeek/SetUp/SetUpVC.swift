@@ -135,7 +135,7 @@ class SetUpVC: UIViewController {
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
         // This sets the values the player has selected.
         gameScene.player = Player(reach: getReach(), role: getRole(), movmentSpeed: getSpeed())
-        gameScene.numberOfPlayers = getNumberOfBots()
+        gameScene.numberOfBots = getNumberOfBots()
         gameScene.gameDifficulty = getDifficulty()
         gameScene.duration = getDuration()
         gameScene.modalPresentationStyle = .fullScreen

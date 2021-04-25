@@ -87,7 +87,7 @@ class HidingSpot: NSObject {
         }
         place.physicsBody?.isDynamic = false
         place.physicsBody?.affectedByGravity = false
-        place.physicsBody?.categoryBitMask = ColliderType.HidingPlace
+        place.physicsBody?.categoryBitMask = ColliderType.HidingPlace.rawValue
         return place
     }
     

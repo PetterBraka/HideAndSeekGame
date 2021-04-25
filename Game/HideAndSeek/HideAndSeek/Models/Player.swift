@@ -65,8 +65,8 @@ class Player: NSObject {
         player.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: image), size: size)
         player.physicsBody?.isDynamic = true
         player.physicsBody?.affectedByGravity = false
-        player.physicsBody?.categoryBitMask = ColliderType.Player
-        player.physicsBody?.collisionBitMask = ColliderType.HidingPlace
+        player.physicsBody?.categoryBitMask = ColliderType.Player.rawValue
+        player.physicsBody?.collisionBitMask = ColliderType.HidingPlace.rawValue
         
         spriteNode = player
     }
@@ -100,5 +100,39 @@ class Player: NSObject {
         print("Image: \(String(describing: spriteNode.texture))")
         print("-------------------------------")
         #endif
+    }
+    
+    func checkBotsIntersections(_ scene: SKScene, _ bots: [Bot]) -> Bot? {
+        scene.enumerateChildNodes(withName: "bot") { [self] (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let bot = bots.first(where: {$0.spriteNode == sprite}){
+                if bot.nodeReach!.intersects(nodeReach!) {
+                    bot.reachable = true
+                } else {
+                    bot.reachable = false
+                }
+            }
+        }
+        if let bot = bots.first(where: {$0.reachable == true}){
+            return bot
+        }
+        return nil
+    }
+    
+    func checkHidingSpotsIntersections(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
+        scene.enumerateChildNodes(withName: "hidingSpot") { [self] (node, _) in
+            let sprite = node as! SKSpriteNode
+            if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
+                if spot.nodeReach!.intersects(nodeReach!) {
+                    spot.reachable = true
+                } else {
+                    spot.reachable = false
+                }
+            }
+        }
+        if let spot = hidingSpots.first(where: {$0.reachable == true}){
+            return spot
+        }
+        return nil
     }
 }

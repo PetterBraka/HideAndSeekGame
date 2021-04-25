@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameSceneVC: UIViewController {
     var gameDifficulty: ChallangeRating?
-    var numberOfPlayers: Int?
+    var numberOfBots: Int?
     var player: Player?
     var duration: Int?
     
@@ -21,18 +21,22 @@ class GameSceneVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = self.view as? SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if gameDifficulty != nil && numberOfPlayers != nil && duration != nil {
+            // Checks if all the data needed to start a game is there.
+            if gameDifficulty != nil && numberOfBots != nil && duration != nil {
                 let scene = GameScene(size: self.view.bounds.size,
                                       difficulty: gameDifficulty!,
                                       player: player!,
                                       duration: duration!,
-                                      amountOfPlayers: numberOfPlayers!)
+                                      numberOfBots: numberOfBots!)
                 print("creating scene with user set values")
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)
             } else {
-                let scene = GameScene(size: self.view.bounds.size, difficulty: .easy, player: Player(reach: .short, role: .hider, movmentSpeed: .normal), duration: 1, amountOfPlayers: 1)
+                let scene = GameScene(size: self.view.bounds.size,
+                                      difficulty: .easy,
+                                      player: Player(reach: .short, role: .hider, movmentSpeed: .normal),
+                                      duration: 1,
+                                      numberOfBots: 1)
                 print("creating scene with preset values")
                 scene.scaleMode = .aspectFill
                 view?.presentScene(scene)
