@@ -21,13 +21,11 @@ class MainMenuTests: XCTestCase {
     }
     
     func testPlayButton(){
-        mainMenu.getButtons()
         let playButton = mainMenu.playButton
         XCTAssert(playButton != nil, "Play button was not found")
     }
     
     func testHelpButton(){
-        mainMenu.getButtons()
         let helpButton = mainMenu.helpButton
         XCTAssert(helpButton != nil, "Help button was not found")
     }
