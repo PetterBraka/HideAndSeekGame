@@ -135,4 +135,30 @@ class Player: NSObject {
         }
         return nil
     }
+    
+    func checkHideAction(_ hidingSpots: [HidingSpot], _ freezeJoystick: Bool) -> String{
+        if role == .hider {
+            if hidingSpots.contains(where: {$0.reachable == true}) {
+                if !freezeJoystick{
+                    return "Hide"
+                } else {
+                    return "Leave"
+                }
+            }
+        }
+        return ""
+    }
+    
+    func checkCatchAction(_ bot: Bot) -> String{
+        if role == .seeker {
+            if bot.movmentSpeed != .frozen {
+                return "Catch"
+            }
+        } else {
+            if bot.movmentSpeed == .frozen {
+                return "Free"
+            }
+        }
+        return ""
+    }
 }
