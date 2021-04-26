@@ -598,8 +598,7 @@ extension GameScene {
         let house = HidingSpot(.house, CGPoint(x: gameArea.width / 8 * 4, y: gameArea.height / 16 * 13), capacity: 2)
         self.addChild(house.spriteNode)
         hidingSpots.append(house)
-        house.drawReach()
-        self.addChild(house.nodeReach!)
+        self.addChild(house.nodeReach)
     }
     
     /**
@@ -627,8 +626,7 @@ extension GameScene {
         let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
         hidingSpots.append(tent)
         self.addChild(tent.spriteNode)
-        tent.drawReach()
-        self.addChild(tent.nodeReach!)
+        self.addChild(tent.nodeReach)
     }
     
     /**
@@ -637,8 +635,7 @@ extension GameScene {
     private func spawnPlayer() {
         player.createSprite(size: CGSize(width: 50, height: 50), location: CGPoint(x: gameArea.width / 2, y: gameArea.height / 2))
         self.addChild(player.spriteNode)
-        player.drawReach()
-        self.addChild(player.nodeReach!)
+        self.addChild(player.nodeReach)
     }
     
     /**
@@ -665,8 +662,7 @@ extension GameScene {
             seekerBot.createSprite(size: botSize,
                                    location: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60))
             self.addChild(seekerBot.spriteNode)
-            seekerBot.drawReach()
-            self.addChild(seekerBot.nodeReach!)
+            self.addChild(seekerBot.nodeReach)
             seeker = seekerBot
             bots.append(seekerBot)
         }
@@ -677,8 +673,7 @@ extension GameScene {
                                                y:  self.gameArea.height / 2 - 60))
             bots.append(bot)
             self.addChild(bot.spriteNode)
-            bot.drawReach()
-            self.addChild(bot.nodeReach!)
+            self.addChild(bot.nodeReach)
             if bots.count == numberOfPlayers - 1{
                 bot.caught()
             }

@@ -24,7 +24,7 @@ class HidingSpot: NSObject {
     var spriteNode: SKSpriteNode = SKSpriteNode()
     var image: String
     var reachable: Bool
-    var nodeReach: SKShapeNode?
+    var nodeReach: SKShapeNode!
     
     init(_ variant: Variant, _ location: CGPoint, capacity: Int) {
         self.type = variant
@@ -33,7 +33,7 @@ class HidingSpot: NSObject {
         self.location = location
         self.reachable = false
         super.init()
-        self.spriteNode = createSprite()
+        createSprite()
     }
     
     init(_ variant: Variant, _ location: CGPoint, newTent: Bool, capacity: Int) {
@@ -52,7 +52,7 @@ class HidingSpot: NSObject {
             self.image = variant.rawValue
         }
         super.init()
-        self.spriteNode = createSprite()
+        createSprite()
     }
     
     /**
@@ -84,7 +84,7 @@ class HidingSpot: NSObject {
      # Notes: #
      1. Should be called to get create any hiding spots.
      */
-    private func createSprite() -> SKSpriteNode {
+    private func createSprite() {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
         place.name = "hidingSpot"
@@ -102,16 +102,17 @@ class HidingSpot: NSObject {
         place.physicsBody?.isDynamic = false
         place.physicsBody?.affectedByGravity = false
         place.physicsBody?.categoryBitMask = ColliderType.HidingPlace.rawValue
-        return place
+        spriteNode = place
+        drawReach()
     }
     
     /**
      Will create a SKShapeNode of a circle with the radius of the spriteNode.
      
      # Notes: #
-     1. Should be called after the SKSpriteNode has been created.
+     1. Will be called after the SKSpriteNode has been created.
      */
-    func drawReach() {
+    private func drawReach() {
         let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
         shape.position = CGPoint(
             x: spriteNode.position.x,
