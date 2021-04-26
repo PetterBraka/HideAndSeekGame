@@ -154,9 +154,9 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         move(timeDifference, player.spriteNode)
         // Checks if the player intersects whit a bot or an hiding spot
-        if let bot = player.checkBotsIntersections(scene!, bots){
-            buttonLabel.text = player.checkCatchAction(bot)
-        } else if player.checkHidingSpotsIntersections(scene!, hidingSpots) != nil {
+        if player.checkBotsIntersections(bots) != nil {
+            buttonLabel.text = player.checkCatchAction(bots)
+        } else if player.checkHidingSpotsIntersections(hidingSpots) != nil {
             buttonLabel.text = player.checkHideAction(hidingSpots, freezeJoystick)
         } else {
             buttonLabel.text = ""
@@ -174,8 +174,8 @@ class GameScene: SKScene {
      # Example #
      ```
      override func update(_ currentTime: TimeInterval) {
-        move(timeDifference, player.spriteNode, velocity)
-        constrinCameraNode()
+     move(timeDifference, player.spriteNode, velocity)
+     constrinCameraNode()
      }
      ```
      */
@@ -243,10 +243,10 @@ class GameScene: SKScene {
      # Example #
      ```
      override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-         for touch in touches {
-             let location = touch.location(in: cameraNode)
-             moveJoystick(location)
-         }
+     for touch in touches {
+     let location = touch.location(in: cameraNode)
+     moveJoystick(location)
+     }
      }
      ```
      */
@@ -292,8 +292,8 @@ class GameScene: SKScene {
      Will move a SKSpriteNode in a direction. It will also calculate how cuickly to move.
      
      - Parameters:
-       - timeDifference: The time difference since last update.
-       - sprite: The SKSpriteNode to be moved.
+     - timeDifference: The time difference since last update.
+     - sprite: The SKSpriteNode to be moved.
      */
     private func move(_ timeDifference: TimeInterval, _ sprite: SKSpriteNode){
         let amountToMove = velocity * CGFloat(timeDifference)
@@ -383,11 +383,11 @@ extension GameScene {
     
     /**
      Creates a Label and posisions it underneat the button. This label will tell what action can be preformed by the player.
-    
+     
      # Notes: #
      1. Should be used tell the player what they can do.
      2. Should be blank if no action can be preformed.
-    
+     
      */
     private func createButtonLabel() {
         buttonLabel.text = "Action button"
@@ -444,7 +444,7 @@ extension GameScene {
      # Example #
      ```
      update(){
-        updateDurationLabel
+     updateDurationLabel
      }
      ```
      */
@@ -619,8 +619,8 @@ extension GameScene {
      Will draw a tent and at it to the scene.
      
      - Parameters:
-        - newTent: A bool representing a new tent.
-        - position: A CGPoint for the location of where the tent will be added.
+     - newTent: A bool representing a new tent.
+     - position: A CGPoint for the location of where the tent will be added.
      */
     private func drawATent(newTent: Bool, _ position: CGPoint){
         let tent = HidingSpot(.tent, position, newTent: newTent , capacity: 1)
@@ -698,8 +698,8 @@ extension GameScene {
      Will create a barrier and add to the scene.
      
      - Parameters:
-        - size: A CGSize for the size of the barrier.
-        - position: A CGPoint for the location for the barrier.
+     - size: A CGSize for the size of the barrier.
+     - position: A CGPoint for the location for the barrier.
      */
     private func drawBarrier(size: CGSize, position: CGPoint) {
         let barrier = SKSpriteNode(color: .clear, size: size)

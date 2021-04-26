@@ -13,7 +13,7 @@ class Player: NSObject {
         case hider = "Hider"
         case seeker = "Seeker"
     }
-
+    
     enum Reach: Float {
         case short = 10
         case medium = 20
@@ -35,7 +35,7 @@ class Player: NSObject {
     var reachable: Bool = false
     var spriteNode: SKSpriteNode
     var movmentSpeed: Speed
-
+    
     internal init(reach: Player.Reach, role: Player.Role, movmentSpeed: Speed) {
         self.reach = reach
         self.role = role
@@ -53,8 +53,8 @@ class Player: NSObject {
      Will create a SKSpriteNode of a spesific size and set the locaiton for the sprite.
      
      - Parameters:
-         - size: - A CGSize of the size the sprite should have.
-         - location: - A CGPoint of where the sprite should be located.
+     - size: - A CGSize of the size the sprite should have.
+     - location: - A CGPoint of where the sprite should be located.
      */
     func createSprite(size: CGSize, location: CGPoint) {
         var image = ""
@@ -89,7 +89,7 @@ class Player: NSObject {
         let shape = SKShapeNode(circleOfRadius: raidus)
         shape.position = spriteNode.position
         shape.lineWidth = 2
-        shape.strokeColor = .clear
+        shape.strokeColor = .red
         shape.zPosition = 99
         nodeReach = shape
     }
@@ -140,59 +140,45 @@ class Player: NSObject {
     /**
      Checks if the players reach inteferes with any bots in the scene.
      
-     - Parameters:
-         - scene:- The SKScene that contains the player and the bot.
-         - bots:- An array of Bot to check.
+     - parameter bots:- An array of Bot to check.
      - returns: Optional Bot if a bots reach intersects the players reach.
      */
-    func checkBotsIntersections(_ scene: SKScene, _ bots: [Bot]) -> Bot? {
-        scene.enumerateChildNodes(withName: "bot") { [self] (node, _) in
-            let sprite = node as! SKSpriteNode
-            if let bot = bots.first(where: {$0.spriteNode == sprite}){
-                if bot.nodeReach!.intersects(nodeReach!) {
-                    bot.reachable = true
-                } else {
-                    bot.reachable = false
-                }
+    func checkBotsIntersections(_ bots: [Bot]) -> Bot? {
+        bots.forEach { (bot) in
+            if bot.nodeReach!.intersects(nodeReach!) {
+                bot.reachable = true
+            } else {
+                bot.reachable = false
             }
         }
-        if let bot = bots.first(where: {$0.reachable == true}){
-            return bot
-        }
-        return nil
+        let bot = bots.first(where: {$0.reachable == true})
+        return bot
     }
     
     /**
      Checks if the players reach inteferes with any hiding spots in the scene.
      
-     - Parameters:
-         - scene: - The SKScene that contains the player and the hiding spot.
-         - hidingSpots: - An array of HidingSpot to check.
+     - parameter hidingSpots: - An array of HidingSpot to check.
      - returns: Optional HidingSpot if a hiding spots reach intersects the players reach.
      */
-    func checkHidingSpotsIntersections(_ scene: SKScene, _ hidingSpots: [HidingSpot]) -> HidingSpot? {
-        scene.enumerateChildNodes(withName: "hidingSpot") { [self] (node, _) in
-            let sprite = node as! SKSpriteNode
-            if let spot = hidingSpots.first(where: {$0.spriteNode == sprite}){
-                if spot.nodeReach.intersects(nodeReach!) {
-                    spot.reachable = true
-                } else {
-                    spot.reachable = false
-                }
+    func checkHidingSpotsIntersections(_ hidingSpots: [HidingSpot]) -> HidingSpot? {
+        hidingSpots.forEach { (spot) in
+            if spot.nodeReach.intersects(nodeReach!) {
+                spot.reachable = true
+            } else {
+                spot.reachable = false
             }
         }
-        if let spot = hidingSpots.first(where: {$0.reachable == true}){
-            return spot
-        }
-        return nil
+        let spot = hidingSpots.first(where: {$0.reachable == true})
+        return spot
     }
     
     /**
      Will check if a hidingSpot is within reach.
      
      - Parameters:
-        hidingSpots: - An array of HidingSpot to check.
-        freezeJoystick: - A Bool represening if the joystick can used or not.
+     hidingSpots: - An array of HidingSpot to check.
+     freezeJoystick: - A Bool represening if the joystick can used or not.
      - returns: A String representing the action that can be preformed.
      */
     func checkHideAction(_ hidingSpots: [HidingSpot], _ freezeJoystick: Bool) -> String{
@@ -215,13 +201,13 @@ class Player: NSObject {
      
      - returns: A String representing the action that can be preformed.
      */
-    func checkCatchAction(_ bot: Bot) -> String{
+    func checkCatchAction(_ bots: [Bot]) -> String{
         if role == .seeker {
-            if bot.movmentSpeed != .frozen {
+            if bots.contains(where: {$0.reachable == true && $0.movmentSpeed != .frozen}) {
                 return "Catch"
             }
         } else {
-            if bot.movmentSpeed == .frozen {
+            if bots.contains(where: {$0.reachable == true && $0.movmentSpeed == .frozen}) {
                 return "Free"
             }
         }
