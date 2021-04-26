@@ -11,10 +11,11 @@ class SegmentCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
+    /**
+     Will set segments for the segment controller, and select the default values.
+     
+     - parameter options: - An array of string that will be set to the segment controller.
+     */
     func updateSegmentControler(_ options: [String]){
         segmentControl.removeAllSegments()
         for option in options {
@@ -25,7 +26,12 @@ class SegmentCell: UITableViewCell {
         segmentControl.selectedSegmentIndex = segmentControl.numberOfSegments / 3
     }
     
-    func getData() -> String {
+    /**
+     Will get the title of the selected item in a UISegmentControl
+     
+     - returns: The string selected by the player.
+     */
+    func getTitleOfSelectedSegment() -> String {
         let index = segmentControl.selectedSegmentIndex
         guard let segmentTitle = segmentControl.titleForSegment(at: index) else {
             return ""

@@ -10,6 +10,7 @@ import UIKit
 class SetUpVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBarItem: UINavigationItem!
+    
     struct GameOptions {
         var title: String
         var hasSegments: Bool
@@ -25,25 +26,29 @@ class SetUpVC: UIViewController {
         GameOptions(title: "Reach", hasSegments: true, options: ["Short", "Medium", "Far"]),
         GameOptions(title: "Duration", hasSegments: false),
         GameOptions(title: "Bots", hasSegments: false)]
-    var difficulty = ChallangeRating.normal
-    var playersRole = Player.Role.hider
-    var playerReach = Player.Reach.medium
-    var numberOfPlayers = 2
-    var duration = 2
-    var movementSpeed = Player.Speed.normal
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
+        // Setts up navigation bar items for cancel and done.
         navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
         navBarItem.leftBarButtonItem?.tintColor = .systemRed
         navBarItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(navBarTapped(sender:)))
     }
     
+    /**
+     Will handle the button click from a navigation bat item.
+     
+     - parameter sender: - The UIBarButtonItem that called this function.
+     
+     # Example #
+     ```
+     navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
+     ```
+     */
     @objc func navBarTapped(sender: UIBarButtonItem){
-        grabData()
         switch sender {
         case navBarItem.leftBarButtonItem:
             #if DEBUG
@@ -62,90 +67,136 @@ class SetUpVC: UIViewController {
         }
     }
     
-    func grabData() {
-        for row in 0...gameOptions.count - 1{
-            if gameOptions[row].hasSegments {
-                let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! SegmentCell
-                let segmentTitle = cell.getData()
-                switch gameOptions[row].title {
-                case "Role": // Role
-                    if Player.Role.hider.rawValue == segmentTitle {
-                        playersRole = Player.Role.hider
-                    } else {
-                        playersRole = Player.Role.seeker
-                    }
-                case "Difficulty": //Difficulty
-                    switch segmentTitle {
-                    case ChallangeRating.easy.rawValue:
-                        difficulty = .easy
-                    case ChallangeRating.normal.rawValue:
-                        difficulty = .normal
-                    case ChallangeRating.hard.rawValue:
-                        difficulty = .hard
-                    default:
-                        difficulty = .normal
-                    }
-                case "Reach": // Reach
-                    switch segmentTitle {
-                    case "Short":
-                        playerReach = .short
-                    case "Medium":
-                        playerReach = .medium
-                    case "Far":
-                        playerReach = .far
-                    default:
-                        playerReach = .medium
-                    }
-                case "Speed": // Speed
-                    switch segmentTitle {
-                    case "Slow":
-                        movementSpeed = Player.Speed.slow
-                    case "Normal":
-                        movementSpeed = Player.Speed.normal
-                    case "Fast":
-                        movementSpeed = Player.Speed.fast
-                    default:
-                        movementSpeed = Player.Speed.normal
-                    }
-                default:
-                    #if DEBUG
-                    print("can't find option")
-                    #endif
-                }
-            } else {
-                let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! StepperCell
-                switch gameOptions[row].title {
-                case "Duration": // Duration
-                    duration = Int(cell.stepper.value)
-                case "Bots": // Bots
-                    numberOfPlayers = Int(cell.stepper.value)
-                default:
-                    #if DEBUG
-                    print("can't find option")
-                    #endif
-                }
-            }
+    /**
+     Will get and unwrap the title for a segmentCell.
+     
+     - parameter indexPath: - The IndexPath for the SegmentCell you want the title for.
+     - returns: A string of the cells title.
+     */
+    private func getSegmentCellTitle(indexPath: IndexPath) -> String{
+        let cell = tableView.cellForRow(at: indexPath) as! SegmentCell
+        return cell.title.text ?? ""
+    }
+    
+    
+    /**
+     Will return the role selected by the player.
+     
+     - returns: A Player.Role that was set by the player.
+     */
+    private func getRole() -> Player.Role {
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SegmentCell
+        switch cell.getTitleOfSelectedSegment(){
+        case Player.Role.seeker.rawValue:
+            return .seeker
+        default:
+            return .hider
         }
     }
     
-    func startGame(){
+    
+    /**
+     Will return the difficulty selected by the player.
+     
+     - returns: A ChallangeRating that was set by the player
+     */
+    private func getDifficulty() -> ChallangeRating{
+        switch getSegmentCellTitle(indexPath: IndexPath(row: 1, section: 0)) {
+            case ChallangeRating.easy.rawValue:
+                return .easy
+            case ChallangeRating.normal.rawValue:
+                return .normal
+            case ChallangeRating.hard.rawValue:
+                return .hard
+            default:
+                return .normal
+            }
+    }
+    
+    
+    /**
+     Will return the speed selecteed by the player.
+     
+     - returns: Player.Speed that was set by the player.
+     */
+    private func getSpeed() -> Player.Speed {
+        switch getSegmentCellTitle(indexPath: IndexPath(row: 2, section: 0)) {
+        case "Slow":
+            return .slow
+        case "Normal":
+            return .normal
+        case "Fast":
+            return .fast
+        default:
+            return .normal
+        }
+    }
+    
+    
+    /**
+     Will return the reach selected by the player.
+     
+     - returns: Player.Reach that was set by the player.
+     */
+    private func getReach() -> Player.Reach {
+        switch getSegmentCellTitle(indexPath: IndexPath(row: 3, section: 0)) {
+        case "Short":
+            return .short
+        case "Medium":
+            return .medium
+        case "Far":
+            return .far
+        default:
+            return .medium
+        }
+    }
+    
+    /**
+     Will return the duration set by the player.
+     
+     - returns: An Int selected by the player as the duration for the game.
+     */
+    private func getDuration() -> Int {
+        let cell = tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! StepperCell
+        return Int(cell.stepper.value)
+    }
+    
+    /**
+     Will return the nuber of bots set by the player.
+     
+     - returns: An Int selected by the player as the number of bots in the game.
+     */
+    private func getNumberOfBots() -> Int {
+        let cell = tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! StepperCell
+        return Int(cell.stepper.value)
+    }
+    
+    
+    /**
+     Will create a segua from the SetUpVC to the GameSceneVC
+     */
+    private func startGame(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC
-        gameScene.player = Player(reach: playerReach, role: playersRole, movmentSpeed: movementSpeed)
-        gameScene.numberOfPlayers = numberOfPlayers
-        gameScene.gameDifficulty = difficulty
-        gameScene.duration = duration
+        // This sets the values the player has selected.
+        gameScene.player = Player(reach: getReach(), role: getRole(), movmentSpeed: getSpeed())
+        gameScene.numberOfBots = getNumberOfBots()
+        gameScene.gameDifficulty = getDifficulty()
+        gameScene.duration = getDuration()
         gameScene.modalPresentationStyle = .fullScreen
         self.present(gameScene, animated: true, completion: nil)
     }
 }
 
+// Here are the methodes needed to have a UITableView.
 extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        gameOptions.count
+        // This sets the number of rows needed for each section.
+        return gameOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // This will create a cell and check what type of cell should be created.
         if gameOptions[indexPath.row].hasSegments{
             let cell = tableView.dequeueReusableCell(withIdentifier: "SegmentCell", for: indexPath) as! SegmentCell
             cell.title.text = gameOptions[indexPath.row].title
@@ -166,6 +217,7 @@ extension SetUpVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // This sets the hight of the cell.
         return 44
     }
 }
