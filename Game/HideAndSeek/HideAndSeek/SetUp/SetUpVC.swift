@@ -38,7 +38,16 @@ class SetUpVC: UIViewController {
         navBarItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(navBarTapped(sender:)))
     }
     
-    // This will handel taps on navigation bar items.
+    /**
+     Will handle the button click from a navigation bat item.
+     
+     - parameter sender: - The UIBarButtonItem that called this function.
+     
+     # Example #
+     ```
+     navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
+     ```
+     */
     @objc func navBarTapped(sender: UIBarButtonItem){
         switch sender {
         case navBarItem.leftBarButtonItem:
@@ -58,13 +67,23 @@ class SetUpVC: UIViewController {
         }
     }
     
-    // This will get and unwrap the title for a segmentCell.
+    /**
+     Will get and unwrap the title for a segmentCell.
+     
+     - parameter indexPath: - The IndexPath for the SegmentCell you want the title for.
+     - returns: A string of the cells title.
+     */
     private func getSegmentCellTitle(indexPath: IndexPath) -> String{
         let cell = tableView.cellForRow(at: indexPath) as! SegmentCell
         return cell.title.text ?? ""
     }
     
-    // This will return the role selected by the player.
+    
+    /**
+     Will return the role selected by the player.
+     
+     - returns: A Player.Role that was set by the player.
+     */
     private func getRole() -> Player.Role {
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SegmentCell
         switch cell.getTitleOfSelectedSegment(){
@@ -75,7 +94,12 @@ class SetUpVC: UIViewController {
         }
     }
     
-    // This will return the difficulty selected by the player.
+    
+    /**
+     Will return the difficulty selected by the player.
+     
+     - returns: A ChallangeRating that was set by the player
+     */
     private func getDifficulty() -> ChallangeRating{
         switch getSegmentCellTitle(indexPath: IndexPath(row: 1, section: 0)) {
             case ChallangeRating.easy.rawValue:
@@ -89,7 +113,12 @@ class SetUpVC: UIViewController {
             }
     }
     
-    // This will return the speed selecteed by the player.
+    
+    /**
+     Will return the speed selecteed by the player.
+     
+     - returns: Player.Speed that was set by the player.
+     */
     private func getSpeed() -> Player.Speed {
         switch getSegmentCellTitle(indexPath: IndexPath(row: 2, section: 0)) {
         case "Slow":
@@ -103,7 +132,12 @@ class SetUpVC: UIViewController {
         }
     }
     
-    // This will return the reach selected by the player.
+    
+    /**
+     Will return the reach selected by the player.
+     
+     - returns: Player.Reach that was set by the player.
+     */
     private func getReach() -> Player.Reach {
         switch getSegmentCellTitle(indexPath: IndexPath(row: 3, section: 0)) {
         case "Short":
@@ -117,19 +151,30 @@ class SetUpVC: UIViewController {
         }
     }
     
-    // This will return the duration set by the player.
+    /**
+     Will return the duration set by the player.
+     
+     - returns: An Int selected by the player as the duration for the game.
+     */
     private func getDuration() -> Int {
         let cell = tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as! StepperCell
         return Int(cell.stepper.value)
     }
     
-    // This will return the nuber of bots set by the player.
+    /**
+     Will return the nuber of bots set by the player.
+     
+     - returns: An Int selected by the player as the number of bots in the game.
+     */
     private func getNumberOfBots() -> Int {
         let cell = tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as! StepperCell
         return Int(cell.stepper.value)
     }
     
-    // This will create a segua from the SetUpVC to the GameSceneVC
+    
+    /**
+     Will create a segua from the SetUpVC to the GameSceneVC
+     */
     private func startGame(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameScene = storyboard.instantiateViewController(withIdentifier: "GameSceneVC") as! GameSceneVC

@@ -8,6 +8,21 @@
 import SpriteKit
 
 extension SKSpriteNode {
+    
+    /**
+     Will change the size of the SKSpriteNode, but keep the aspec ratio of the texture set.
+     
+     - parameter size: - The CGSize wanted for the SKSpriteNode.
+     
+     # Notes: #
+     1. The SKSpriteNode needs an texture to resize the node.
+     
+     # Example #
+     ```
+     let sprite = SKSpriteNode(imageNamed: "image name")
+     sprite.aspectFillToSize(size: CGSize)
+     ```
+     */
     func aspectFillToSize(size: CGSize) {
         guard let texture = self.texture else {
             print("Can't set aspect ratio of node. No textures found for node")

@@ -12,7 +12,11 @@ class StepperCell: UITableViewCell {
     @IBOutlet weak var steppNumber: UILabel!
     @IBOutlet weak var stepper: UIStepper!
     
-    // This will update the label with the value of the stepper.
+    /**
+     Will update the label with the value of the stepper.
+     
+     - parameter sender: - The UIStepper that called this dunction.
+     */
     @IBAction func stepperAction(_ sender: UIStepper) {
         steppNumber.text = Int(sender.value).description
     }

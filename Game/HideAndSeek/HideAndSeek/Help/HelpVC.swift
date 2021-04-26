@@ -36,8 +36,17 @@ class HelpVC: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
     }
-    
-    // This will handle the button click from a navigation bat item.
+
+    /**
+     Will handle the button click from a navigation bat item.
+     
+     - parameter sender: - The UIBarButtonItem that called this function.
+     
+     # Example #
+     ```
+     navBarItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(navBarTapped(sender:)))
+     ```
+     */
     @objc func navBarTapped(sender: UIBarButtonItem){
         switch sender {
         case navBarItem.leftBarButtonItem:
