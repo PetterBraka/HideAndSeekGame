@@ -191,7 +191,6 @@
         <!--HelpSceneVC-->
         <scene sceneID="udy-U2-AVR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K7g-hC-CAu" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="HelpVC" title="Help" id="Qog-eQ-J0u" userLabel="HelpSceneVC" customClass="HelpVC" customModule="HideAndSeek" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="fXT-kq-Bi7" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
@@ -268,6 +267,7 @@
                         <outlet property="tableview" destination="dE5-Vo-Y74" id="Enl-yT-um4"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K7g-hC-CAu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="430.58035714285711" y="776.81159420289862"/>
         </scene>

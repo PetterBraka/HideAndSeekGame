@@ -55,6 +55,12 @@ class HidingSpot: NSObject {
         self.spriteNode = createSprite()
     }
     
+    /**
+     Will give the size needed for that type of hiding spot.
+     
+     - returns: A CGSize depening on the type.
+     
+     */
     private func getSize() -> CGSize {
         switch type {
         case .mountain:
@@ -70,6 +76,14 @@ class HidingSpot: NSObject {
         }
     }
     
+    /**
+     Creates a SKSprite node for the hiding spot. I will aslo give it a SKPhysicsBody depending on the type of spot.
+     
+     - returns: A SKSpriteNode for the hiding spot.
+     
+     # Notes: #
+     1. Should be called to get create any hiding spots.
+     */
     private func createSprite() -> SKSpriteNode {
         let place = SKSpriteNode(imageNamed: image)
         place.position = location
@@ -91,6 +105,12 @@ class HidingSpot: NSObject {
         return place
     }
     
+    /**
+     Will create a SKShapeNode of a circle with the radius of the spriteNode.
+     
+     # Notes: #
+     1. Should be called after the SKSpriteNode has been created.
+     */
     func drawReach() {
         let shape = SKShapeNode(circleOfRadius: (spriteNode.size.width / 2))
         shape.position = CGPoint(
@@ -102,6 +122,13 @@ class HidingSpot: NSObject {
         nodeReach = shape
     }
     
+    /**
+     Will print all the information from a hidingspot.
+     
+     # Notes: #
+     1. Will print directly to the output.
+     2. Will only print if in debug mode.
+     */
     func toString(){
         #if DEBUG
         print("-------------------------------")
