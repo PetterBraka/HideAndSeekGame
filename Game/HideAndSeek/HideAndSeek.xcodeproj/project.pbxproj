@@ -17,7 +17,7 @@
 		3365714725E662A300308812 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3365714625E662A300308812 /* SegmentCell.swift */; };
 		336CBC00260773820090D223 /* HidingSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CBBFF260773820090D223 /* HidingSpot.swift */; };
 		3371F2E525E91266008E983E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E425E91266008E983E /* GameScene.swift */; };
-		3371F2E825E91822008E983E /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E725E91822008E983E /* extensions.swift */; };
+		3371F2E825E91822008E983E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3371F2E725E91822008E983E /* Extensions.swift */; };
 		339157982608B097008FFCA2 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339157972608B097008FFCA2 /* Player.swift */; };
 		3391579D2608B8E8008FFCA2 /* Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3391579C2608B8E8008FFCA2 /* Bot.swift */; };
 		33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DAC07F25FF7B18007FA28F /* HelpVC.swift */; };
@@ -53,7 +53,7 @@
 		3365714625E662A300308812 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
 		336CBBFF260773820090D223 /* HidingSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidingSpot.swift; sourceTree = "<group>"; };
 		3371F2E425E91266008E983E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		3371F2E725E91822008E983E /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		3371F2E725E91822008E983E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		339157972608B097008FFCA2 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3391579C2608B8E8008FFCA2 /* Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bot.swift; sourceTree = "<group>"; };
 		33DAC07F25FF7B18007FA28F /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 				33E5BDEC25E5614100D337F9 /* SetUp */,
 				3371F2E025E91239008E983E /* GameScene */,
 				337648C82632EE660094056A /* Models */,
-				3371F2E725E91822008E983E /* extensions.swift */,
+				3371F2E725E91822008E983E /* Extensions.swift */,
 				33E5BDCF25E5369700D337F9 /* Assets.xcassets */,
 				33E5BDD125E5369700D337F9 /* Info.plist */,
 			);
@@ -306,7 +306,7 @@
 				33DAC08025FF7B18007FA28F /* HelpVC.swift in Sources */,
 				3365714725E662A300308812 /* SegmentCell.swift in Sources */,
 				339157982608B097008FFCA2 /* Player.swift in Sources */,
-				3371F2E825E91822008E983E /* extensions.swift in Sources */,
+				3371F2E825E91822008E983E /* Extensions.swift in Sources */,
 				33E5BDCB25E5369600D337F9 /* MainMenuVC.swift in Sources */,
 				33E5BDC325E5369600D337F9 /* AppDelegate.swift in Sources */,
 				335E28152631C76F00F87AFB /* HelpCell.swift in Sources */,
