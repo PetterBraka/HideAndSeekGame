@@ -113,9 +113,6 @@ class GameScene: SKScene {
                     print("can't do anything")
                     #endif
                 }
-                freezeJoystick = true
-            } else {
-                freezeJoystick = true
             }
         }
     }
@@ -144,11 +141,23 @@ class GameScene: SKScene {
         move(timeDifference, player.spriteNode)
         // Checks if the player intersects whit a bot or an hiding spot
         if player.checkBotsIntersections(bots) != nil {
-            buttonLabel.text = player.checkCatchAction(bots)
+            let text = player.checkCatchAction(bots)
+            if text != "" {
+                buttonLabel.text = text
+            }
         } else if player.checkHidingSpotsIntersections(hidingSpots) != nil {
-            buttonLabel.text = player.checkHideAction(hidingSpots, freezeJoystick)
+            let text = player.checkHideAction(hidingSpots)
+            if text != "" {
+                buttonLabel.text = player.checkHideAction(hidingSpots)
+            }
         } else {
             buttonLabel.text = ""
+        }
+        bots.forEach { (bot) in
+            bot.nodeReach.position = bot.spriteNode.position
+        }
+        if player.role == .hider {
+            checkSeekerVictory()
         }
         constrinCameraNode()
         updateDurationLabel()
@@ -204,20 +213,45 @@ class GameScene: SKScene {
      1. Should be called in when checking the duration of the game
      
      */
-    private func checkVictory(){
-        var forzenBots = 0
+    private func checkDurationVictory(){
+        var frozenPlayers = 0
         bots.forEach { (bot) in
             if bot.movmentSpeed == .frozen{
-                forzenBots = forzenBots + 1
+                frozenPlayers = frozenPlayers + 1
             }
         }
+        if player.role == .hider && player.movmentSpeed == .frozen {
+            frozenPlayers = frozenPlayers + 1
+        }
         // Goes though all the bots and checks if all are chough.
-        if forzenBots == bots.count{
+        if frozenPlayers == bots.count{
             createVictoryLabel("Seekers Won")
         } else {
             createVictoryLabel("Hiders Won")
         }
     }
+    
+    private func checkSeekerVictory() {
+        let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
+        if secondsSinceStart > 5 {
+            seeker?.seek(for: player)
+            var coughtPlayers = 0
+            bots.forEach { (bot) in
+                if bot.movmentSpeed == .frozen {
+                    coughtPlayers = coughtPlayers + 1
+                }
+            }
+            if player.movmentSpeed == .frozen {
+                coughtPlayers = coughtPlayers + 1
+            }
+            if coughtPlayers == bots.count {
+                createVictoryLabel("Seekers won")
+                joystick.position = joystickBackground.position
+                freezeJoystick = true
+            }
+        }
+    }
+    
     
     // MARK: - Movement
     
@@ -240,7 +274,7 @@ class GameScene: SKScene {
      ```
      */
     private func moveJoystick(_ location: CGPoint) {
-        if !freezeJoystick {
+        if !player.spriteNode.isHidden {
             let radius = CGVector(dx: location.x - joystickBackground.position.x,
                                   dy: location.y - joystickBackground.position.y)
             let angle: CGFloat = atan2(radius.dy, radius.dx) - 1.57079633
@@ -441,7 +475,7 @@ extension GameScene {
         let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
         let timeLeft = duration - secondsSinceStart
         if timeLeft < 0 {
-            checkVictory()
+            checkDurationVictory()
         } else {
             durationLabel.text = "Time left: \(timeLeft)"
         }

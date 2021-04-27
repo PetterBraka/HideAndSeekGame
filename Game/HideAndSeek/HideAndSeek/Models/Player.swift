@@ -180,10 +180,10 @@ class Player {
      freezeJoystick: - A Bool represening if the joystick can used or not.
      - returns: A String representing the action that can be preformed.
      */
-    func checkHideAction(_ hidingSpots: [HidingSpot], _ freezeJoystick: Bool) -> String{
+    func checkHideAction(_ hidingSpots: [HidingSpot]) -> String{
         if role == .hider {
             if hidingSpots.contains(where: {$0.reachable == true}) {
-                if !freezeJoystick{
+                if !spriteNode.isHidden{
                     return "Hide"
                 } else {
                     return "Leave"

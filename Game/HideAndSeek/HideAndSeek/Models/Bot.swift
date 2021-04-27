@@ -52,4 +52,18 @@ class Bot: Player {
         shape.zPosition = 99
         nodeReach = shape
     }
+    
+    func seek(for player: Player) {
+        let position = player.spriteNode.position
+        if player.movmentSpeed != .frozen {
+            spriteNode.run(.move(to: position, duration: 2))
+            if player.checkBotsIntersections([self]) != nil && !player.spriteNode.isHidden {
+                if player.movmentSpeed != .frozen{
+                    player.caught()
+                }
+            }
+        } else {
+            spriteNode.run(.stop())
+        }
+    }
 }
