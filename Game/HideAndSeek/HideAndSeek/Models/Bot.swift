@@ -5,7 +5,6 @@
 //  Created by Petter vang Brakalsvålet on 22/03/2021.
 //
 
-import UIKit
 import SpriteKit
 
 class Bot: Player {

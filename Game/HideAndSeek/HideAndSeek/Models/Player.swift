@@ -5,10 +5,9 @@
 //  Created by Petter vang Brakalsvålet on 22/03/2021.
 //
 
-import UIKit
 import SpriteKit
 
-class Player: NSObject {
+class Player {
     enum Role: String {
         case hider = "Hider"
         case seeker = "Seeker"

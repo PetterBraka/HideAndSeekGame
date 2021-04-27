@@ -5,10 +5,9 @@
 //  Created by Petter vang Brakalsvålet on 21/03/2021.
 //
 
-import UIKit
 import SpriteKit
 
-class HidingSpot: NSObject {
+class HidingSpot {
     enum Variant: String {
         case mountain = "mountain"
         case house = "house"
@@ -32,7 +31,6 @@ class HidingSpot: NSObject {
         self.capacity = capacity
         self.location = location
         self.reachable = false
-        super.init()
         createSprite()
     }
     
@@ -51,7 +49,6 @@ class HidingSpot: NSObject {
         default:
             self.image = variant.rawValue
         }
-        super.init()
         createSprite()
     }
     

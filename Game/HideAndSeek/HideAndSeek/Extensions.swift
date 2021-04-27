@@ -7,6 +7,17 @@
 
 import SpriteKit
 
+enum ChallangeRating: String {
+    case easy = "Easy"
+    case normal = "Normal"
+    case hard = "Hard"
+}
+
+enum ColliderType: UInt32 {
+    case Player = 1
+    case HidingPlace = 2
+}
+
 extension SKSpriteNode {
     
     /**

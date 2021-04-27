@@ -7,17 +7,6 @@
 
 import SpriteKit
 
-enum ChallangeRating : String {
-    case easy = "Easy"
-    case normal = "Normal"
-    case hard = "Hard"
-}
-
-enum ColliderType: UInt32 {
-    case Player = 1
-    case HidingPlace = 2
-}
-
 class GameScene: SKScene {
     // MARK: - Variabels
     private let duration: Int
@@ -62,6 +51,8 @@ class GameScene: SKScene {
     
     // MARK: - Game mechanics
     override func didMove(to view: SKView) {
+        createMap()
+        createUI()
         #if DEBUG
         // This will print out the game details if run in debug mode.
         print("============================")
@@ -71,8 +62,6 @@ class GameScene: SKScene {
         player.toString()
         print("============================")
         #endif
-        createMap()
-        createUI()
     }
     
     // MARK: - Touch handeling

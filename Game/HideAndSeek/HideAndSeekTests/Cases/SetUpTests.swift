@@ -79,62 +79,62 @@ class SetUpTests: XCTestCase {
     // Test number of segments of game options
     func testNumberOfSegmentsOfRoleOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertEqual(gameOptions[0].options, defaultOptions[0].options, "Number of segments of role option is not as expected")
+        XCTAssertEqual(gameOptions[0].segments, defaultOptions[0].options, "Number of segments of role option is not as expected")
     }
     
     func testNumberOfSegmentsOfDifficultyOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertEqual(gameOptions[1].options, defaultOptions[1].options, "Number of segments of difficulty option is not as expected")
+        XCTAssertEqual(gameOptions[1].segments, defaultOptions[1].options, "Number of segments of difficulty option is not as expected")
     }
     
     func testNumberOfSegmentsOfSpeedOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertEqual(gameOptions[2].options, defaultOptions[2].options, "Number of segments of speed option is not as expected")
+        XCTAssertEqual(gameOptions[2].segments, defaultOptions[2].options, "Number of segments of speed option is not as expected")
     }
     
     func testNumberOfSegmentsOfReachOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertEqual(gameOptions[3].options, defaultOptions[3].options, "Number of segments of reach option is not as expected")
+        XCTAssertEqual(gameOptions[3].segments, defaultOptions[3].options, "Number of segments of reach option is not as expected")
     }
     
     func testNumberOfSegmentsOfDurationOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertNil(gameOptions[4].options, "Number of segments of duration option is not nil")
+        XCTAssertNil(gameOptions[4].segments, "Number of segments of duration option is not nil")
     }
     
     func testNumberOfSegmentsOfBotsOption(){
         let gameOptions = setUpVC.gameOptions
-        XCTAssertNil(gameOptions[5].options, "Number of segments of bots option is not nil")
+        XCTAssertNil(gameOptions[5].segments, "Number of segments of bots option is not nil")
     }
     
     func testRoleOption(){
         let gameOption = setUpVC.gameOptions[0]
         XCTAssert(
-            gameOption.options?[0] == defaultOptions[0].options?[0] &&
-                gameOption.options?[1] == defaultOptions[0].options?[1])
+            gameOption.segments?[0] == defaultOptions[0].options?[0] &&
+                gameOption.segments?[1] == defaultOptions[0].options?[1])
     }
     
     func testDifficultyOption(){
         let gameOption = setUpVC.gameOptions[1]
         XCTAssert(
-            gameOption.options?[0] == defaultOptions[1].options?[0] &&
-                gameOption.options?[1] == defaultOptions[1].options?[1] &&
-                gameOption.options?[2] == defaultOptions[1].options?[2])
+            gameOption.segments?[0] == defaultOptions[1].options?[0] &&
+                gameOption.segments?[1] == defaultOptions[1].options?[1] &&
+                gameOption.segments?[2] == defaultOptions[1].options?[2])
     }
     
     func testSpeedOption(){
         let gameOption = setUpVC.gameOptions[2]
         XCTAssert(
-            gameOption.options?[0] == defaultOptions[2].options?[0] &&
-                gameOption.options?[1] == defaultOptions[2].options?[1] &&
-                gameOption.options?[2] == defaultOptions[2].options?[2])
+            gameOption.segments?[0] == defaultOptions[2].options?[0] &&
+                gameOption.segments?[1] == defaultOptions[2].options?[1] &&
+                gameOption.segments?[2] == defaultOptions[2].options?[2])
     }
     
     func testReachOption(){
         let gameOption = setUpVC.gameOptions[3]
         XCTAssert(
-            gameOption.options?[0] == defaultOptions[3].options?[0] &&
-                gameOption.options?[1] == defaultOptions[3].options?[1] &&
-                gameOption.options?[2] == defaultOptions[3].options?[2])
+            gameOption.segments?[0] == defaultOptions[3].options?[0] &&
+                gameOption.segments?[1] == defaultOptions[3].options?[1] &&
+                gameOption.segments?[2] == defaultOptions[3].options?[2])
     }
 }
