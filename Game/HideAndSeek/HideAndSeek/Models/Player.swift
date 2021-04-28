@@ -7,7 +7,8 @@
 
 import SpriteKit
 
-class Player {
+class Player: Equatable {
+    
     enum Role: String {
         case hider = "Hider"
         case seeker = "Seeker"
@@ -211,5 +212,9 @@ class Player {
             }
         }
         return ""
+    }
+    
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return lhs.spriteNode == rhs.spriteNode
     }
 }

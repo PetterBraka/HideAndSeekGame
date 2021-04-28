@@ -26,6 +26,7 @@ class GameScene: SKScene {
     private var bots: [Bot]
     private var seeker: Bot?
     private var player: Player
+    private var botTarget: Player?
     private var nodesHit: [SKSpriteNode] = []
     private var hidingSpots: [HidingSpot] = []
     private var freezeJoystick: Bool = false
@@ -156,8 +157,9 @@ class GameScene: SKScene {
         bots.forEach { (bot) in
             bot.nodeReach.position = bot.spriteNode.position
         }
-        if player.role == .hider {
-            checkSeekerVictory()
+        seek()
+        if botTarget == nil {
+            seeker?.spriteNode.run(.move(to: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60), duration: 1))
         }
         constrinCameraNode()
         updateDurationLabel()
@@ -231,10 +233,52 @@ class GameScene: SKScene {
         }
     }
     
-    private func checkSeekerVictory() {
+    /**
+     This will try to set a target for the seeker to find.
+     
+     # Notes: #
+     1. Should only be used if the player is an hider.
+     */
+    private func setTarget(){
         let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
         if secondsSinceStart > 5 {
-            seeker?.seek(for: player)
+            var targets = bots
+            targets.removeAll(where: {$0 == seeker && $0.movmentSpeed == .frozen})
+            if player.role == .hider {
+                if Bool.random() {
+                    botTarget = targets.randomElement()
+                } else {
+                    botTarget = player 
+                }
+            }
+        }
+    }
+    
+    /**
+     This will set the seeker to seek after the target.
+     
+     # Notes: #
+     1. Should only be called in update()
+     */
+    private func seek() {
+        if botTarget != nil{
+            seeker?.seek(for: botTarget!)
+            seeker?.seeking = true
+            if botTarget!.movmentSpeed == .frozen || botTarget!.spriteNode.isHidden {
+                botTarget = nil
+            }
+        } else {
+            setTarget()
+        }
+        if player.role == .hider {
+            checkSeekerVictory()
+        }
+    }
+    
+    /**
+     This will check if the seeker have won the game.
+     */
+    private func checkSeekerVictory() {
             var coughtPlayers = 0
             bots.forEach { (bot) in
                 if bot.movmentSpeed == .frozen {
@@ -244,12 +288,11 @@ class GameScene: SKScene {
             if player.movmentSpeed == .frozen {
                 coughtPlayers = coughtPlayers + 1
             }
-            if coughtPlayers == bots.count {
+            if coughtPlayers == bots.count + 1 {
                 createVictoryLabel("Seekers won")
                 joystick.position = joystickBackground.position
                 freezeJoystick = true
             }
-        }
     }
     
     

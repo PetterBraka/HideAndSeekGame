@@ -8,6 +8,8 @@
 import SpriteKit
 
 class Bot: Player {
+    var seeking = false
+    
     /**
      Will create a SKSpriteNode of a spesific size and set the locaiton for the sprite.
      
@@ -60,6 +62,7 @@ class Bot: Player {
             if player.checkBotsIntersections([self]) != nil && !player.spriteNode.isHidden {
                 if player.movmentSpeed != .frozen{
                     player.caught()
+                    seeking = false
                 }
             }
         } else {
