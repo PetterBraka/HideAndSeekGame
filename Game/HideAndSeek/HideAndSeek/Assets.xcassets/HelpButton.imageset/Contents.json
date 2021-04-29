@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "HelpButton.png",
+      "filename" : "HelpButton@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "HelpButton@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "HelpButton@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

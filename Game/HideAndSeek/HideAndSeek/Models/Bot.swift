@@ -21,9 +21,9 @@ class Bot: Player {
         var image = ""
         switch role {
         case .hider:
-            image = "Hider"
+            image = "hider"
         default:
-            image = "Seeker"
+            image = "seeker"
         }
         let player = SKSpriteNode(imageNamed: image)
         player.position = location

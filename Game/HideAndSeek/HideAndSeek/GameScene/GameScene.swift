@@ -234,48 +234,6 @@ class GameScene: SKScene {
     }
     
     /**
-     This will try to set a target for the seeker to find.
-     
-     # Notes: #
-     1. Should only be used if the player is an hider.
-     */
-    private func setTarget(){
-        let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
-        if secondsSinceStart > 5 {
-            var targets = bots
-            targets.removeAll(where: {$0 == seeker && $0.movmentSpeed == .frozen})
-            if player.role == .hider {
-                if Bool.random() {
-                    botTarget = targets.randomElement()
-                } else {
-                    botTarget = player 
-                }
-            }
-        }
-    }
-    
-    /**
-     This will set the seeker to seek after the target.
-     
-     # Notes: #
-     1. Should only be called in update()
-     */
-    private func seek() {
-        if botTarget != nil{
-            seeker?.seek(for: botTarget!)
-            seeker?.seeking = true
-            if botTarget!.movmentSpeed == .frozen || botTarget!.spriteNode.isHidden {
-                botTarget = nil
-            }
-        } else {
-            setTarget()
-        }
-        if player.role == .hider {
-            checkSeekerVictory()
-        }
-    }
-    
-    /**
      This will check if the seeker have won the game.
      */
     private func checkSeekerVictory() {
@@ -365,6 +323,48 @@ class GameScene: SKScene {
         let amountToMove = velocity * CGFloat(timeDifference)
         sprite.position += amountToMove
         player.nodeReach?.position = sprite.position
+    }
+    
+    /**
+     This will try to set a target for the seeker to find.
+     
+     # Notes: #
+     1. Should only be used if the player is an hider.
+     */
+    private func setTarget(){
+        let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
+        if secondsSinceStart > 5 {
+            var targets = bots
+            targets.removeAll(where: {$0 == seeker && $0.movmentSpeed == .frozen})
+            if player.role == .hider {
+                if Bool.random() {
+                    botTarget = targets.randomElement()
+                } else {
+                    botTarget = player
+                }
+            }
+        }
+    }
+    
+    /**
+     This will set the seeker to seek after the target.
+     
+     # Notes: #
+     1. Should only be called in update()
+     */
+    private func seek() {
+        if botTarget != nil{
+            seeker?.seek(for: botTarget!)
+            seeker?.seeking = true
+            if botTarget!.movmentSpeed == .frozen || botTarget!.spriteNode.isHidden {
+                botTarget = nil
+            }
+        } else {
+            setTarget()
+        }
+        if player.role == .hider {
+            checkSeekerVictory()
+        }
     }
     
     /**
