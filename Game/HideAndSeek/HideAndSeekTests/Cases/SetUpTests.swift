@@ -111,7 +111,7 @@ class SetUpTests: XCTestCase {
         let gameOption = setUpVC.gameOptions[0]
         XCTAssert(
             gameOption.segments?[0] == defaultOptions[0].options?[0] &&
-                gameOption.segments?[1] == defaultOptions[0].options?[1])
+                gameOption.segments?[1] == defaultOptions[0].options?[1], "The role options isn't matching the expected options.")
     }
     
     func testDifficultyOption(){
@@ -119,7 +119,7 @@ class SetUpTests: XCTestCase {
         XCTAssert(
             gameOption.segments?[0] == defaultOptions[1].options?[0] &&
                 gameOption.segments?[1] == defaultOptions[1].options?[1] &&
-                gameOption.segments?[2] == defaultOptions[1].options?[2])
+                gameOption.segments?[2] == defaultOptions[1].options?[2], "The difficulty options isn't matching the expected options.")
     }
     
     func testSpeedOption(){
@@ -127,7 +127,7 @@ class SetUpTests: XCTestCase {
         XCTAssert(
             gameOption.segments?[0] == defaultOptions[2].options?[0] &&
                 gameOption.segments?[1] == defaultOptions[2].options?[1] &&
-                gameOption.segments?[2] == defaultOptions[2].options?[2])
+                gameOption.segments?[2] == defaultOptions[2].options?[2], "The speed options isn't matching the expected options.")
     }
     
     func testReachOption(){
@@ -135,6 +135,6 @@ class SetUpTests: XCTestCase {
         XCTAssert(
             gameOption.segments?[0] == defaultOptions[3].options?[0] &&
                 gameOption.segments?[1] == defaultOptions[3].options?[1] &&
-                gameOption.segments?[2] == defaultOptions[3].options?[2])
+                gameOption.segments?[2] == defaultOptions[3].options?[2], "The reach options isn't matching the expected options.")
     }
 }

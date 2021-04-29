@@ -42,9 +42,9 @@ class HidingSpot {
         switch variant {
         case .tent:
             if newTent {
-                image = "tentNew"
+                image = "tentNewStyle"
             } else {
-                image = "tentOld"
+                image = "tentOldStyle"
             }
         default:
             self.image = variant.rawValue

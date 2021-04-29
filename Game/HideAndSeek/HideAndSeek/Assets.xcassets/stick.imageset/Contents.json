@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "stick.png",
+      "filename" : "stick@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "stick@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "stick@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

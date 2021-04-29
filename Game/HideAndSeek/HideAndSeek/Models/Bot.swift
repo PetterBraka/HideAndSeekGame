@@ -8,6 +8,8 @@
 import SpriteKit
 
 class Bot: Player {
+    var seeking = false
+    
     /**
      Will create a SKSpriteNode of a spesific size and set the locaiton for the sprite.
      
@@ -19,9 +21,9 @@ class Bot: Player {
         var image = ""
         switch role {
         case .hider:
-            image = "Hider"
+            image = "hider"
         default:
-            image = "Seeker"
+            image = "seeker"
         }
         let player = SKSpriteNode(imageNamed: image)
         player.position = location
@@ -51,5 +53,20 @@ class Bot: Player {
         shape.strokeColor = .orange
         shape.zPosition = 99
         nodeReach = shape
+    }
+    
+    func seek(for player: Player) {
+        let position = player.spriteNode.position
+        if player.movmentSpeed != .frozen {
+            spriteNode.run(.move(to: position, duration: 2))
+            if player.checkBotsIntersections([self]) != nil && !player.spriteNode.isHidden {
+                if player.movmentSpeed != .frozen{
+                    player.caught()
+                    seeking = false
+                }
+            }
+        } else {
+            spriteNode.run(.stop())
+        }
     }
 }

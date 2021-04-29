@@ -20,10 +20,10 @@ class HelpVC: UIViewController {
     }
     
     //Creates and array of preset help options
-    var helpItems = [HelpItem(image: "Hider", explenation: "This is a hider. Your job as a hider is to hide from the seeker."),
-                     HelpItem(image: "Seeker", explenation: "This is a seeker. Your job as a seeker is to catch all other players."),
-                     HelpItem(image: "tentNew", explenation: "This is an hiding spot. You can hide here."),
-                     HelpItem(image: "tentOld", explenation: "This is an hiding spot. You can hide here."),
+    var helpItems = [HelpItem(image: "hider", explenation: "This is a hider. Your job as a hider is to hide from the seeker."),
+                     HelpItem(image: "seeker", explenation: "This is a seeker. Your job as a seeker is to catch all other players."),
+                     HelpItem(image: "tentNewStyle", explenation: "This is an hiding spot. You can hide here."),
+                     HelpItem(image: "tentOldStyle", explenation: "This is an hiding spot. You can hide here."),
                      HelpItem(image: "house", explenation: "This is an hiding spot. You can hide here."),
                      HelpItem(image: "joystick_background",secondImage: "joystick" , explenation: "This is an joystick. You can use this to move around on the map."),
                      HelpItem(image: "button", explenation: "This is the action button. I will have a label stating the action yo can preform.")]

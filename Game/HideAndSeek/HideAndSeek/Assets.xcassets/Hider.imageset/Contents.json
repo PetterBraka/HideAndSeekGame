@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Hider.png",
+      "filename" : "Hider@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Hider@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Hider@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

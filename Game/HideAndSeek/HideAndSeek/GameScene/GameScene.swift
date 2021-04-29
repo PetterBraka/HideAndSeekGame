@@ -26,6 +26,7 @@ class GameScene: SKScene {
     private var bots: [Bot]
     private var seeker: Bot?
     private var player: Player
+    private var botTarget: Player?
     private var nodesHit: [SKSpriteNode] = []
     private var hidingSpots: [HidingSpot] = []
     private var freezeJoystick: Bool = false
@@ -113,9 +114,6 @@ class GameScene: SKScene {
                     print("can't do anything")
                     #endif
                 }
-                freezeJoystick = true
-            } else {
-                freezeJoystick = true
             }
         }
     }
@@ -144,11 +142,24 @@ class GameScene: SKScene {
         move(timeDifference, player.spriteNode)
         // Checks if the player intersects whit a bot or an hiding spot
         if player.checkBotsIntersections(bots) != nil {
-            buttonLabel.text = player.checkCatchAction(bots)
+            let text = player.checkCatchAction(bots)
+            if text != "" {
+                buttonLabel.text = text
+            }
         } else if player.checkHidingSpotsIntersections(hidingSpots) != nil {
-            buttonLabel.text = player.checkHideAction(hidingSpots, freezeJoystick)
+            let text = player.checkHideAction(hidingSpots)
+            if text != "" {
+                buttonLabel.text = player.checkHideAction(hidingSpots)
+            }
         } else {
             buttonLabel.text = ""
+        }
+        bots.forEach { (bot) in
+            bot.nodeReach.position = bot.spriteNode.position
+        }
+        seek()
+        if botTarget == nil {
+            seeker?.spriteNode.run(.move(to: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60), duration: 1))
         }
         constrinCameraNode()
         updateDurationLabel()
@@ -204,20 +215,44 @@ class GameScene: SKScene {
      1. Should be called in when checking the duration of the game
      
      */
-    private func checkVictory(){
-        var forzenBots = 0
+    private func checkDurationVictory(){
+        var frozenPlayers = 0
         bots.forEach { (bot) in
             if bot.movmentSpeed == .frozen{
-                forzenBots = forzenBots + 1
+                frozenPlayers = frozenPlayers + 1
             }
         }
+        if player.role == .hider && player.movmentSpeed == .frozen {
+            frozenPlayers = frozenPlayers + 1
+        }
         // Goes though all the bots and checks if all are chough.
-        if forzenBots == bots.count{
+        if frozenPlayers == bots.count{
             createVictoryLabel("Seekers Won")
         } else {
             createVictoryLabel("Hiders Won")
         }
     }
+    
+    /**
+     This will check if the seeker have won the game.
+     */
+    private func checkSeekerVictory() {
+            var coughtPlayers = 0
+            bots.forEach { (bot) in
+                if bot.movmentSpeed == .frozen {
+                    coughtPlayers = coughtPlayers + 1
+                }
+            }
+            if player.movmentSpeed == .frozen {
+                coughtPlayers = coughtPlayers + 1
+            }
+            if coughtPlayers == bots.count + 1 {
+                createVictoryLabel("Seekers won")
+                joystick.position = joystickBackground.position
+                freezeJoystick = true
+            }
+    }
+    
     
     // MARK: - Movement
     
@@ -240,7 +275,7 @@ class GameScene: SKScene {
      ```
      */
     private func moveJoystick(_ location: CGPoint) {
-        if !freezeJoystick {
+        if !player.spriteNode.isHidden {
             let radius = CGVector(dx: location.x - joystickBackground.position.x,
                                   dy: location.y - joystickBackground.position.y)
             let angle: CGFloat = atan2(radius.dy, radius.dx) - 1.57079633
@@ -288,6 +323,48 @@ class GameScene: SKScene {
         let amountToMove = velocity * CGFloat(timeDifference)
         sprite.position += amountToMove
         player.nodeReach?.position = sprite.position
+    }
+    
+    /**
+     This will try to set a target for the seeker to find.
+     
+     # Notes: #
+     1. Should only be used if the player is an hider.
+     */
+    private func setTarget(){
+        let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
+        if secondsSinceStart > 5 {
+            var targets = bots
+            targets.removeAll(where: {$0 == seeker && $0.movmentSpeed == .frozen})
+            if player.role == .hider {
+                if Bool.random() {
+                    botTarget = targets.randomElement()
+                } else {
+                    botTarget = player
+                }
+            }
+        }
+    }
+    
+    /**
+     This will set the seeker to seek after the target.
+     
+     # Notes: #
+     1. Should only be called in update()
+     */
+    private func seek() {
+        if botTarget != nil{
+            seeker?.seek(for: botTarget!)
+            seeker?.seeking = true
+            if botTarget!.movmentSpeed == .frozen || botTarget!.spriteNode.isHidden {
+                botTarget = nil
+            }
+        } else {
+            setTarget()
+        }
+        if player.role == .hider {
+            checkSeekerVictory()
+        }
     }
     
     /**
@@ -441,7 +518,7 @@ extension GameScene {
         let secondsSinceStart = Int(abs(gameStartDate.timeIntervalSince1970 - Date().timeIntervalSince1970))
         let timeLeft = duration - secondsSinceStart
         if timeLeft < 0 {
-            checkVictory()
+            checkDurationVictory()
         } else {
             durationLabel.text = "Time left: \(timeLeft)"
         }
