@@ -157,6 +157,10 @@ class GameScene: SKScene {
         bots.forEach { (bot) in
             bot.nodeReach.position = bot.spriteNode.position
         }
+        player.nodeReach.position = player.spriteNode.position
+        if seeker != nil {
+            seeker!.nodeReach.position = seeker!.spriteNode.position
+        }
         seek()
         if botTarget == nil {
             seeker?.spriteNode.run(.move(to: CGPoint(x: gameArea.width / 32 * 14, y: gameArea.height / 2 + 60), duration: 1))
@@ -246,11 +250,19 @@ class GameScene: SKScene {
             if player.movmentSpeed == .frozen {
                 coughtPlayers = coughtPlayers + 1
             }
+        if player.role == .hider {
             if coughtPlayers == bots.count + 1 {
                 createVictoryLabel("Seekers won")
                 joystick.position = joystickBackground.position
                 freezeJoystick = true
             }
+        } else {
+            if coughtPlayers == bots.count {
+                createVictoryLabel("Seekers won")
+                joystick.position = joystickBackground.position
+                freezeJoystick = true
+            }
+        }
     }
     
     

@@ -50,7 +50,7 @@ class Bot: Player {
         let shape = SKShapeNode(circleOfRadius: raidus)
         shape.position = spriteNode.position
         shape.lineWidth = 2
-        shape.strokeColor = .orange
+        shape.strokeColor = .clear
         shape.zPosition = 99
         nodeReach = shape
     }

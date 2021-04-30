@@ -89,7 +89,7 @@ class Player: Equatable {
         let shape = SKShapeNode(circleOfRadius: raidus)
         shape.position = spriteNode.position
         shape.lineWidth = 2
-        shape.strokeColor = .red
+        shape.strokeColor = .clear
         shape.zPosition = 99
         nodeReach = shape
     }
