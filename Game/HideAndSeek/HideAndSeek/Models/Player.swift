@@ -60,9 +60,9 @@ class Player: Equatable {
         var image = ""
         switch role {
         case .hider:
-            image = "hider"
+            image = "Hider"
         default:
-            image = "seeker"
+            image = "Seeker"
         }
         let player = SKSpriteNode(imageNamed: image)
         player.position = location
