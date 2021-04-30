@@ -7,7 +7,7 @@ The This folder is devided into muliple folder.
 
 The Docs folder contains all the document created in relation to this project.
 
-The Game folder contains the Xcode project and the related files and folder needed.
+The Game folder contains the final Xcode project and the related files and folder needed.
 
 The GameAssets folder contains all the orignal game assets and some unused assets.
 
@@ -16,3 +16,5 @@ The Playground folder is containg a playground version of the game (a game demo)
 The Practice folder contains all my beginning projects and tutorials.
 
 The LICENSE file is the licens related to this project.
+
+The final version of the game is located in Game -> HideAndSeek. Open the file named HideAndSeek.xcodeproj or open this folder with XCode to see the code. Build and run the code in XCode.
